@@ -1,0 +1,12 @@
+query Users($name: String){
+  users(name: $name){
+    data {
+      id
+      name
+      email
+      email_verified_at
+      created_at
+      updated_at
+    }
+  }
+}
