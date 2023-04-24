@@ -3,16 +3,11 @@ import { ENDPOINT_URL } from "./utils/constants";
  
 const config: CodegenConfig = {
   overwrite: true,
-  schema: "https://3868-177-232-7-99.ngrok-free.app/graphql",
+  schema: "https://0f15-148-204-142-9.ngrok-free.app/graphql",
   documents: "graphql/**/*.graphql",
   generates: {
-    "src/gql/": {
+    "gql/": {
       preset: "client",
-      plugins: [
-        "typescript-operations",
-        "typescript-document-nodes",
-        "typescript",
-      ]
     },
     "gql/graphql.ts": {
       plugins: [

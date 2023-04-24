@@ -1,31 +1,10 @@
-import gql from 'graphql-tag';
+/* eslint-disable */
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type UsersQueryVariables = Exact<{
-  name?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type UsersQuery = { __typename?: 'Query', users: { __typename?: 'UserPaginator', data: Array<{ __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any }> } };
-
-
-export const Users = gql`
-    query Users($name: String) {
-  users(name: $name) {
-    data {
-      id
-      name
-      email
-      email_verified_at
-      created_at
-      updated_at
-    }
-  }
-}
-    `;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -33,8 +12,11 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** A date string with format 'y-m-d'. e.g. '2002-12-22.' */
   Date: any;
+  /** A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`. */
   DateTime: any;
+  /** A upload string */
   Upload: any;
 };
 
@@ -51,6 +33,11 @@ export type Comment = {
   rating?: Maybe<Scalars['Float']>;
 };
 
+export type CreateRecipeBelongsTo = {
+  connect?: InputMaybe<Scalars['ID']>;
+  create?: InputMaybe<CreateRecipeInput>;
+};
+
 export type CreateUserBelongsTo = {
   connect?: InputMaybe<Scalars['ID']>;
   create?: InputMaybe<CreateUserInput>;
@@ -60,6 +47,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Mutación para crear receta */
   createRecipe: Recipe;
+  createStep: Step;
   /** Crea un Usuario Nuevo */
   createUser: User;
   /** Elimina una Receta */
@@ -79,6 +67,11 @@ export type Mutation = {
 
 export type MutationCreateRecipeArgs = {
   input: CreateRecipeInput;
+};
+
+
+export type MutationCreateStepArgs = {
+  input: CreateStepInput;
 };
 
 
@@ -202,6 +195,8 @@ export type Query = {
   /** Find a single Recipe by an identifying attribute. */
   recipe?: Maybe<Recipe>;
   recipes: RecipePaginator;
+  step?: Maybe<Step>;
+  steps: StepPaginator;
   /** Find a single user by an identifying attribute. */
   user?: Maybe<User>;
   /** List multiple users. */
@@ -226,6 +221,20 @@ export type QueryRecipesArgs = {
   rate?: InputMaybe<Scalars['Float']>;
   time_food?: InputMaybe<Time>;
   title?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Indicates what fields are available at the top level of a query operation. */
+export type QueryStepArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+/** Indicates what fields are available at the top level of a query operation. */
+export type QueryStepsArgs = {
+  description?: InputMaybe<Scalars['String']>;
+  first?: Scalars['Int'];
+  page?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -268,6 +277,8 @@ export type Recipe = {
   proteins?: Maybe<Scalars['Float']>;
   /** Calificación promedio de la receta */
   rate?: Maybe<Scalars['Float']>;
+  /** Los pasos */
+  steps: Array<Step>;
   /** En que tiempo es la receta. Ej, Desayuno */
   time_food: Time;
   /** Titulo de la receta */
@@ -321,11 +332,20 @@ export enum SortOrder {
 
 export type Step = {
   __typename?: 'Step';
-  Recipe?: Maybe<Recipe>;
+  Recipe: Recipe;
   /** descripcion */
-  descripcion: Scalars['String'];
+  description: Scalars['String'];
   /** Direccion de Imagen */
   imagen_path?: Maybe<Scalars['String']>;
+};
+
+/** A paginated list of Step items. */
+export type StepPaginator = {
+  __typename?: 'StepPaginator';
+  /** A list of Step items. */
+  data: Array<Step>;
+  /** Pagination information about the list of items. */
+  paginatorInfo: PaginatorInfo;
 };
 
 /** Specify if you want to include or exclude trashed results from a query. */
@@ -399,6 +419,15 @@ export type CreateRecipeInput = {
   user?: InputMaybe<CreateUserBelongsTo>;
 };
 
+export type CreateStepHasMany = {
+  create: Array<CreateStepInput>;
+};
+
+export type CreateStepInput = {
+  description: Scalars['String'];
+  recipe?: InputMaybe<CreateRecipeBelongsTo>;
+};
+
 export type CreateUserInput = {
   /** Una fecha de cumpleaños de formato 'Año-Mes-Dia', Ej. '2002-02-11'.  */
   birthday: Scalars['Date'];
@@ -453,3 +482,13 @@ export enum Time {
   /** Tiempo Desayuno */
   Desayuno = 'Desayuno'
 }
+
+export type UsersQueryVariables = Exact<{
+  name?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UsersQuery = { __typename?: 'Query', users: { __typename?: 'UserPaginator', data: Array<{ __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any }> } };
+
+
+export const UsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Users"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"email_verified_at"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]}}]} as unknown as DocumentNode<UsersQuery, UsersQueryVariables>;
