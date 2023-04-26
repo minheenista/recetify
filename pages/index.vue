@@ -55,8 +55,8 @@
                         dense
                         block
                         :loading="loading"
-                        @click="handleLogin"
                         height="45"
+                        @click="signin()"
                       >
                         Iniciar Sesión
                       </v-btn> 
@@ -151,6 +151,9 @@ export default {
   methods: {
     preferencias(){
       this.$router.push('./preferencias');
+    },
+    signin(){
+      this.$router.push('./recetas');
     }
   },
     data: () => ({
