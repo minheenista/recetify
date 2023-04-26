@@ -1,0 +1,26 @@
+query User($id: ID, $email: String){
+  user(id: $id, email: $email) {
+    id
+    name
+    email
+    birthday
+    recipes {
+      id
+      title
+      description
+      image_pf_path
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      rate
+      user
+      steps
+      Comments
+    }
+  }
+}

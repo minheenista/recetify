@@ -1,0 +1,20 @@
+query Comments($comentario:string){
+  Comments(comentario:$comentario) {
+    paginatorInfo {
+      count
+      currentPage
+      firstItem
+      hasMorePages
+      lastItem
+      lastPage
+      perPage
+      total
+    }
+    data {
+      id
+      comentario
+      rating
+      Recipe
+    }
+  }
+}

@@ -1,0 +1,20 @@
+
+query Steps($description:string){
+  steps(description: $description) {
+    paginatorInfo {
+      count
+      currentPage
+      firstItem
+      hasMorePages
+      lastItem
+      lastPage
+      perPage
+      total
+    }
+    data {
+      description
+      imagen_path
+      Recipe
+    }
+  }
+}
