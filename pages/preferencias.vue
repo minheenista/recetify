@@ -1,117 +1,123 @@
-<template>
+
+  <template>
     <v-app>
-        <div class="container">
-            <center>
-                <div class="titulo">
-                    <h1>
-                        Queremos conocerte mas ^^
-                    </h1>
-                    <br>
-                </div>
-               <div class="subtitulo">
-                <h3 class="subtitulo">Cuales son tus alergias?</h3>
-                <br>
-                <br>
-               </div>
-               <!-- CHIPS ALERGIAS PRE -->
-                <v-row justify="space-around">
-                    <v-col cols="auto">
-                        <v-sheet
-                            elevation="0"
-                            class="py-4 px-4"
-                        >
-                            <v-chip-group 
-                            multiple
-                            selected-class="text-primary"
-                            >
-                                <v-chip size="x-large"
-                                    v-for="tag in tags"
-                                    :key="tag"
-                                >
-                                    {{ tag }}
-                                </v-chip>
-                            </v-chip-group>
-                        </v-sheet>
-                    </v-col>
-                </v-row>
-
-            
+            <div class="container">
                 <center>
-                    <v-card
-                        class="mx-auto"
-                        max-width="500"
+                    <div class="titulo">
+                        <h1>
+                            Queremos conocerte mas ^^
+                        </h1>
+                        <br>
+                    </div>
+                   <div class="subtitulo">
+                    <h3 class="subtitulo">Cuales son tus alergias?</h3>
+                    <br>
+                    <br>
+                   </div>
+                   <!-- CHIPS ALERGIAS PRE -->
+                    <v-row justify="space-around">
+                        <v-col cols="auto">
+                            <v-sheet
+                                elevation="0"
+                                class="py-4 px-4"
+                            >
+                                <v-chip-group 
+                                multiple
+                                selected-class="text-primary"
+                                >
+                                    <v-chip size="x-large" 
+                                        v-for="tag in tags"
+                                        :key="tag"
+                                    >
+                                        {{ tag }}
+                                    </v-chip>
+                                </v-chip-group>
+                            </v-sheet>
+                        </v-col>
+                    </v-row>
+              </center>
+              <br>
+                <!-- BUsqueda de alergias -->
+    
+              
+                  <v-container>
+                    <v-row
+                      align="center"
+                      justify="start"
                     >
-
-                        <v-container width="500">
-                        <v-row
-                            align="center"
-                            justify="start"
+                      <v-col
+                        v-for="(selection, i) in selections"
+                        :key="selection.text"
+                        cols="auto"
+                        class="py-1 pe-0"
+                      >
+                        <v-chip closable
+                          :disabled="loading"
+                          @click:close="selected.splice(i, 1)"
                         >
-                            <v-col
-                            v-for="(selection, i) in selections"
-                            :key="selection.text"
-                            cols="auto"
-                            class="py-1 pe-0"
-                            >
-                            <v-chip
-                                :disabled="loading"
-                                closable
-                                @click:close="selected.splice(i, 1)"
-                            >
-                                <v-icon
-                                :icon="selection.icon"
-                                start
-                                ></v-icon>
-
-                                {{ selection.text }}
-                            </v-chip>
-                            </v-col>
-
-                            <v-col max-width="500"
-                            cols="12"
-                            >
-                            <v-text-field 
-                                ref="search"
-                                v-model="search"
-                                hide-details
-                                label="Search"
-                                single-line
-                            ></v-text-field>
-                            </v-col>
-                        </v-row>
-                        </v-container>
-
-                        <v-divider ></v-divider>
-
-                        <v-list>
-                        <template v-for="item in categories">
-                            <v-list-item
-                            v-if="!selected.includes(item)"
-                            :key="item.text"
+                          <v-icon
+                            :icon="selection.icon"
+                            start
+                          ></v-icon>
+              
+                          {{ selection.text }}
+                        </v-chip>
+                      </v-col>
+              
+                      <v-col  cols="12">
+                        <v-text-field
+                          ref="search"
+                          v-model="search"
+                          hide-details
+                          label="Search"
+                          single-line
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+              
+                  <v-divider ></v-divider>
+              
+                  <v-list>
+                    <template v-for="item in categories">
+                      <v-list-item
+                        v-if="!selected.includes(item)"
+                        :key="item.text"
+                        :disabled="loading"
+                        @click="selected.push(item)"
+                      >
+                        <template v-slot:prepend>
+                          <v-icon
                             :disabled="loading"
-                            @click="selected.push(item)"
-                            >
-                            <template v-slot:prepend>
-                                <v-icon
-                                :disabled="loading"
-                                :icon="item.icon"
-                                ></v-icon>
-                            </template>
-
-                            <v-list-item-title v-text="item.text"></v-list-item-title>
-                            </v-list-item>
+                            :icon="item.icon"
+                          ></v-icon>
                         </template>
-                        </v-list>
-
-                        <v-divider></v-divider>
-                    </v-card>
-                </center>
-                    
-            </center>
+              
+                        <v-list-item-title v-text="item.text"></v-list-item-title>
+                      </v-list-item>
+                    </template>
+                  </v-list>
+    
+      
+                  <br>
+                  <br>
+                  <div class="text-center">
+                    <v-btn color=green @click="alimentacion()"
+                      prepend-icon="mdi-check-circle"
+                    >
+                      <template v-slot:prepend>
+                        <v-icon color="default"></v-icon>
+                      </template>
                 
-        </div>
-    </v-app>
-</template>
+                      Continuar
+                
+                    </v-btn>
+                  </div>
+    
+            </div>
+        </v-app>       
+    </template>
+
 
 <script>
 export default {
@@ -196,6 +202,9 @@ export default {
           this.loading = false
         }, 2000)
       },
+      alimentacion(){
+      this.$router.push('./alimentacion');
+    }
     },
   }
 </script>
