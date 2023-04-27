@@ -20,10 +20,10 @@
                 <div class="title">Inicio de sesión</div>
               </center>
                 
-              <v-form  v-model="form" @submit.prevent="onSubmit">
+              <v-form  ref="form">
                 <div class="input-boxes">
-                  <v-text-field v-model="email"
-                  :rules="emailRulesReg"
+                  <v-text-field v-model="dataLogin.email"
+                  :rules="rulesLogin.emailRules"
                   label="Correo electronico"
                   variant="underlined"
                   color="green" 
@@ -56,7 +56,7 @@
                         block
                         :loading="loading"
                         height="45"
-                        @click="signin()"
+                        @click="handleLogin()"
                       >
                         Iniciar Sesión
                       </v-btn> 
@@ -73,10 +73,10 @@
 
               <form action="#">
                 <div class="input-boxes">
-                  <v-form  v-model="form" @submit.prevent="onSubmit">
+                  <v-form ref="form">
                     <div class="input-boxes">
-                      <v-text-field  v-model="firstname"
-                      :rules="nameRules"
+                      <v-text-field  v-model="dataRegister.name"
+                      :rules="rules.nameRules"
                       :counter="50"
                       label="Primer Nombre"
                       variant="underlined"
@@ -85,8 +85,8 @@
                       required
                       ></v-text-field>
                     
-                      <v-text-field v-model="lastname"
-                      :rules="lastnameRules"
+                      <v-text-field v-model="dataRegister.lastname"
+                      :rules="rules.lastnameRules"
                       :counter="50"
                       label="Apellidos"
                       variant="underlined"
@@ -95,18 +95,18 @@
                       required
                      ></v-text-field>
 
-                      <v-text-field v-model="emailReg"
-                      :rules="emailRules"
+                      <v-text-field v-model="dataRegister.email"
+                      :rules="rules.emailRulesReg"
                       label="Correo electronico"
                       variant="underlined"
                       color="green" 
-                      prepend-inner-icon="mdi-account"
+                      prepend-inner-icon="mdi-email"
                       required
                       ></v-text-field>
         
-                      <v-text-field v-model="passwordReg"
+                      <v-text-field v-model="dataRegister.password"
                       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                      :rules="[passRules.required, passRules.min]"
+                      :rules="[rules.passRules.required, rules.passRules.min]"
                       :type="show1 ? 'text' : 'password'"
                       name="input-10-1"
                       label="Contraseña"
@@ -116,6 +116,8 @@
                       hint="Se requieren al menos 8 caracteres"
                       @click:append="show1 = !show1"
                       ></v-text-field> 
+
+
                     </div>
                     <br>
                     <v-btn
@@ -124,7 +126,7 @@
                             dense
                             block
                             :loading="loading"
-                            @click="preferencias()"
+                            @click="handleRegister()"
                             height="45"
                           >
                             Registrar
@@ -146,7 +148,123 @@
 </template>
 
 <script>
-export default {
+import Vue from "vue";
+import { data } from "browserslist";
+
+//import Component from "vue-class-component";
+import { namespace } from "vuex-class";
+import { CreateUserInput } from "~/gql/graphql";
+//import { component } from 'vue/types/umd';
+import { LoginInput } from "~/gql/graphql";
+
+const Auth = namespace("AuthModule")
+/* @component
+ */
+export default class Register extends Vue{
+  public show1 = false;
+  public show2 = true;
+
+  public rules = {
+    passRules: {
+        required: (value: string) => !!value || 'Required.',
+        min: (v: string) => v.length >= 8 || 'Min 8 characters',
+        emailMatch: () => (`The email and password you entered don't match`),
+      },
+      nameRules: [
+        (value: string) => {
+          if (value) return true
+
+          return 'Se requiere el nombre.'
+        },
+        (value: string) => {
+          if (value?.length <= 50) return true
+
+          return 'El nombre debe contener menos de 50 caracteres'
+        },
+      ],
+      lastnameRules: [
+        (value: string) => {
+          if (value) return true
+
+          return 'Se requiere el apellido.'
+        },
+        (value: string) => {
+          if (value?.length <= 50) return true
+
+          return 'El apellido debe contener menos de 50 caracteres'
+        },
+      ],
+      emailRulesReg: [
+        (value: string) => {
+          if (value) return true
+
+          return 'E-mail is requred.'
+        },
+        (value: string) => {
+          if (/.+@.+\..+/.test(value)) return true
+
+          return 'No es un correo valido'
+        },
+      ],
+
+  }
+
+  public rulesLogin = {
+    passRules: {
+        required: (value: string) => !!value || 'Required.',
+        min: (v: string) => v.length >= 8 || 'Min 8 characters',
+        emailMatch: () => (`The email and password you entered don't match`),
+      },
+      
+      emailRules: [
+        (value: string) => {
+          if (value) return true
+
+          return 'E-mail is requred.'
+        },
+        (value: string) => {
+          if (/.+@.+\..+/.test(value)) return true
+
+          return 'No es un correo valido'
+        },
+      ],
+
+  }
+
+  public dataRegister: CreateUserInput = {
+    name: "", 
+    lastname: "",
+    email: "",
+    password: "",
+    birthday: "",
+  };
+
+  public dataLogin: LoginInput = {
+    email: "",
+    password: "",
+  };
+
+
+  @Auth.Action
+  private createUser!: (data: CreateUserInput) => Promise<void>;
+
+  async handleRegister(){
+    await this.createUser(this.dataRegister)
+  }
+
+  @Auth.State("errorMessage")
+  public errorMessage?: string;
+  @Auth.State("loadingLoginStatus")
+  public loadingLoginStatus?: boolean;
+  @Auth.Action
+  private login!: (data: LoginInput) => Promise<void>;
+  async handleLogin() {
+    await this.login(this.dataLogin);
+  }
+}
+
+
+/* export default {
   name: "Inicio",
   methods: {
     preferencias(){
@@ -181,7 +299,7 @@ export default {
 
           return 'El nombre debe contener menos de 50 caracteres'
         },
-      ],
+      ], 
       lastnameRules: [
         value => {
           if (value) return true
@@ -208,7 +326,7 @@ export default {
         },
       ],
       emailreg: '',
-      emailRulesReg: [
+       emailRulesReg: [
         value => {
           if (value) return true
 
@@ -221,7 +339,7 @@ export default {
         },
       ],
     }),
-  }
+  } */
 </script>
 
 <style>

@@ -1,10 +1,10 @@
 
-query Steps($description:string){
+query Steps($description: String){
   steps(description: $description) {
     data {
       description
       imagen_path
-      Recipe
+      
     }
   }
 }

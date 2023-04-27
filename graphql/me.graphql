@@ -1,11 +1,9 @@
-mutation CreateUser($CrearUsuario: createUserInput!) {
-  createUser(input: $CrearUsuario) {
+query Me{
+  me {
     id
     name
     email
-    email_verified_at
-    created_at
-    updated_at
+
     birthday
     recipes {
       id
@@ -21,9 +19,8 @@ mutation CreateUser($CrearUsuario: createUserInput!) {
       carbs
       proteins
       rate
-      user
-      steps
-      Comments
+      
+      
     }
   }
 }

@@ -18,18 +18,17 @@ query Recipe($id: ID ){
       name
       email
       birthday
-      recipes
     }
     steps {
       description
       imagen_path
-      Recipe
+      
     }
     Comments {
       id
       comentario
       rating
-      Recipe
+      
     }
   }
 }

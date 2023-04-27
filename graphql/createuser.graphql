@@ -1,8 +1,11 @@
-query User($id: ID, $email: String){
-  user(id: $id, email: $email) {
+mutation CreateUser($CrearUsuario: createUserInput!) {
+  createUser(input: $CrearUsuario) {
     id
     name
     email
+    email_verified_at
+    created_at
+    updated_at
     birthday
     recipes {
       id
@@ -18,9 +21,7 @@ query User($id: ID, $email: String){
       carbs
       proteins
       rate
-      user
-      steps
-      Comments
+      
     }
   }
 }

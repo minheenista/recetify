@@ -1,5 +1,5 @@
-query Recipes($title: string, $origen_food: string, $time_food: string, $diet: string,
- prep_time: string, $calories: string, $rate: string){
+query Recipes($title: String, $origen_food: origen, $time_food: time, $diet: String,
+ $prep_time: Float, $calories: Float, $rate: Float){
   recipes(
     title:$title,
     origen_food:$origen_food,
@@ -24,9 +24,13 @@ query Recipes($title: string, $origen_food: string, $time_food: string, $diet: s
       carbs
       proteins
       rate
-      user
-      steps
-      Comments
+      user {
+      id
+      name
+      email
+      birthday
+    }
+      
     }
   }
 }

@@ -1,8 +1,10 @@
-query Step($id: ID ){
-  step(id: $id) {
-    description
-    imagen_path
-    Recipe {
+query User($id: ID, $email: String){
+  user(id: $id, email: $email) {
+    id
+    name
+    email
+    birthday
+    recipes {
       id
       title
       description
@@ -16,9 +18,8 @@ query Step($id: ID ){
       carbs
       proteins
       rate
-      user
-      steps
-      Comments
+      
+      
     }
   }
 }

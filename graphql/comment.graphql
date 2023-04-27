@@ -18,9 +18,13 @@ query Comment($id: ID ){
       carbs
       proteins
       rate
-      user
-      steps
-      Comments
+      user {
+      id
+      name
+      email
+      birthday
+    }
+      
     }
   }
 }

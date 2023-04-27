@@ -1,7 +1,6 @@
 import { ApolloError } from "@apollo/client";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import { Auth, CreateUserInput, LoginInput, User } from "~/gql/graphql";
-import authService from "~/services/auth.service";
 
 import AuthService from "~/services/auth.service";
 
@@ -11,8 +10,9 @@ class AuthModule extends VuexModule {
   public loadingLoginStatus = false;
   public loadingRegisterStatus = false;
   public errorMessage?: string = undefined;
+  context: any;
 
-  @Mutation
+ @Mutation
   public loginFaile(error: any) {
     if (error.message === "Tus datos son incorrectos") {
       this.errorMessage = "Tus datos son incorrectos";
@@ -24,24 +24,25 @@ class AuthModule extends VuexModule {
       this.errorMessage = "A ocurrido un error";
     }
   }
-
+ /* 
   @Mutation
   public resetErrorMessage() {
     this.errorMessage = undefined;
-  }
+  } */
 
+  
   @Mutation
   public removeCookies() {
     window.$nuxt.$cookies.remove("token");
     window.$nuxt.$router.push("/");
   }
 
-  @Action({ rawError: true })
+  /* @Action({ rawError: true })
   logOut(): void {
     this.context.commit("removeCookies");
-  }
+  } */
 
-  @Action
+ /*  @Action
   async login(data: LoginInput) {
     this.context.commit("loadingLogin", true);
     this.context.commit("resetErrorMessage");
@@ -57,12 +58,12 @@ class AuthModule extends VuexModule {
         this.context.commit("loginFaile", error);
         this.context.commit("loadingLogin", false);
       });
-  }
+  } */
 
   @Action
-  async registerUser(data: CreateUserInput) {
+  async createUser(data: CreateUserInput) {
     this.context.commit("loadingRegister", true);
-    return await AuthService.registerUser(data)
+    return await AuthService.createUser(data)
       .then(async () => {
         return await AuthService.login({
           email: data.email,
@@ -73,7 +74,7 @@ class AuthModule extends VuexModule {
             this.context.commit("loginSuccess", auth);
             this.context.commit("loadingRegister", false);
           })
-          .catch((error) => {
+          .catch((error: string) => {
             console.log(error);
           });
       })
