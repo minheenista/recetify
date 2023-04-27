@@ -1,0 +1,11 @@
+query Comments($comentario:string){
+  Comments(comentario:$comentario) {
+
+    data {
+      id
+      comentario
+      rating
+      Recipe
+    }
+  }
+}
