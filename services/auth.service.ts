@@ -1,16 +1,17 @@
 import { apolloClient } from "@/provider/apolloProvider";
 import {
+  CreateUser,
   CreateUserInput,
+  Login,
   LoginInput,
-  login,
-  createUser,
+
 } from "~/gql/graphql";
 
 class AuthService {
   async login(data: LoginInput) {
     return (
       await apolloClient.mutate({
-        mutation: login,
+        mutation: Login,
         variables: {
           input: data,
         },
@@ -20,7 +21,7 @@ class AuthService {
   async createUser(data: CreateUserInput) {
     return (
       await apolloClient.mutate({
-        mutation: createUser,
+        mutation: CreateUser,
         variables: {
           create: data,
         },

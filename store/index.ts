@@ -1,8 +1,6 @@
-import Vuex, { Store } from "vuex";
-import { Module } from 'vuex';
-import { RootState } from '@/store/types';
-import AuthModule from "./modules/auth.module";
-//import RecipesModule from "./modules/recipes.module";
+import Vuex, { Store } from 'vuex';
+import AuthModule from './modules/auth.module';
+
 export interface RootState {}
 export const store = new Vuex.Store<RootState>({
   actions: {
@@ -10,7 +8,7 @@ export const store = new Vuex.Store<RootState>({
   },
   modules: {
     AuthModule,
-    //RecipesModule,
+
   },
 });
 const createStore = (): Store<RootState> => {

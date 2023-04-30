@@ -147,19 +147,16 @@
     
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
-import { data } from "browserslist";
 
-//import Component from "vue-class-component";
+import Component from "vue-class-component";
 import { namespace } from "vuex-class";
 import { CreateUserInput } from "~/gql/graphql";
-//import { component } from 'vue/types/umd';
 import { LoginInput } from "~/gql/graphql";
 
 const Auth = namespace("AuthModule")
-/* @component
- */
+@Component
 export default class Register extends Vue{
   public show1 = false;
   public show2 = true;

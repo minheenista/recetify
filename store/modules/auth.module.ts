@@ -1,6 +1,6 @@
-import { ApolloError } from "@apollo/client";
+import { ApolloError } from "@apollo/client/errors";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
-import { Auth, CreateUserInput, LoginInput, User } from "~/gql/graphql";
+import {CreateUserInput, LoginInput, User } from "~/gql/graphql";
 
 import AuthService from "~/services/auth.service";
 
@@ -69,7 +69,7 @@ class AuthModule extends VuexModule {
           email: data.email,
           password: data.password,
         })
-          .then((auth: Auth) => {
+          .then((auth: any) => {
             console.log(auth);
             this.context.commit("loginSuccess", auth);
             this.context.commit("loadingRegister", false);
@@ -85,7 +85,7 @@ class AuthModule extends VuexModule {
   }
 
   @Mutation
-  public loginSuccess(auth: Auth): void {
+  public loginSuccess(auth: any): void {
     console.log(auth);
     window.$nuxt.$cookies.set("token", auth.token, {
       path: "/",

@@ -1,0 +1,59 @@
+mutation UpdateRecipe(
+  $id: ID!
+  $title: String
+  $description: String
+  $origen_food: String
+  $time_food: String
+  $diet: String
+  $prep_time: Float
+  $calories: Float
+  $fat: Float
+  $carbs: Float
+  $proteins: Float
+) {
+  updateRecipe(
+    id: $id
+    title: $title
+    description: $description
+    origen_food: $origen_food
+    time_food: $time_food
+    diet: $diet
+    prep_time: $prep_time
+    calories: $calories
+    fat: $fat
+    carbs: $carbs
+    proteins: $proteins
+  ) {
+    id
+    title
+    description
+    image_pf_path
+    origen_food
+    time_food
+    diet
+    prep_time
+    calories
+    fat
+    carbs
+    proteins
+    rate
+    user {
+      id
+      name
+      email
+      email_verified_at
+      created_at
+      updated_at
+      birthday
+    }
+    steps {
+      description
+      imagen_path
+    }
+    Comments {
+      id
+      comentario
+      rating
+    }
+  }
+}
