@@ -1,227 +1,319 @@
 <template>
-  <v-app>
-      <div class="container">
-        <!-- Animacion flip -->
-        <input type="checkbox" id="flip">
-        <div class="cover">
-          <div class="front">
-            <img src="https://source.unsplash.com/random/900×700/?food" alt="">
-          </div>
-          <div class="back">
-           <img class="backImg" src="https://source.unsplash.com/random/900×700/?food" alt="">
-          </div>
+    <div class="container">
+      <!-- Animacion flip -->
+      <input type="checkbox" id="flip" />
+      <div class="cover">
+        <div class="front">
+          <img src="https://source.unsplash.com/random/900×700/?food" alt="" />
         </div>
-        <!-- LOGIN FORM -->
-        <div class="forms">
-          <div class="form-content">
-            <div class="login-form">
-              <center>
-                <img src="../assets/recetifylogo.jpeg">
-                <div class="title">Inicio de sesión</div>
-              </center>
-                
-              <v-form  v-model="form" @submit.prevent="onSubmit">
-                <div class="input-boxes">
-                  <v-text-field v-model="email"
-                  :rules="emailRulesReg"
+        <div class="back">
+          <img
+            class="backImg"
+            src="https://source.unsplash.com/random/900×700/?food"
+            alt=""
+          />
+        </div>
+      </div>
+      <!-- LOGIN FORM -->
+      <div class="forms">
+        <div class="form-content">
+          <div class="login-form">
+            <center>
+              <img src="../assets/recetifylogo.jpeg" />
+              <div class="title">Inicio de sesión</div>
+            </center>
+
+            <v-form ref="form">
+              <div class="input-boxes">
+                <v-text-field
+                  v-model="dataLogin.email"
+                  :rules="rulesLogin.emailRules"
                   label="Correo electronico"
                   variant="underlined"
-                  color="green" 
+                  color="green"
                   prepend-inner-icon="mdi-account"
                   required
-                  ></v-text-field>
+                ></v-text-field>
 
-                  <v-text-field v-model="password"
+                <v-text-field
+                  v-model="dataLogin.password"
                   :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                  :rules="[passRules.required, passRules.min]"
+                  :rules="[rules.passRules.required, rules.passRules.min]"
                   :type="show1 ? 'text' : 'password'"
                   name="input-10-1"
                   label="Contraseña"
                   variant="underlined"
-                  color="green" 
+                  color="green"
                   prepend-inner-icon="mdi-lock"
                   hint="Se requieren al menos 8 caracteres"
                   @click:append="show1 = !show1"
-                  ></v-text-field> 
-                </div>
+                ></v-text-field>
+              </div>
 
-                <div class="text sign-up-text"><a href="#">Olvidaste tu contraseña?</a></div>
-                <div class="text sign-up-text">No tienes una cuenta? <label for="flip">Registrate aquí</label></div>
-                <br>
+              <div class="text sign-up-text">
+                <a href="#">Olvidaste tu contraseña?</a>
+              </div>
+              <div class="text sign-up-text">
+                No tienes una cuenta? <label for="flip">Registrate aquí</label>
+              </div>
+              <br />
 
-                <v-btn
-                        class="mx-auto col-md-11"
-                        color="primary"
-                        dense
-                        block
-                        :loading="loading"
-                        height="45"
-                        @click="signin()"
-                      >
-                        Iniciar Sesión
-                      </v-btn> 
-              </v-form>
-            </div>
+              <v-btn
+                class="mx-auto col-md-11"
+                color="primary"
+                dense
+                block
+                height="45"
+                @click="handleLogin()"
+              >
+                Iniciar Sesión
+              </v-btn>
+            </v-form>
+          </div>
 
           <!-- REGISTER FORM -->
-          
-            <div class="signup-form">
-              <center>
-                <img src="../assets/recetifylogo.jpeg">
-                <div class="title">Registro de usuario</div>
-              </center>
 
-              <form action="#">
-                <div class="input-boxes">
-                  <v-form  v-model="form" @submit.prevent="onSubmit">
-                    <div class="input-boxes">
-                      <v-text-field  v-model="firstname"
-                      :rules="nameRules"
+          <div class="signup-form">
+            <center>
+              <img src="../assets/recetifylogo.jpeg" />
+              <div class="title">Registro de usuario</div>
+            </center>
+
+            <form action="#">
+              <div class="input-boxes">
+                <v-form ref="form">
+                  <div class="input-boxes">
+                    <v-text-field
+                      v-model="dataRegister.name"
+                      :rules="rules.nameRules"
                       :counter="50"
                       label="Primer Nombre"
                       variant="underlined"
-                      color="green"  
+                      color="green"
                       prepend-inner-icon="mdi-account-box"
                       required
-                      ></v-text-field>
-                    
-                      <v-text-field v-model="lastname"
-                      :rules="lastnameRules"
+                    ></v-text-field>
+
+                    <v-text-field
+                      v-model="dataRegister.lastname"
+                      :rules="rules.lastnameRules"
                       :counter="50"
                       label="Apellidos"
                       variant="underlined"
-                      color="green" 
+                      color="green"
                       prepend-inner-icon="mdi-account-box"
                       required
-                     ></v-text-field>
+                    ></v-text-field>
 
-                      <v-text-field v-model="emailReg"
-                      :rules="emailRules"
+                    <v-text-field
+                      v-model="dataRegister.email"
+                      :rules="rules.emailRulesReg"
                       label="Correo electronico"
                       variant="underlined"
-                      color="green" 
-                      prepend-inner-icon="mdi-account"
+                      color="green"
+                      prepend-inner-icon="mdi-email"
                       required
-                      ></v-text-field>
-        
-                      <v-text-field v-model="passwordReg"
+                    ></v-text-field>
+
+                    <v-text-field
+                      v-model="dataRegister.password"
                       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                      :rules="[passRules.required, passRules.min]"
+                      :rules="[rules.passRules.required, rules.passRules.min]"
                       :type="show1 ? 'text' : 'password'"
                       name="input-10-1"
                       label="Contraseña"
                       variant="underlined"
-                      color="green" 
+                      color="green"
                       prepend-inner-icon="mdi-lock"
                       hint="Se requieren al menos 8 caracteres"
                       @click:append="show1 = !show1"
-                      ></v-text-field> 
-                    </div>
-                    <br>
-                    <v-btn
-                            class="mx-auto col-md-11"
-                            color="primary"
-                            dense
-                            block
-                            :loading="loading"
-                            @click="preferencias()"
-                            height="45"
-                          >
-                            Registrar
-                          </v-btn> 
-                  </v-form>
-                 <br>
-                  <div class="text sign-up-text">Ya tienes una cuenta? <label for="flip">Inicia sesión aquí</label></div>
+                    ></v-text-field>
+
+                    <v-menu
+                      ref="menu"
+                      v-model="menu"
+                      :close-on-content-click="false"
+                      :return-value.sync="date"
+                      transition="scale-transition"
+                      offset-y
+                      min-width="auto"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          v-model="dataRegister.birthday"
+                          label="Picker in menu"
+                          prepend-icon="mdi-calendar"
+                          readonly
+                          v-bind="attrs"
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        v-model="dataRegister.birthday"
+                        no-title
+                        scrollable
+                      >
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          text
+                          color="primary"
+                          @click="menu = false"
+                        >
+                          Cancel
+                        </v-btn>
+                        <v-btn
+                          text
+                          color="primary"
+                          @click="$refs.menu.save(date)"
+                        >
+                          OK
+                        </v-btn>
+                      </v-date-picker>
+                    </v-menu>
+                  </div>
+                  <br />
+                  <v-btn
+                    class="mx-auto col-md-11"
+                    color="primary"
+                    dense
+                    block
+                    @click="handleRegister()"
+                    height="45"
+                  >
+                    Registrar
+                  </v-btn>
+                </v-form>
+                <br />
+                <div class="text sign-up-text">
+                  Ya tienes una cuenta?
+                  <label for="flip">Inicia sesión aquí</label>
                 </div>
-          </form>
+              </div>
+            </form>
+          </div>
         </div>
-        </div>
-        </div>
-      </div>  
-  
-
-  </v-app>
-
-    
+      </div>
+    </div>
 </template>
 
-<script>
-export default {
-  name: "Inicio",
-  methods: {
-    preferencias(){
-      this.$router.push('./preferencias');
+<script lang="ts">
+import Vue from "vue";
+
+import Component from "vue-class-component";
+import { namespace } from "vuex-class";
+import { CreateUserInput } from "~/gql/graphql";
+import { LoginInput } from "~/gql/graphql";
+
+const Auth = namespace("AuthModule");
+@Component
+export default class Register extends Vue {
+  public show1 = false;
+  public show2 = true;
+
+  public menu = false;
+  public modal = false;
+  public menu2 = false;
+  date = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
+     /*  menu: false,
+      modal: false,
+      menu2: false, */
+
+  public rules = {
+    passRules: {
+      required: (value: string) => !!value || "Required.",
+      min: (v: string) => v.length >= 8 || "Min 8 characters",
+      emailMatch: () => `The email and password you entered don't match`,
     },
-    signin(){
-      this.$router.push('./recetas');
-    }
-  },
-    data: () => ({
-      
-      show1: false,
-      show2: true,
-      password: '',
-      passwordReg: '',
-      passRules: {
-        required: value => !!value || 'Required.',
-        min: v => v.length >= 8 || 'Min 8 characters',
-        emailMatch: () => (`The email and password you entered don't match`),
+    nameRules: [
+      (value: string) => {
+        if (value) return true;
+
+        return "Se requiere el nombre.";
       },
-      valid: false,
-      firstname: '',
-      lastname: '',
-      nameRules: [
-        value => {
-          if (value) return true
+      (value: string) => {
+        if (value?.length <= 50) return true;
 
-          return 'Se requiere el nombre.'
-        },
-        value => {
-          if (value?.length <= 50) return true
+        return "El nombre debe contener menos de 50 caracteres";
+      },
+    ],
+    lastnameRules: [
+      (value: string) => {
+        if (value) return true;
 
-          return 'El nombre debe contener menos de 50 caracteres'
-        },
-      ],
-      lastnameRules: [
-        value => {
-          if (value) return true
+        return "Se requiere el apellido.";
+      },
+      (value: string) => {
+        if (value?.length <= 50) return true;
 
-          return 'Se requiere el apellido.'
-        },
-        value => {
-          if (value?.length <= 50) return true
+        return "El apellido debe contener menos de 50 caracteres";
+      },
+    ],
+    emailRulesReg: [
+      (value: string) => {
+        if (value) return true;
 
-          return 'El apellido debe contener menos de 50 caracteres'
-        },
-      ],
-      email: '',
-      emailRules: [
-        value => {
-          if (value) return true
+        return "E-mail is requred.";
+      },
+      (value: string) => {
+        if (/.+@.+\..+/.test(value)) return true;
 
-          return 'E-mail is requred.'
-        },
-        value => {
-          if (/.+@.+\..+/.test(value)) return true
+        return "No es un correo valido";
+      },
+    ],
+  };
 
-          return 'No es un correo valido'
-        },
-      ],
-      emailreg: '',
-      emailRulesReg: [
-        value => {
-          if (value) return true
+  public rulesLogin = {
+    passRules: {
+      required: (value: string) => !!value || "Required.",
+      min: (v: string) => v.length >= 8 || "Min 8 characters",
+      emailMatch: () => `The email and password you entered don't match`,
+    },
 
-          return 'E-mail is requred.'
-        },
-        value => {
-          if (/.+@.+\..+/.test(value)) return true
+    emailRules: [
+      (value: string) => {
+        if (value) return true;
 
-          return 'No es un correo valido'
-        },
-      ],
-    }),
+        return "E-mail is requred.";
+      },
+      (value: string) => {
+        if (/.+@.+\..+/.test(value)) return true;
+
+        return "No es un correo valido";
+      },
+    ],
+  };
+
+  public dataRegister: CreateUserInput = {
+    name: "",
+    lastname: "",
+    email: "",
+    password: "",
+    birthday: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+  };
+
+  public dataLogin: LoginInput = {
+    email: "",
+    password: "",
+  };
+
+  @Auth.Action
+  private createUser!: (data: CreateUserInput) => Promise<void>;
+
+  async handleRegister() {
+    await this.createUser(this.dataRegister);
   }
+
+  @Auth.State("errorMessage")
+  public errorMessage?: string;
+  @Auth.State("loadingLoginStatus")
+  public loadingLoginStatus?: boolean;
+  @Auth.Action
+  private login!: (data: LoginInput) => Promise<void>;
+  async handleLogin() {
+    await this.login(this.dataLogin);
+  }
+}
+
 </script>
 
 <style>

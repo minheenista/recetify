@@ -1,0 +1,34 @@
+mutation CreateRecipe($CrearReceta: createRecipeInput!) {
+  createRecipe(input: $CrearReceta) {
+    id
+    title
+    description
+    image_pf_path
+    origen_food
+    time_food
+    diet
+    prep_time
+    calories
+    fat
+    carbs
+    proteins
+    rate
+    user {
+      id
+      name
+      email
+      email_verified_at
+      created_at
+      updated_at
+      birthday
+    }
+    steps {
+      description
+      imagen_path
+    }
+    Comments {
+      comentario
+      rating
+    }
+  }
+}

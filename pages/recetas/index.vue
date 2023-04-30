@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+<div>  
     <v-card
     class="pa-5"
     flat
@@ -33,7 +33,7 @@
             <v-dialog
               v-model="dialog"
               persistent
-              max-width="1000px"
+              max-width="1100px"
             >
             <!-- BOTON CREAR RECETA -->
               <template v-slot:activator="{ on, attrs }">
@@ -62,6 +62,7 @@
                         <v-text-field
                           label="Titulo de la receta *"
                           required
+                          counter="200"
                         ></v-text-field>
                       </v-col>
                       <v-col
@@ -80,19 +81,84 @@
                         sm="3"
                       >
                         <v-select
-                          :items="['Desayuno', 'Almuerzo', 'Lunch', 'Colacion', 'Cena']"
+                          :items="['Desayuno', 'Almuerzo', 'Colacion', 'Cena']"
                           label="Tiempo de comida*"
                           required
                         ></v-select>
                       </v-col>
                     </v-row>
-<!-- origen*, tiempo*, tiempo prep, calo, grasas, carbos y proteinas -->
+
+                    <v-row>
+                      <v-col
+                        cols="12"
+                        sm="2"
+                      >
+                        <v-select
+                          :items="['Mexicana', 'Italiana', 'China', 'Americana']"
+                          label="Origen*"
+                          required
+                        ></v-select>
+                      </v-col>
+                      <v-col
+                        cols="12"
+                        sm="2"
+                      >
+                      <v-text-field
+                        label="Tiempo de preparacion"
+                        type="number"
+                        suffix="mins."
+                      ></v-text-field>
+                      </v-col>
+                      <v-col
+                        cols="12"
+                        sm="2"
+                      >
+                      <v-text-field
+                        label="Calorias"
+                        type="number"
+                        suffix="cals"
+                      ></v-text-field>
+                      </v-col>
+                      <v-col
+                        cols="12"
+                        sm="2"
+                      >
+                      <v-text-field
+                        label="Grasas"
+                        type="number"
+                        suffix="ag"
+                      ></v-text-field>
+                      </v-col>
+                      <v-col
+                        cols="12"
+                        sm="2"
+                      >
+                      <v-text-field
+                        label="Carbohidratos"
+                        type="number"
+                        suffix="carbs"
+                      ></v-text-field>
+                      </v-col>
+                      <v-col
+                        cols="12"
+                        sm="2"
+                      >
+                      <v-text-field
+                        label="Proteinas"
+                        type="number"
+                        suffix="P"
+                      ></v-text-field>
+                      </v-col>
+                    </v-row>
+<!--  , tiempo prep, calo, grasas, carbos y proteinas -->
                     <v-row class="my-0">
                       <v-col cols="12">
-                        <v-text-field
+                        <v-textarea
+                          counter="1000"
                           label="Descripcion"
-                          
-                        ></v-text-field>
+                          :rules="rules"
+                          :value="value"
+                        ></v-textarea>
                       </v-col>
                     </v-row>
                     <v-row>
@@ -315,9 +381,8 @@
        </v-row>
      </div>
 
+   </div>  
      
-     
-</v-app>
 </template>
 
 <script>

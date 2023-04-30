@@ -1,14 +1,10 @@
-import type { CodegenConfig } from '@graphql-codegen/cli';
-import { ENDPOINT_URL } from "./utils/constants";
- 
+import type { CodegenConfig } from "@graphql-codegen/cli";
+
 const config: CodegenConfig = {
   overwrite: true,
-  schema: "https://0f15-148-204-142-9.ngrok-free.app/graphql",
+  schema: "https://b1e4-177-232-7-99.ngrok-free.app/graphql",
   documents: "graphql/**/*.graphql",
   generates: {
-    "gql/": {
-      preset: "client",
-    },
     "gql/graphql.ts": {
       plugins: [
         "typescript-operations",
@@ -20,9 +16,9 @@ const config: CodegenConfig = {
       plugins: ["typescript-graphql-files-modules"],
     },
     "./graphql.schema.json": {
-      plugins: ["introspection"]
-    }
-  }
+      plugins: ["introspection"],
+    },
+  },
 };
 
 export default config;

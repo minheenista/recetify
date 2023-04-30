@@ -1,0 +1,10 @@
+
+query Steps($description: String){
+  steps(description: $description) {
+    data {
+      description
+      imagen_path
+      
+    }
+  }
+}
