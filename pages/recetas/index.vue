@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+<div>  
     <v-card
     class="pa-5"
     flat
@@ -381,9 +381,8 @@
        </v-row>
      </div>
 
+   </div>  
      
-     
-</v-app>
 </template>
 
 <script>

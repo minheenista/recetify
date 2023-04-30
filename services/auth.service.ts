@@ -23,7 +23,7 @@ class AuthService {
       await apolloClient.mutate({
         mutation: CreateUser,
         variables: {
-          create: data,
+          input: data,
         },
       })
     ).data;

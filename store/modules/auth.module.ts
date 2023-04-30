@@ -42,23 +42,23 @@ class AuthModule extends VuexModule {
     this.context.commit("removeCookies");
   } */
 
- /*  @Action
+   @Action
   async login(data: LoginInput) {
     this.context.commit("loadingLogin", true);
     this.context.commit("resetErrorMessage");
     return await AuthService.login(data)
-      .then((auth: Auth) => {
+      .then((auth: any) => {
         console.log(auth);
         this.context.commit("loginSuccess", auth);
         this.context.commit("loadingLogin", false);
-        window.$nuxt.$router.push("./PagPrin/Principal");
+        window.$nuxt.$router.push("./recetas");
       })
       .catch((error) => {
         console.log(error.message);
         this.context.commit("loginFaile", error);
         this.context.commit("loadingLogin", false);
       });
-  } */
+  } 
 
   @Action
   async createUser(data: CreateUserInput) {
@@ -90,6 +90,8 @@ class AuthModule extends VuexModule {
     window.$nuxt.$cookies.set("token", auth.token, {
       path: "/",
     });
+    window.$nuxt.$router.push("./preferencias");
+
   }
 
   @Mutation
