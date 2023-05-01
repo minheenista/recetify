@@ -1,5 +1,5 @@
-mutation CreateRecipe($CrearReceta: createRecipeInput!) {
-  createRecipe(input: $CrearReceta) {
+mutation CreateRecipe($input: createRecipeInput!) {
+  createRecipe(input: $input) {
     id
     title
     description
@@ -12,23 +12,5 @@ mutation CreateRecipe($CrearReceta: createRecipeInput!) {
     fat
     carbs
     proteins
-    rate
-    user {
-      id
-      name
-      email
-      email_verified_at
-      created_at
-      updated_at
-      birthday
-    }
-    steps {
-      description
-      imagen_path
-    }
-    Comments {
-      comentario
-      rating
-    }
   }
 }

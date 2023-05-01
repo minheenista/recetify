@@ -38,11 +38,11 @@ export type CreateCommentMutationVariables = Exact<{
 export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'Comment', id: string, comentario: string, rating?: number | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', name: string, email: string } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }>, Comments: Array<{ __typename?: 'Comment', comentario: string, rating?: number | null }> } } };
 
 export type CreateRecipeMutationVariables = Exact<{
-  CrearReceta: CreateRecipeInput;
+  input: CreateRecipeInput;
 }>;
 
 
-export type CreateRecipeMutation = { __typename?: 'Mutation', createRecipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }>, Comments: Array<{ __typename?: 'Comment', comentario: string, rating?: number | null }> } };
+export type CreateRecipeMutation = { __typename?: 'Mutation', createRecipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null } };
 
 export type CreateStepMutationVariables = Exact<{
   crearPaso: CreateStepInput;
@@ -267,8 +267,8 @@ export const CreateComment = gql`
 }
     `;
 export const CreateRecipe = gql`
-    mutation CreateRecipe($CrearReceta: createRecipeInput!) {
-  createRecipe(input: $CrearReceta) {
+    mutation CreateRecipe($input: createRecipeInput!) {
+  createRecipe(input: $input) {
     id
     title
     description
@@ -281,24 +281,6 @@ export const CreateRecipe = gql`
     fat
     carbs
     proteins
-    rate
-    user {
-      id
-      name
-      email
-      email_verified_at
-      created_at
-      updated_at
-      birthday
-    }
-    steps {
-      description
-      imagen_path
-    }
-    Comments {
-      comentario
-      rating
-    }
   }
 }
     `;

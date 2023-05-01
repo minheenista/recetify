@@ -2,7 +2,7 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: "https://b1e4-177-232-7-99.ngrok-free.app/graphql",
+  schema: "https://7d96-177-232-7-99.ngrok-free.app/graphql",
   documents: "graphql/**/*.graphql",
   generates: {
     "gql/graphql.ts": {

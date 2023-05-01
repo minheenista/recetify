@@ -1,298 +1,233 @@
 <template>
-<div>  
-    <v-card
-    class="pa-5"
-    flat
-    width="1200"
-    min-width="1200"
-  >
-    <v-toolbar
-      
-      floating
-    >
-    <v-img
-        :width="40"
-        cover
-        src="../../assets/recetifylogo.jpeg"
-      ></v-img>
+  <div class="container1">
+    <v-card class="pa-5" flat width="100%" min-width="1500">
+      <v-toolbar floating>
+        <v-img :width="40" cover src="../../assets/recetifylogo.jpeg"></v-img>
 
-      <v-text-field 
-            :loading="loading"
-            density="compact"
-            variant="solo"
-            label="Search templates"
-            append-icon="mdi-magnify"
-            single-line
-            hide-details
-            @click:append-inner="onClick"
-          ></v-text-field>
+        <v-text-field
+          density="compact"
+          variant="solo"
+          label="Search templates"
+          append-icon="mdi-magnify"
+          single-line
+          hide-details
+          @click:append-inner="onClick"
+        ></v-text-field>
 
-          <v-spacer></v-spacer>
-<!-- ======================= modal crear receta ============================= -->
-          <v-row justify="center">
-            <v-dialog
-              v-model="dialog"
-              persistent
-              max-width="1100px"
-            >
+        <v-spacer></v-spacer>
+        <!-- ======================= modal crear receta ============================= -->
+        <v-row justify="center">
+          <v-dialog v-model="dialog" persistent max-width="1100px">
             <!-- BOTON CREAR RECETA -->
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn class="ml-8 mr-8"
-                  color="primary"
-                  dark
-                  v-bind="attrs"
-                  v-on="on"
-                >
-                  Nueva receta
-                </v-btn>
-              </template>
-              <!-- MODAL -->
-              <v-card>
-                <v-card-title>
-                  <span class="text-h5">Crear receta</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-
-                    <v-row class="my-0">
-                      <v-col
-                        cols="12"
-                        sm="6"
-                      >
-                        <v-text-field
-                          label="Titulo de la receta *"
-                          required
-                          counter="200"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="3"
-                      >
-                        <v-select
-                          :items="['Omnivora', 'Vegetariana', 'Vegana', 'Crudivegana']"
-                          label="Dieta*"
-                          required
-                        ></v-select>
-                      </v-col>
-
-                      <v-col
-                        cols="12"
-                        sm="3"
-                      >
-                        <v-select
-                          :items="['Desayuno', 'Almuerzo', 'Colacion', 'Cena']"
-                          label="Tiempo de comida*"
-                          required
-                        ></v-select>
-                      </v-col>
-                    </v-row>
-
-                    <v-row>
-                      <v-col
-                        cols="12"
-                        sm="2"
-                      >
-                        <v-select
-                          :items="['Mexicana', 'Italiana', 'China', 'Americana']"
-                          label="Origen*"
-                          required
-                        ></v-select>
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="2"
-                      >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                class="ml-8 mr-8"
+                color="primary"
+                dark
+                v-bind="attrs"
+                v-on="on"
+                v-model="dialog"
+              >
+                Nueva receta
+              </v-btn>
+            </template>
+            <!-- MODAL -->
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">Crear receta</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <!-- TITULO, DIETA, TIEMPO -->
+                  <v-row class="my-0">
+                  <!-- Titulo -->
+                    <v-col cols="12" sm="6">
+                      <v-text-field
+                        label="Titulo de la receta *"
+                        required
+                        counter="200"
+                        v-model="recipeRegister.title"
+                      ></v-text-field>
+                    </v-col>
+                    <!-- Dieta -->
+                    <v-col cols="12" sm="3">
+                      <v-select
+                        :items="dietas"
+                        label="Dieta*"
+                        required
+                        v-model="recipeRegister.diet"
+                      ></v-select>
+                    </v-col>
+                    <!-- Tiempo de comida -->
+                    <v-col cols="12" sm="3">
+                      <v-select
+                        :items="['Desayuno', 'Almuerzo', 'Colacion', 'Cena']"
+                        label="Tiempo de comida*"
+                        required
+                        v-model="recipeRegister.time_food"
+                      ></v-select>
+                    </v-col>
+                  </v-row>
+                  <!-- TIMEPO DE PREPARACION,  PORCIONES, FOTO -->
+                  <v-row class="my-0">
+                    <v-col cols="12" sm="3">
                       <v-text-field
                         label="Tiempo de preparacion"
                         type="number"
                         suffix="mins."
+                        v-model="recipeRegister.prep_time"
                       ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="2"
+                    </v-col>
+
+                    <v-col cols="12" sm="3">
+                      <v-text-field
+                        label="Porciones"
+                        type="number"
+                        suffix=""
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6">
+                      <v-file-input
+                        
+                        color=""
+                        counter
+                        placeholder="Imagen de receta"
+                        prepend-icon="mdi-camera"
                       >
+                        <template v-slot:selection="{ index, text }">
+                          <v-chip v-if="index < 2" color="" dark label small>
+                            {{ text }}
+                          </v-chip>
+                        </template>
+                      </v-file-input>
+                    </v-col>
+                  </v-row>
+                  <!-- ORIGEN, CALORIAS, GRASAS, CARBOHIDRATOS, PROTEINAS -->
+                  <h3>Informacion nutricional</h3>
+                  <v-row>
+                    <v-col cols="12" sm="3">
+                      <v-select
+                        :items="['Mexicana', 'Italiana', 'China', 'Americana']"
+                        label="Origen*"
+                        required
+                        v-model="recipeRegister.origen_food"
+                      ></v-select>
+                    </v-col>
+
+                    <v-col cols="12" sm="2">
                       <v-text-field
                         label="Calorias"
                         type="number"
                         suffix="cals"
+                        v-model="recipeRegister.calories"
                       ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="2"
-                      >
+                    </v-col>
+                    <v-col cols="12" sm="2">
                       <v-text-field
                         label="Grasas"
                         type="number"
                         suffix="ag"
+                        v-model="recipeRegister.fat"
                       ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="2"
-                      >
+                    </v-col>
+                    <v-col cols="12" sm="2">
                       <v-text-field
                         label="Carbohidratos"
                         type="number"
                         suffix="carbs"
+                        v-model="recipeRegister.carbs"
                       ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="2"
-                      >
+                    </v-col>
+                    <v-col cols="12" sm="2">
                       <v-text-field
                         label="Proteinas"
                         type="number"
                         suffix="P"
+                        v-model="recipeRegister.proteins"
                       ></v-text-field>
-                      </v-col>
-                    </v-row>
-<!--  , tiempo prep, calo, grasas, carbos y proteinas -->
-                    <v-row class="my-0">
-                      <v-col cols="12">
-                        <v-textarea
-                          counter="1000"
-                          label="Descripcion"
-                          :rules="rules"
-                          :value="value"
-                        ></v-textarea>
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <span class="text-h5">Procedimiento</span>
-                    </v-row>
-                    <v-row>
-                      <v-col
-                        cols="12"
-                        sm="8"
-                      >
-                        <v-text-field
-                        label="Paso 1 *"
-                        required
-                      ></v-text-field>
-                      </v-col>
-                      <v-col
-                      cols="12"
-                      sm="3"
-                      >
-                      <!-- <v-btn
-                        icon
-                      >
-                        <v-icon>mdi-camera</v-icon>
-                      </v-btn> -->
+                    </v-col>
+                  </v-row>
+
+                  <v-row class="my-0">
+                    <v-col cols="12">
+                      <v-textarea
+                        counter="1000"
+                        label="Descripcion"
+                        v-model="recipeRegister.description"
+                      ></v-textarea>
+                    </v-col>
+                  </v-row>
+
+                  <h3>Ingredientes</h3>
+                  <v-row> LOS FUCKING INGREDIENTES </v-row>
+                  <v-row>
+                    <span class="text-h5">Procedimiento</span>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" sm="7">
+                      <v-text-field label="Paso 1 *" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="4">
                       <v-file-input
-                        v-model="files"
                         color=""
                         counter
-                        
-                        
                         placeholder=""
                         prepend-icon="mdi-camera"
-                        
-                        :show-size="10"
                       >
                         <template v-slot:selection="{ index, text }">
-                          <v-chip
-                            v-if="index < 2"
-                            color=""
-                            dark
-                            label
-                            small
-                          >
+                          <v-chip v-if="index < 2" color="" dark label small>
                             {{ text }}
                           </v-chip>
-
                         </template>
                       </v-file-input>
                     </v-col>
-                     
-                    </v-row>
-                    <v-row>
-                      <v-col
-                      cols="12"
-                      sm="3"
-                    >
-                    <v-btn
-                    color="primary"
-                    elevation="2"
-                  > + paso</v-btn>
-                    </v-col>
-                    </v-row>
-                  </v-container>
-                  <small>*indicates required field</small>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="dialog = false"
-                  >
-                    Close
-                  </v-btn>
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="dialog = false"
-                  >
-                    Save
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-row>
+                  </v-row>
 
-          <!-- <v-btn color=green class="ml-6"
-            prepend-icon="mdi-plus" v-bind="attrs"
-            v-on="on"
-          >
-          <template v-slot:prepend>
-            <v-icon color="default"></v-icon>
+                  <!-- PASOS -->
+
+                  <button-step />
+                </v-container>
+                <small>*indicates required field</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="error" text @click="dialog = false">
+                  Cancelar
+                </v-btn>
+                <v-btn color="green" text @click="handleCreateRecipe()">
+                  Guardar Receta
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+
+        <!-- <v-snackbar v-model="snackbarSucessCreateRecipe">
+          {{ snackbarSucessMessageCreateRecipe }}
+
+          <template v-slot:action="{ attrs }">
+            <v-btn
+              color="green"
+              text
+              v-bind="attrs"
+              @click="changeStatusSnackbarCreateRecipe()"
+            >
+              Close
+            </v-btn>
           </template>
-            Crear receta
-          </v-btn> -->
+        </v-snackbar> -->
 
-          <!-- <template v-slot:activator="{ on, attrs }"> -->
-            
-          <!-- </template> -->
+        <v-btn class="mx-auto" color="gray" dense @click="handleLogout()">
+          Cerrar Sesión
+        </v-btn>
+      </v-toolbar>
 
-    </v-toolbar>
-  </v-card>
-     <!-- <div class="nav-bar">
-      
-      <v-card
-        class="mx-auto"
-        color="grey-lighten-3"
-        max-width="1200"
-      >
-      <v-img
-        :width="40"
-        cover
-        src="../../assets/recetifylogo.jpeg"
-      ></v-img>
-        <v-card-text>
-          <v-text-field
-            :loading="loading"
-            density="compact"
-            variant="solo"
-            label="Search templates"
-            append-inner-icon="mdi-magnify"
-            single-line
-            hide-details
-            @click:append-inner="onClick"
-          ></v-text-field>
-        </v-card-text>
-      </v-card>
+      <!-- ================= LISTA DE RECETAS ======================== -->
+    </v-card>
 
-
-     </div> -->
-     <p class="text-h5 text-center">
-      Recetas recomendadas
-    </p>
-     <div class="d-flex justify-space-around bg-surface-variant">
+    <p class="text-h5 text-center">Recetas recomendadas</p>
+    <div class="d-flex justify-space-around bg-surface-variant">
       <v-row class="ml-12">
         <v-col sm="2" md="2" lg="2" xl="2" cols="10">
           <recetas></recetas>
@@ -309,13 +244,11 @@
         <v-col sm="2" md="2" lg="2" xl="2" cols="10">
           <recetas></recetas>
         </v-col>
-       </v-row>
-     </div>
+      </v-row>
+    </div>
 
-     <p class="text-h5 text-center">
-      Recetas mejor valoradas
-    </p>
-     <div class="d-flex justify-space-around bg-surface-variant">
+    <p class="text-h5 text-center">Recetas mejor valoradas</p>
+    <div class="d-flex justify-space-around bg-surface-variant">
       <v-row class="ml-12">
         <v-col sm="2" md="2" lg="2" xl="2" cols="10">
           <recetas></recetas>
@@ -332,110 +265,165 @@
         <v-col sm="2" md="2" lg="2" xl="2" cols="10">
           <recetas></recetas>
         </v-col>
-       </v-row>
-     </div>
-
-     <p class="text-h5 text-center">
-      En menos de 15 minutos!
-    </p>
-     <div class="d-flex justify-space-around bg-surface-variant">
-      <v-row class="ml-12">
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-       </v-row>
-     </div>
-
-     <p class="text-h5 text-center">
-      Postres y snacks
-    </p>
-     <div class="d-flex justify-space-around bg-surface-variant">
-      <v-row class="ml-12">
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-       </v-row>
-     </div>
-
-   </div>  
-     
+      </v-row>
+    </div>
+  </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import { namespace } from "vuex-class";
+import { CreateRecipeInput, Recipe, LoginInput } from "~/gql/graphql";
+
 import Recetas from '~/components/recetas.vue';
-export default {
-    name: "Inicio",
+import buttonStep from "~/components/buttonStep.vue";
+import verReceta from '~/components/verReceta.vue';
+
+const RecipesModule = namespace("RecipesModule");
+const Auth = namespace("AuthModule");
+
+@Component({
+  components: {
+    buttonStep,
+    verReceta,
     Recetas,
-      data: () => ({
-        dialog: false,
-      drawer: false,
-      group: null,
-      loaded: false,
-      loading: false,
-      
-      items: [
-        {
-          title: 'Foo',
-          value: 'foo',
-        },
-        {
-          title: 'Bar',
-          value: 'bar',
-        },
-        {
-          title: 'Fizz',
-          value: 'fizz',
-        },
-        {
-          title: 'Buzz',
-          value: 'buzz',
-        },
-      ],
-    }),
-    
-    methods: {
-      onClick () {
-        this.loading = true
+  },
+})
+export default class Principal extends Vue{
+  public dialog = false;
+  public drawer = false;
+  public group = null;
+  public loaded = false;
+  public loading = false;
+  public dietas = [
+    {text: "Omnivora", value: 1},
+    {text: "Ovo-lacteo Vegetariana", value: 2},
+    {text: "Vegana", value: 3},
+    {text: "Crudivegana", value: 4},
+  ];
 
-        setTimeout(() => {
-          this.loading = false
-          this.loaded = true
-        }, 2000)
-      },
-    },
+  public recipeRegister: CreateRecipeInput ={
+    title: '',
+    diet: '',
+    origen_food: '',
+    time_food: '',
+    prep_time: null,
+    calories: null,
+    fat: null,
+    carbs: null,
+    proteins: null,
+    /* FALTAN INGREDIENTES Y PASOS */
+  };
+/*   @RecipesModule.State("recipes")
+  private recipes!: Recipe[];
 
-    watch: {
-      group () {
-        this.drawer = false
-      },
-    },
+  @RecipesModule.Action
+  private fetchRecipes!: () => Promise<void>;
+  async created() {
+    await this.fetchRecipes();
+  }  */
+  @RecipesModule.Action
+  private createRecipe!: (data: CreateRecipeInput) => Promise<void>;
+
+  async handleCreateRecipe(){
+    await this.createRecipe(this.recipeRegister);
+    this.dialog = false;
   }
+/* 
+  @Auth.Action
+  private CerrarSesion!: () => void; */
+
+  @RecipesModule.State("snackbarSucessCreateRecipe")
+  public snackbarSucessCreateRecipe?: boolean;
+  @RecipesModule.State("snackbarSucessMessageCreateRecipe")
+  public snackbarSucessMessageCreateRecipe?: string;
+  @RecipesModule.Action
+  private changeStatusSnackbarCreateRecipe!: () => void;
+
+  async onClick(){
+    this.loading = true;
+    setTimeout(() =>{
+      this.loading = false
+      this.loaded = true
+    }, 2000)
+  }
+
+  async handleLogout(){
+    this.$router.push('/')
+  }
+  
+}
+
+
+/* export default {
+  name: "Inicio",
+   components: {
+    buttonStep,
+    verReceta,
+    Recetas,
+  }, 
+ 
+
+  data: () => ({
+    dialog: false,
+    drawer: false,
+    group: null,
+    loaded: false,
+    loading: false,
+ 
+    items: [
+      {
+        title: 'Foo',
+        value: 'foo',
+      },
+      {
+        title: 'Bar',
+        value: 'bar',
+      },
+      {
+        title: 'Fizz',
+        value: 'fizz',
+      },
+      {
+        title: 'Buzz',
+        value: 'buzz',
+      },
+    ],
+  }),
+
+  methods: {
+    onClick() {
+      this.loading = true
+
+      setTimeout(() => {
+        this.loading = false
+        this.loaded = true
+      }, 2000)
+    },
+    openDialog(recipe) {
+      this.$refs.modalRecipe[recipe.id].dialog = true;
+    },
+    handleLogout() {
+      this.$router.push('/');
+    }
+  },
+
+  watch: {
+    group() {
+      this.drawer = false
+    },
+  },
+} */
 </script>
 
 <style scoped>
+.container1{
+  position: relative;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+
+}
 
 </style>
