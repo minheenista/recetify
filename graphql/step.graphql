@@ -1,12 +1,16 @@
-query Step($id: ID ){
+query Step($id: ID) {
   step(id: $id) {
     description
-    imagen_path
+    image {
+      url
+      imageable {
+        __typename
+      }
+    }
     Recipe {
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -15,10 +19,14 @@ query Step($id: ID ){
       fat
       carbs
       proteins
+      porcion
+      image {
+        url
+        imageable {
+          __typename
+        }
+      }
       rate
-      
-      
-      
     }
   }
 }

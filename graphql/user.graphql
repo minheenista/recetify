@@ -1,4 +1,4 @@
-query User($id: ID, $email: String){
+query User($id: ID, $email: String) {
   user(id: $id, email: $email) {
     id
     name
@@ -8,7 +8,6 @@ query User($id: ID, $email: String){
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -17,9 +16,14 @@ query User($id: ID, $email: String){
       fat
       carbs
       proteins
+      porcion
+      image {
+        url
+        imageable {
+          __typename
+        }
+      }
       rate
-      
-      
     }
   }
 }

@@ -1,12 +1,10 @@
 mutation createStep($crearPaso: createStepInput!){
   createStep(input: $crearPaso) {
     description
-    imagen_path
     Recipe {
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -15,6 +13,7 @@ mutation createStep($crearPaso: createStepInput!){
       fat
       carbs
       proteins
+      porcion
       rate
       steps{
         description

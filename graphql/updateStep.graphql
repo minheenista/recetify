@@ -1,12 +1,16 @@
 mutation updateStep($id: ID!, $description: String){
   updateStep(id: $id, description: $description) {
     description
-    imagen_path
+    image{
+      url
+      imageable{
+        __typename
+      }
+    }
     Recipe {
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -15,6 +19,13 @@ mutation updateStep($id: ID!, $description: String){
       fat
       carbs
       proteins
+      porcion
+      image{
+        url
+        imageable{
+          __typename
+        }
+      }
       rate
       user{
         name
@@ -22,7 +33,12 @@ mutation updateStep($id: ID!, $description: String){
       }
       steps{
         description
-        imagen_path
+        image{
+          url
+          imageable{
+            __typename
+          }
+        }
       }
     }
   }

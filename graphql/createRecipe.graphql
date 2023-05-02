@@ -3,7 +3,6 @@ mutation CreateRecipe($input: createRecipeInput!) {
     id
     title
     description
-    image_pf_path
     origen_food
     time_food
     diet

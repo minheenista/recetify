@@ -1,4 +1,4 @@
-query Me{
+query Me {
   me {
     id
     name
@@ -9,7 +9,6 @@ query Me{
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -18,9 +17,11 @@ query Me{
       fat
       carbs
       proteins
+      porcion
+      image{
+        url
+      }
       rate
-      
-      
     }
   }
 }

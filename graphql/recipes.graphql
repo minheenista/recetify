@@ -1,20 +1,25 @@
-query Recipes($title: String, $origen_food: origen, $time_food: time, $diet: String,
- $prep_time: Float, $calories: Float, $rate: Float){
+query Recipes(
+  $title: String
+  $origen_food: origen
+  $time_food: time
+  $diet: String
+  $prep_time: Float
+  $calories: Float
+  $rate: Float
+) {
   recipes(
-    title:$title,
-    origen_food:$origen_food,
-    time_food:$time_food,
-    diet:$diet,
-    prep_time:$prep_time,
-    calories:$calories,
-    rate:$rate,
+    title: $title
+    origen_food: $origen_food
+    time_food: $time_food
+    diet: $diet
+    prep_time: $prep_time
+    calories: $calories
+    rate: $rate
   ) {
-    
     data {
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -23,14 +28,33 @@ query Recipes($title: String, $origen_food: origen, $time_food: time, $diet: Str
       fat
       carbs
       proteins
+      porcion
+      image {
+        url
+        imageable {
+          __typename
+        }
+      }
       rate
       user {
-      id
-      name
-      email
-      birthday
-    }
-      
+        id
+        name
+        email
+        birthday
+      }
+      steps {
+        description
+        image {
+          url
+          imageable {
+            __typename
+          }
+        }
+      }
+      Comments {
+        comentario
+        rating
+      }
     }
   }
 }
