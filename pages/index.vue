@@ -118,14 +118,14 @@
                     <v-text-field
                       v-model="dataRegister.password"
                       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                      :rules="[rules.passRules.required, rules.passRules.min]"
+                      :rules="[rules.passRules.required, rules.passRules.regex]"
                       :type="show1 ? 'text' : 'password'"
                       name="input-10-1"
                       label="Contraseña"
                       variant="underlined"
                       color="green"
                       prepend-inner-icon="mdi-lock"
-                      hint="Se requieren al menos 8 caracteres"
+                      hint="Se requieren al menos 8 caracteres, una mayúscula, un número y un símbolo."
                       @click:append="show1 = !show1"
                     ></v-text-field>
 
@@ -214,15 +214,15 @@ export default class Register extends Vue {
   public modal = false;
   public menu2 = false;
   date = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
-     /*  menu: false,
-      modal: false,
-      menu2: false, */
 
   public rules = {
     passRules: {
-      required: (value: string) => !!value || "Required.",
-      min: (v: string) => v.length >= 8 || "Min 8 characters",
+      required: (value: string) => !!value || "Campo obligatorio.",
+      min: (v: string) => v.length >= 8 || "Mínimo 8 caracteres",
       emailMatch: () => `The email and password you entered don't match`,
+      regex: (v: string): string | boolean =>
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}$/.test(v) ||
+      "La contraseña debe contener al menos un número, una mayúscula y un caracter especial. Vuelve a intentarlo. Minimo 8 caracteres",
     },
     nameRules: [
       (value: string) => {
@@ -252,7 +252,7 @@ export default class Register extends Vue {
       (value: string) => {
         if (value) return true;
 
-        return "E-mail is requred.";
+        return "Se requiere un correo electrónico.";
       },
       (value: string) => {
         if (/.+@.+\..+/.test(value)) return true;
@@ -264,8 +264,8 @@ export default class Register extends Vue {
 
   public rulesLogin = {
     passRules: {
-      required: (value: string) => !!value || "Required.",
-      min: (v: string) => v.length >= 8 || "Min 8 characters",
+      required: (value: string) => !!value || "Campo obligatorio.",
+      min: (v: string) => v.length >= 8 || "Mínimo 8 caracteres",
       emailMatch: () => `The email and password you entered don't match`,
     },
 
@@ -273,7 +273,7 @@ export default class Register extends Vue {
       (value: string) => {
         if (value) return true;
 
-        return "E-mail is requred.";
+        return "Se requiere un correo electrónico.";
       },
       (value: string) => {
         if (/.+@.+\..+/.test(value)) return true;

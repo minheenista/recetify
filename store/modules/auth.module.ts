@@ -10,6 +10,7 @@ class AuthModule extends VuexModule {
   public loadingLoginStatus = false;
   public loadingRegisterStatus = false;
   public errorMessage?: string = undefined;
+  public nextPage = false;
   context: any;
 
  @Mutation
@@ -87,6 +88,7 @@ class AuthModule extends VuexModule {
   @Mutation
   public loginSuccess(auth: any): void {
     console.log(auth);
+    console.log("hola auth")
     window.$nuxt.$cookies.set("token", auth.token, {
       path: "/",
     });
