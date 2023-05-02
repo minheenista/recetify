@@ -1,10 +1,720 @@
-/* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type LoginMutationVariables = Exact<{
+  input: LoginInput;
+}>;
+
+
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'Session', accessToken?: string | null, user: { __typename?: 'User', id: string, name: string, lastname: string, email: string, birthday: any } } };
+
+export type LogOutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogOutMutation = { __typename?: 'Mutation', logout: { __typename?: 'Session', accessToken?: string | null } };
+
+export type CommentQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type CommentQuery = { __typename?: 'Query', Comment?: { __typename?: 'Comment', id: string, comentario: string, rating?: number | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any } | null } } | null };
+
+export type CommentsQueryVariables = Exact<{
+  comentario?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type CommentsQuery = { __typename?: 'Query', Comments: { __typename?: 'CommentPaginator', data: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null }> } };
+
+export type CreateCommentMutationVariables = Exact<{
+  crearComentario: CreateCommentInput;
+}>;
+
+
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'Comment', id: string, comentario: string, rating?: number | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', name: string, email: string } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }>, Comments: Array<{ __typename?: 'Comment', comentario: string, rating?: number | null }> } } };
+
+export type CreateRecipeMutationVariables = Exact<{
+  CrearReceta: CreateRecipeInput;
+}>;
+
+
+export type CreateRecipeMutation = { __typename?: 'Mutation', createRecipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }>, Comments: Array<{ __typename?: 'Comment', comentario: string, rating?: number | null }> } };
+
+export type CreateStepMutationVariables = Exact<{
+  crearPaso: CreateStepInput;
+}>;
+
+
+export type CreateStepMutation = { __typename?: 'Mutation', createStep: { __typename?: 'Step', description: string, imagen_path?: string | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, steps: Array<{ __typename?: 'Step', description: string }> } } };
+
+export type CreateUserMutationVariables = Exact<{
+  input: CreateUserInput;
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null }> } };
+
+export type DeleteRecipeMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteRecipeMutation = { __typename?: 'Mutation', deleteRecipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, lastname: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }>, Comments: Array<{ __typename?: 'Comment', comentario: string, rating?: number | null }> } };
+
+export type DeleteStepMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteStepMutation = { __typename?: 'Mutation', deleteStep: { __typename?: 'Step', description: string, imagen_path?: string | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', name: string, email: string } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }> } } };
+
+export type DeleteUserMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser: { __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string }> } };
+
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, email: string, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null }> } };
+
+export type RecipeQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type RecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }>, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null }> } | null };
+
+export type RecipesQueryVariables = Exact<{
+  title?: InputMaybe<Scalars['String']>;
+  origen_food?: InputMaybe<Origen>;
+  time_food?: InputMaybe<Time>;
+  diet?: InputMaybe<Scalars['String']>;
+  prep_time?: InputMaybe<Scalars['Float']>;
+  calories?: InputMaybe<Scalars['Float']>;
+  rate?: InputMaybe<Scalars['Float']>;
+}>;
+
+
+export type RecipesQuery = { __typename?: 'Query', recipes: { __typename?: 'RecipePaginator', data: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any } | null }> } };
+
+export type StepQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type StepQuery = { __typename?: 'Query', step?: { __typename?: 'Step', description: string, imagen_path?: string | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null } } | null };
+
+export type StepsQueryVariables = Exact<{
+  description?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type StepsQuery = { __typename?: 'Query', steps: { __typename?: 'StepPaginator', data: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }> } };
+
+export type UpdateRecipeMutationVariables = Exact<{
+  id: Scalars['ID'];
+  title?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  origen_food?: InputMaybe<Scalars['String']>;
+  time_food?: InputMaybe<Scalars['String']>;
+  diet?: InputMaybe<Scalars['String']>;
+  prep_time?: InputMaybe<Scalars['Float']>;
+  calories?: InputMaybe<Scalars['Float']>;
+  fat?: InputMaybe<Scalars['Float']>;
+  carbs?: InputMaybe<Scalars['Float']>;
+  proteins?: InputMaybe<Scalars['Float']>;
+}>;
+
+
+export type UpdateRecipeMutation = { __typename?: 'Mutation', updateRecipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }>, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null }> } };
+
+export type UpdateStepMutationVariables = Exact<{
+  id: Scalars['ID'];
+  description?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UpdateStepMutation = { __typename?: 'Mutation', updateStep: { __typename?: 'Step', description: string, imagen_path?: string | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', name: string, email: string } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }> } } };
+
+export type UpdateUserMutationVariables = Exact<{
+  id: Scalars['ID'];
+  email?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null }> } };
+
+export type UserQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  email?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null }> } | null };
+
+export type UsersQueryVariables = Exact<{
+  name?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UsersQuery = { __typename?: 'Query', users: { __typename?: 'UserPaginator', data: Array<{ __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any }> } };
+
+
+export const Login = gql`
+    mutation Login($input: loginInput!) {
+  login(input: $input) {
+    accessToken
+    user {
+      id
+      name
+      lastname
+      email
+      birthday
+    }
+  }
+}
+    `;
+export const LogOut = gql`
+    mutation LogOut {
+  logout {
+    accessToken
+  }
+}
+    `;
+export const Comment = gql`
+    query Comment($id: ID) {
+  Comment(id: $id) {
+    id
+    comentario
+    rating
+    Recipe {
+      id
+      title
+      description
+      image_pf_path
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      rate
+      user {
+        id
+        name
+        email
+        birthday
+      }
+    }
+  }
+}
+    `;
+export const Comments = gql`
+    query Comments($comentario: String) {
+  Comments(comentario: $comentario) {
+    data {
+      id
+      comentario
+      rating
+    }
+  }
+}
+    `;
+export const CreateComment = gql`
+    mutation CreateComment($crearComentario: createCommentInput!) {
+  createComment(input: $crearComentario) {
+    id
+    comentario
+    rating
+    Recipe {
+      id
+      title
+      description
+      image_pf_path
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      rate
+      user {
+        name
+        email
+      }
+      steps {
+        description
+        imagen_path
+      }
+      Comments {
+        comentario
+        rating
+      }
+    }
+  }
+}
+    `;
+export const CreateRecipe = gql`
+    mutation CreateRecipe($CrearReceta: createRecipeInput!) {
+  createRecipe(input: $CrearReceta) {
+    id
+    title
+    description
+    image_pf_path
+    origen_food
+    time_food
+    diet
+    prep_time
+    calories
+    fat
+    carbs
+    proteins
+    rate
+    user {
+      id
+      name
+      email
+      email_verified_at
+      created_at
+      updated_at
+      birthday
+    }
+    steps {
+      description
+      imagen_path
+    }
+    Comments {
+      comentario
+      rating
+    }
+  }
+}
+    `;
+export const CreateStep = gql`
+    mutation CreateStep($crearPaso: createStepInput!) {
+  createStep(input: $crearPaso) {
+    description
+    imagen_path
+    Recipe {
+      id
+      title
+      description
+      image_pf_path
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      rate
+      steps {
+        description
+      }
+    }
+  }
+}
+    `;
+export const CreateUser = gql`
+    mutation CreateUser($input: createUserInput!) {
+  createUser(input: $input) {
+    id
+    name
+    email
+    email_verified_at
+    created_at
+    updated_at
+    birthday
+    recipes {
+      id
+      title
+      description
+      image_pf_path
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      rate
+    }
+  }
+}
+    `;
+export const DeleteRecipe = gql`
+    mutation DeleteRecipe($id: ID!) {
+  deleteRecipe(id: $id) {
+    id
+    title
+    description
+    image_pf_path
+    origen_food
+    time_food
+    diet
+    prep_time
+    calories
+    fat
+    carbs
+    proteins
+    rate
+    user {
+      id
+      name
+      lastname
+      email
+      email_verified_at
+      created_at
+      updated_at
+      birthday
+    }
+    steps {
+      description
+      imagen_path
+    }
+    Comments {
+      comentario
+      rating
+    }
+  }
+}
+    `;
+export const DeleteStep = gql`
+    mutation DeleteStep($id: ID!) {
+  deleteStep(id: $id) {
+    description
+    imagen_path
+    Recipe {
+      id
+      title
+      description
+      image_pf_path
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      rate
+      user {
+        name
+        email
+      }
+      steps {
+        description
+        imagen_path
+      }
+    }
+  }
+}
+    `;
+export const DeleteUser = gql`
+    mutation DeleteUser($id: ID!) {
+  deleteUser(id: $id) {
+    id
+    name
+    email
+    email_verified_at
+    created_at
+    updated_at
+    birthday
+    recipes {
+      id
+      title
+    }
+  }
+}
+    `;
+export const Me = gql`
+    query Me {
+  me {
+    id
+    name
+    email
+    birthday
+    recipes {
+      id
+      title
+      description
+      image_pf_path
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      rate
+    }
+  }
+}
+    `;
+export const Recipe = gql`
+    query Recipe($id: ID) {
+  recipe(id: $id) {
+    id
+    title
+    description
+    image_pf_path
+    origen_food
+    time_food
+    diet
+    prep_time
+    calories
+    fat
+    carbs
+    proteins
+    rate
+    user {
+      id
+      name
+      email
+      birthday
+    }
+    steps {
+      description
+      imagen_path
+    }
+    Comments {
+      id
+      comentario
+      rating
+    }
+  }
+}
+    `;
+export const Recipes = gql`
+    query Recipes($title: String, $origen_food: origen, $time_food: time, $diet: String, $prep_time: Float, $calories: Float, $rate: Float) {
+  recipes(
+    title: $title
+    origen_food: $origen_food
+    time_food: $time_food
+    diet: $diet
+    prep_time: $prep_time
+    calories: $calories
+    rate: $rate
+  ) {
+    data {
+      id
+      title
+      description
+      image_pf_path
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      rate
+      user {
+        id
+        name
+        email
+        birthday
+      }
+    }
+  }
+}
+    `;
+export const Step = gql`
+    query Step($id: ID) {
+  step(id: $id) {
+    description
+    imagen_path
+    Recipe {
+      id
+      title
+      description
+      image_pf_path
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      rate
+    }
+  }
+}
+    `;
+export const Steps = gql`
+    query Steps($description: String) {
+  steps(description: $description) {
+    data {
+      description
+      imagen_path
+    }
+  }
+}
+    `;
+export const UpdateRecipe = gql`
+    mutation UpdateRecipe($id: ID!, $title: String, $description: String, $origen_food: String, $time_food: String, $diet: String, $prep_time: Float, $calories: Float, $fat: Float, $carbs: Float, $proteins: Float) {
+  updateRecipe(
+    id: $id
+    title: $title
+    description: $description
+    origen_food: $origen_food
+    time_food: $time_food
+    diet: $diet
+    prep_time: $prep_time
+    calories: $calories
+    fat: $fat
+    carbs: $carbs
+    proteins: $proteins
+  ) {
+    id
+    title
+    description
+    image_pf_path
+    origen_food
+    time_food
+    diet
+    prep_time
+    calories
+    fat
+    carbs
+    proteins
+    rate
+    user {
+      id
+      name
+      email
+      email_verified_at
+      created_at
+      updated_at
+      birthday
+    }
+    steps {
+      description
+      imagen_path
+    }
+    Comments {
+      id
+      comentario
+      rating
+    }
+  }
+}
+    `;
+export const UpdateStep = gql`
+    mutation UpdateStep($id: ID!, $description: String) {
+  updateStep(id: $id, description: $description) {
+    description
+    imagen_path
+    Recipe {
+      id
+      title
+      description
+      image_pf_path
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      rate
+      user {
+        name
+        email
+      }
+      steps {
+        description
+        imagen_path
+      }
+    }
+  }
+}
+    `;
+export const UpdateUser = gql`
+    mutation UpdateUser($id: ID!, $email: String, $password: String) {
+  updateUser(id: $id, email: $email, password: $password) {
+    id
+    name
+    email
+    email_verified_at
+    created_at
+    updated_at
+    birthday
+    recipes {
+      id
+      title
+      description
+      image_pf_path
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      rate
+    }
+  }
+}
+    `;
+export const User = gql`
+    query User($id: ID, $email: String) {
+  user(id: $id, email: $email) {
+    id
+    name
+    email
+    birthday
+    recipes {
+      id
+      title
+      description
+      image_pf_path
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      rate
+    }
+  }
+}
+    `;
+export const Users = gql`
+    query Users($name: String) {
+  users(name: $name) {
+    data {
+      id
+      name
+      email
+      email_verified_at
+      created_at
+      updated_at
+    }
+  }
+}
+    `;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -12,11 +722,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A date string with format 'y-m-d'. e.g. '2002-12-22.' */
   Date: any;
-  /** A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`. */
   DateTime: any;
-  /** A upload string */
   Upload: any;
 };
 
@@ -62,6 +769,8 @@ export type Mutation = {
   createStep: Step;
   /** Crea un Usuario Nuevo */
   createUser: User;
+  /** eliminar un comentario */
+  deleteComment: Comment;
   /** Elimina una Receta */
   deleteRecipe: Recipe;
   /** eliminar un paso */
@@ -72,6 +781,8 @@ export type Mutation = {
   login: Session;
   /** Mutación para Cerrar Sesión */
   logout: Session;
+  /** actualizar un comentario ya existente */
+  updateComment: Comment;
   /** Actualiza una Receta Ya Existente */
   updateRecipe: Recipe;
   /** actualizar un paso ya existente */
@@ -101,13 +812,18 @@ export type MutationCreateUserArgs = {
 };
 
 
+export type MutationDeleteCommentArgs = {
+  id: Scalars['ID'];
+};
+
+
 export type MutationDeleteRecipeArgs = {
-  id?: InputMaybe<Scalars['ID']>;
+  id: Scalars['ID'];
 };
 
 
 export type MutationDeleteStepArgs = {
-  id?: InputMaybe<Scalars['ID']>;
+  id: Scalars['ID'];
 };
 
 
@@ -118,6 +834,13 @@ export type MutationDeleteUserArgs = {
 
 export type MutationLoginArgs = {
   input: LoginInput;
+};
+
+
+export type MutationUpdateCommentArgs = {
+  comentario?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID'];
+  rating?: InputMaybe<Scalars['Float']>;
 };
 
 
@@ -539,100 +1262,3 @@ export enum Time {
   /** Tiempo Desayuno */
   Desayuno = 'Desayuno'
 }
-
-export type CommentQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']>;
-}>;
-
-
-export type CommentQuery = { __typename?: 'Query', Comment?: { __typename?: 'Comment', id: string, comentario: string, rating?: number | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any } | null } } | null };
-
-export type CommentsQueryVariables = Exact<{
-  comentario?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type CommentsQuery = { __typename?: 'Query', Comments: { __typename?: 'CommentPaginator', data: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null }> } };
-
-export type CreateUserMutationVariables = Exact<{
-  CrearUsuario: CreateUserInput;
-}>;
-
-
-export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null }> } };
-
-export type MeQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, email: string, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null }> } };
-
-export type RecipeQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']>;
-}>;
-
-
-export type RecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }>, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null }> } | null };
-
-export type RecipesQueryVariables = Exact<{
-  title?: InputMaybe<Scalars['String']>;
-  origen_food?: InputMaybe<Origen>;
-  time_food?: InputMaybe<Time>;
-  diet?: InputMaybe<Scalars['String']>;
-  prep_time?: InputMaybe<Scalars['Float']>;
-  calories?: InputMaybe<Scalars['Float']>;
-  rate?: InputMaybe<Scalars['Float']>;
-}>;
-
-
-export type RecipesQuery = { __typename?: 'Query', recipes: { __typename?: 'RecipePaginator', data: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any } | null }> } };
-
-export type StepQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']>;
-}>;
-
-
-export type StepQuery = { __typename?: 'Query', step?: { __typename?: 'Step', description: string, imagen_path?: string | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null } } | null };
-
-export type StepsQueryVariables = Exact<{
-  description?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type StepsQuery = { __typename?: 'Query', steps: { __typename?: 'StepPaginator', data: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }> } };
-
-export type UpdateUserMutationVariables = Exact<{
-  id: Scalars['ID'];
-  email?: InputMaybe<Scalars['String']>;
-  password?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null }> } };
-
-export type UserQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']>;
-  email?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null }> } | null };
-
-export type UsersQueryVariables = Exact<{
-  name?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type UsersQuery = { __typename?: 'Query', users: { __typename?: 'UserPaginator', data: Array<{ __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any }> } };
-
-
-export const CommentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Comment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Comment"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"comentario"}},{"kind":"Field","name":{"kind":"Name","value":"rating"}},{"kind":"Field","name":{"kind":"Name","value":"Recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image_pf_path"}},{"kind":"Field","name":{"kind":"Name","value":"origen_food"}},{"kind":"Field","name":{"kind":"Name","value":"time_food"}},{"kind":"Field","name":{"kind":"Name","value":"diet"}},{"kind":"Field","name":{"kind":"Name","value":"prep_time"}},{"kind":"Field","name":{"kind":"Name","value":"calories"}},{"kind":"Field","name":{"kind":"Name","value":"fat"}},{"kind":"Field","name":{"kind":"Name","value":"carbs"}},{"kind":"Field","name":{"kind":"Name","value":"proteins"}},{"kind":"Field","name":{"kind":"Name","value":"rate"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"birthday"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CommentQuery, CommentQueryVariables>;
-export const CommentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Comments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"comentario"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Comments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"comentario"},"value":{"kind":"Variable","name":{"kind":"Name","value":"comentario"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"comentario"}},{"kind":"Field","name":{"kind":"Name","value":"rating"}}]}}]}}]}}]} as unknown as DocumentNode<CommentsQuery, CommentsQueryVariables>;
-export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"CrearUsuario"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"createUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"CrearUsuario"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"email_verified_at"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"birthday"}},{"kind":"Field","name":{"kind":"Name","value":"recipes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image_pf_path"}},{"kind":"Field","name":{"kind":"Name","value":"origen_food"}},{"kind":"Field","name":{"kind":"Name","value":"time_food"}},{"kind":"Field","name":{"kind":"Name","value":"diet"}},{"kind":"Field","name":{"kind":"Name","value":"prep_time"}},{"kind":"Field","name":{"kind":"Name","value":"calories"}},{"kind":"Field","name":{"kind":"Name","value":"fat"}},{"kind":"Field","name":{"kind":"Name","value":"carbs"}},{"kind":"Field","name":{"kind":"Name","value":"proteins"}},{"kind":"Field","name":{"kind":"Name","value":"rate"}}]}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
-export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"birthday"}},{"kind":"Field","name":{"kind":"Name","value":"recipes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image_pf_path"}},{"kind":"Field","name":{"kind":"Name","value":"origen_food"}},{"kind":"Field","name":{"kind":"Name","value":"time_food"}},{"kind":"Field","name":{"kind":"Name","value":"diet"}},{"kind":"Field","name":{"kind":"Name","value":"prep_time"}},{"kind":"Field","name":{"kind":"Name","value":"calories"}},{"kind":"Field","name":{"kind":"Name","value":"fat"}},{"kind":"Field","name":{"kind":"Name","value":"carbs"}},{"kind":"Field","name":{"kind":"Name","value":"proteins"}},{"kind":"Field","name":{"kind":"Name","value":"rate"}}]}}]}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
-export const RecipeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Recipe"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image_pf_path"}},{"kind":"Field","name":{"kind":"Name","value":"origen_food"}},{"kind":"Field","name":{"kind":"Name","value":"time_food"}},{"kind":"Field","name":{"kind":"Name","value":"diet"}},{"kind":"Field","name":{"kind":"Name","value":"prep_time"}},{"kind":"Field","name":{"kind":"Name","value":"calories"}},{"kind":"Field","name":{"kind":"Name","value":"fat"}},{"kind":"Field","name":{"kind":"Name","value":"carbs"}},{"kind":"Field","name":{"kind":"Name","value":"proteins"}},{"kind":"Field","name":{"kind":"Name","value":"rate"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"birthday"}}]}},{"kind":"Field","name":{"kind":"Name","value":"steps"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imagen_path"}}]}},{"kind":"Field","name":{"kind":"Name","value":"Comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"comentario"}},{"kind":"Field","name":{"kind":"Name","value":"rating"}}]}}]}}]}}]} as unknown as DocumentNode<RecipeQuery, RecipeQueryVariables>;
-export const RecipesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Recipes"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"origen_food"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"origen"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"time_food"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"time"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"diet"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"prep_time"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"calories"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"rate"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"Argument","name":{"kind":"Name","value":"origen_food"},"value":{"kind":"Variable","name":{"kind":"Name","value":"origen_food"}}},{"kind":"Argument","name":{"kind":"Name","value":"time_food"},"value":{"kind":"Variable","name":{"kind":"Name","value":"time_food"}}},{"kind":"Argument","name":{"kind":"Name","value":"diet"},"value":{"kind":"Variable","name":{"kind":"Name","value":"diet"}}},{"kind":"Argument","name":{"kind":"Name","value":"prep_time"},"value":{"kind":"Variable","name":{"kind":"Name","value":"prep_time"}}},{"kind":"Argument","name":{"kind":"Name","value":"calories"},"value":{"kind":"Variable","name":{"kind":"Name","value":"calories"}}},{"kind":"Argument","name":{"kind":"Name","value":"rate"},"value":{"kind":"Variable","name":{"kind":"Name","value":"rate"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image_pf_path"}},{"kind":"Field","name":{"kind":"Name","value":"origen_food"}},{"kind":"Field","name":{"kind":"Name","value":"time_food"}},{"kind":"Field","name":{"kind":"Name","value":"diet"}},{"kind":"Field","name":{"kind":"Name","value":"prep_time"}},{"kind":"Field","name":{"kind":"Name","value":"calories"}},{"kind":"Field","name":{"kind":"Name","value":"fat"}},{"kind":"Field","name":{"kind":"Name","value":"carbs"}},{"kind":"Field","name":{"kind":"Name","value":"proteins"}},{"kind":"Field","name":{"kind":"Name","value":"rate"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"birthday"}}]}}]}}]}}]}}]} as unknown as DocumentNode<RecipesQuery, RecipesQueryVariables>;
-export const StepDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Step"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"step"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imagen_path"}},{"kind":"Field","name":{"kind":"Name","value":"Recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image_pf_path"}},{"kind":"Field","name":{"kind":"Name","value":"origen_food"}},{"kind":"Field","name":{"kind":"Name","value":"time_food"}},{"kind":"Field","name":{"kind":"Name","value":"diet"}},{"kind":"Field","name":{"kind":"Name","value":"prep_time"}},{"kind":"Field","name":{"kind":"Name","value":"calories"}},{"kind":"Field","name":{"kind":"Name","value":"fat"}},{"kind":"Field","name":{"kind":"Name","value":"carbs"}},{"kind":"Field","name":{"kind":"Name","value":"proteins"}},{"kind":"Field","name":{"kind":"Name","value":"rate"}}]}}]}}]}}]} as unknown as DocumentNode<StepQuery, StepQueryVariables>;
-export const StepsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Steps"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"steps"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imagen_path"}}]}}]}}]}}]} as unknown as DocumentNode<StepsQuery, StepsQueryVariables>;
-export const UpdateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"email_verified_at"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"birthday"}},{"kind":"Field","name":{"kind":"Name","value":"recipes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image_pf_path"}},{"kind":"Field","name":{"kind":"Name","value":"origen_food"}},{"kind":"Field","name":{"kind":"Name","value":"time_food"}},{"kind":"Field","name":{"kind":"Name","value":"diet"}},{"kind":"Field","name":{"kind":"Name","value":"prep_time"}},{"kind":"Field","name":{"kind":"Name","value":"calories"}},{"kind":"Field","name":{"kind":"Name","value":"fat"}},{"kind":"Field","name":{"kind":"Name","value":"carbs"}},{"kind":"Field","name":{"kind":"Name","value":"proteins"}},{"kind":"Field","name":{"kind":"Name","value":"rate"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
-export const UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"User"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"birthday"}},{"kind":"Field","name":{"kind":"Name","value":"recipes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image_pf_path"}},{"kind":"Field","name":{"kind":"Name","value":"origen_food"}},{"kind":"Field","name":{"kind":"Name","value":"time_food"}},{"kind":"Field","name":{"kind":"Name","value":"diet"}},{"kind":"Field","name":{"kind":"Name","value":"prep_time"}},{"kind":"Field","name":{"kind":"Name","value":"calories"}},{"kind":"Field","name":{"kind":"Name","value":"fat"}},{"kind":"Field","name":{"kind":"Name","value":"carbs"}},{"kind":"Field","name":{"kind":"Name","value":"proteins"}},{"kind":"Field","name":{"kind":"Name","value":"rate"}}]}}]}}]}}]} as unknown as DocumentNode<UserQuery, UserQueryVariables>;
-export const UsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Users"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"email_verified_at"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]}}]} as unknown as DocumentNode<UsersQuery, UsersQueryVariables>;

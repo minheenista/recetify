@@ -1,6 +1,6 @@
-import { ApolloError } from "@apollo/client";
+import { ApolloError } from "@apollo/client/errors";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
-import { Auth, CreateUserInput, LoginInput, User } from "~/gql/graphql";
+import {CreateUserInput, LoginInput, User } from "~/gql/graphql";
 
 import AuthService from "~/services/auth.service";
 
@@ -42,23 +42,23 @@ class AuthModule extends VuexModule {
     this.context.commit("removeCookies");
   } */
 
- /*  @Action
+   @Action
   async login(data: LoginInput) {
     this.context.commit("loadingLogin", true);
     this.context.commit("resetErrorMessage");
     return await AuthService.login(data)
-      .then((auth: Auth) => {
+      .then((auth: any) => {
         console.log(auth);
         this.context.commit("loginSuccess", auth);
         this.context.commit("loadingLogin", false);
-        window.$nuxt.$router.push("./PagPrin/Principal");
+        window.$nuxt.$router.push("./recetas");
       })
       .catch((error) => {
         console.log(error.message);
         this.context.commit("loginFaile", error);
         this.context.commit("loadingLogin", false);
       });
-  } */
+  } 
 
   @Action
   async createUser(data: CreateUserInput) {
@@ -69,7 +69,7 @@ class AuthModule extends VuexModule {
           email: data.email,
           password: data.password,
         })
-          .then((auth: Auth) => {
+          .then((auth: any) => {
             console.log(auth);
             this.context.commit("loginSuccess", auth);
             this.context.commit("loadingRegister", false);
@@ -85,11 +85,13 @@ class AuthModule extends VuexModule {
   }
 
   @Mutation
-  public loginSuccess(auth: Auth): void {
+  public loginSuccess(auth: any): void {
     console.log(auth);
     window.$nuxt.$cookies.set("token", auth.token, {
       path: "/",
     });
+    window.$nuxt.$router.push("./preferencias");
+
   }
 
   @Mutation

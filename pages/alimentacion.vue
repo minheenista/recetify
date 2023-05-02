@@ -1,5 +1,4 @@
  <template>
-    <v-app>
             <div class="container">
                 <center>
                     <div class="titulo">
@@ -119,7 +118,6 @@
               </div>
     
             </div>
-        </v-app>       
     </template>
 
 

@@ -36,10 +36,12 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    'cookie-universal-nuxt',
   ],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
