@@ -28,6 +28,7 @@ class RecipesModule extends VuexModule{
     @Action
     async CreateRecipes(data: CreateRecipeInput) {
         this.context.commit("loadingCreate", true);
+        console.log("aver")
         return await RecipesService.createRecipe(data)
         .then((recipes: Recipe) => {
             console.log(recipes);
@@ -37,7 +38,8 @@ class RecipesModule extends VuexModule{
             this.context.commit("setsnackbarSucessCreateRecipe");
         })
         .catch((error) => {
-            console.log(error);
+            //console.log(error);
+            console.log(JSON.stringify(error, null, 2));
         });
     }
 

@@ -1,4 +1,4 @@
-mutation LogOut {
+mutation Logout {
     logout{
         accessToken
     }

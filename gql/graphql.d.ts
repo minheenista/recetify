@@ -11,7 +11,7 @@ declare module '*/Login.graphql' {
 declare module '*/Logout.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const LogOut: DocumentNode;
+  export const Logout: DocumentNode;
 
   export default defaultDocument;
 }

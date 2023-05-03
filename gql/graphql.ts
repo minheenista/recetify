@@ -11,10 +11,10 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'Session', accessToken?: string | null, user: { __typename?: 'User', id: string, name: string, lastname: string, email: string, birthday: any } } };
 
-export type LogOutMutationVariables = Exact<{ [key: string]: never; }>;
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type LogOutMutation = { __typename?: 'Mutation', logout: { __typename?: 'Session', accessToken?: string | null } };
+export type LogoutMutation = { __typename?: 'Mutation', logout: { __typename?: 'Session', accessToken?: string | null } };
 
 export type CommentQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
@@ -182,8 +182,8 @@ export const Login = gql`
   }
 }
     `;
-export const LogOut = gql`
-    mutation LogOut {
+export const Logout = gql`
+    mutation Logout {
   logout {
     accessToken
   }

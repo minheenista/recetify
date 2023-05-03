@@ -13,6 +13,36 @@ class AuthModule extends VuexModule {
   public nextPage = false;
   context: any;
 
+  @Action
+  async login(data: LoginInput): Promise<void> {
+    this.context.commit("loadingLogin", true);
+    this.context.commit("resetErrorMessage");
+    return await AuthService.login(data)
+      .then((auth: any) => {
+        console.log(auth);
+        console.log("hola auth noseee");
+        this.context.commit("loginSuccess", auth);
+        this.context.commit("loadingLogin", false);
+        window.$nuxt.$router.push("./recetas");
+      })
+      .catch((error) => {
+        console.log(error.message);
+        this.context.commit("loginFaile", error);
+        this.context.commit("loadingLogin", false);
+      });
+  }
+
+  @Mutation
+  public loginSuccess(auth: any): void {
+    console.log(auth);
+    this.nextPage = true;
+    window.$nuxt.$cookies.set("token", auth.token, {
+      path: "/preferencias",
+    });
+    window.$nuxt.$router.push("./preferencias");
+
+  }
+
  @Mutation
   public loginFaile(error: any) {
     if (error.message === "Tus datos son incorrectos") {
@@ -25,11 +55,39 @@ class AuthModule extends VuexModule {
       this.errorMessage = "A ocurrido un error";
     }
   }
- /* 
+
+  @Action({ rawError: true })
+  async logout(): Promise<void> {
+    return await AuthService.logout()
+      .then((logoutSuccess: boolean) => {
+        if (logoutSuccess) {
+          this.context.commit('logoutSuccess');
+        } else {
+          this.context.commit('logoutFailure');
+        }
+      })
+      .catch(() => {
+        this.context.commit('logoutFailure');
+      });
+  }
+
+  @Mutation
+  public logoutSuccess(): void {
+    window.$nuxt.$cookies.remove('token');
+    this.nextPage = false;
+  }
+
+  @Mutation
+  public logoutFailure(): void {
+    /*  this.status.logged = false; */
+  }
+
+
+ 
   @Mutation
   public resetErrorMessage() {
     this.errorMessage = undefined;
-  } */
+  } 
 
   
   @Mutation
@@ -38,28 +96,14 @@ class AuthModule extends VuexModule {
     window.$nuxt.$router.push("/");
   }
 
-  /* @Action({ rawError: true })
-  logOut(): void {
+/*   @Action({ rawError: true })
+  logout(): void {
     this.context.commit("removeCookies");
   } */
 
-   @Action
-  async login(data: LoginInput) {
-    this.context.commit("loadingLogin", true);
-    this.context.commit("resetErrorMessage");
-    return await AuthService.login(data)
-      .then((auth: any) => {
-        console.log(auth);
-        this.context.commit("loginSuccess", auth);
-        this.context.commit("loadingLogin", false);
-        window.$nuxt.$router.push("./recetas");
-      })
-      .catch((error) => {
-        console.log(error.message);
-        this.context.commit("loginFaile", error);
-        this.context.commit("loadingLogin", false);
-      });
-  } 
+  
+
+   
 
   @Action
   async createUser(data: CreateUserInput) {
@@ -86,17 +130,6 @@ class AuthModule extends VuexModule {
   }
 
   @Mutation
-  public loginSuccess(auth: any): void {
-    console.log(auth);
-    console.log("hola auth")
-    window.$nuxt.$cookies.set("token", auth.token, {
-      path: "/",
-    });
-    window.$nuxt.$router.push("./preferencias");
-
-  }
-
-  @Mutation
   public loadingLogin(status: boolean) {
     this.loadingLoginStatus = status;
   }
@@ -113,5 +146,16 @@ class AuthModule extends VuexModule {
   get isLoadingRegister(): boolean {
     return this.loadingRegisterStatus;
   }
+
+  get getUser(): User | undefined {
+    return this.user;
+  }
+
+  get getAuthToken(): string | null {
+    return window.$nuxt.$cookies.get('token');
+  }
+
+
+
 }
 export default AuthModule;

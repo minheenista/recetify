@@ -5,6 +5,7 @@ import {
   Login,
   LoginInput,
   Me,
+  Logout,
 } from "~/gql/graphql";
 
 class AuthService {
@@ -34,6 +35,14 @@ class AuthService {
       await apolloClient.query({
         query: Me,
         fetchPolicy: "network-only",
+      })
+    ).data;
+  }
+
+  async logout(): Promise<boolean> {
+    return (
+      await apolloClient.mutate({
+        mutation: Logout,
       })
     ).data;
   }

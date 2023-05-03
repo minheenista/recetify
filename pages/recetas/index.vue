@@ -2,7 +2,11 @@
   <div class="container1">
     <v-card class="pa-5" flat width="100%" min-width="1500">
       <v-toolbar floating>
-        <v-img :width="40" cover src="../../assets/recetifylogo.jpeg"></v-img>
+      <v-avatar class="ml-3 mr-4">
+        <v-img src="logo.png"></v-img>
+      </v-avatar>
+
+        <h2 class="ml-3 mr-8" style="color: #00C853">RECETIFY</h2>
 
         <v-text-field
           density="compact"
@@ -61,7 +65,7 @@
                     <!-- Tiempo de comida -->
                     <v-col cols="12" sm="3">
                       <v-select
-                        :items="['Desayuno', 'Almuerzo', 'Colacion', 'Cena']"
+                        :items="tiempo"
                         label="Tiempo de comida*"
                         required
                         v-model="recipeRegister.time_food"
@@ -108,7 +112,7 @@
                   <v-row>
                     <v-col cols="12" sm="3">
                       <v-select
-                        :items="['Mexicana', 'Italiana', 'China', 'Americana']"
+                        :items="origen"
                         label="Origen*"
                         required
                         v-model="recipeRegister.origen_food"
@@ -218,9 +222,69 @@
           </template>
         </v-snackbar> -->
 
-        <v-btn class="mx-auto" color="gray" dense @click="handleLogout()">
+        <!-- <v-btn class="mx-auto" color="gray" dense @click="handleLogout()">
           Cerrar Sesión
-        </v-btn>
+        </v-btn> -->
+
+        <!-- <v-container
+          fluid
+          style="height: 300px"
+        > -->
+            <v-menu
+              bottom
+              min-width="200px"
+              rounded
+              offset-y
+            >
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  icon
+                  x-large
+                  v-on="on"
+                >
+                  <v-avatar
+                    color="primary"
+                    size="45"
+                    class="mr-3"
+                  >
+                    <span class="white--text text-h5"> AA </span>
+                  </v-avatar>
+                </v-btn>
+              </template>
+              <v-card>
+                <v-list-item-content class="justify-center">
+                  <div class="mx-auto text-center">
+                    <v-avatar
+                      color="primary"
+                    >
+                      <span class="white--text text-h5">{{ user.initials }}</span>
+                    </v-avatar>
+                    <h3>{{ user.fullName }}</h3>
+                    <p class="text-caption mt-1">
+                      {{ user.email }}
+                    </p>
+                    <v-divider class="my-3"></v-divider>
+                    <v-btn
+                      depressed
+                      rounded
+                      text
+                    >
+                      Mi perfil
+                    </v-btn>
+                    <v-divider class="my-3"></v-divider>
+                    <v-btn @click="handleLogout()"
+                      depressed
+                      rounded
+                      text
+                    >
+                      Cerrar Sesion
+                    </v-btn>
+                  </div>
+                </v-list-item-content>
+              </v-card>
+            </v-menu>
+<!--         </v-container>
+ -->
       </v-toolbar>
 
       <!-- ================= LISTA DE RECETAS ======================== -->
@@ -274,7 +338,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { namespace } from "vuex-class";
-import { CreateRecipeInput, Recipe, LoginInput } from "~/gql/graphql";
+import { CreateRecipeInput, Recipe, LoginInput, User } from "~/gql/graphql";
 
 import Recetas from '~/components/recetas.vue';
 import buttonStep from "~/components/buttonStep.vue";
@@ -296,11 +360,31 @@ export default class Principal extends Vue{
   public group = null;
   public loaded = false;
   public loading = false;
+
+  public user = {
+        initials: 'JD',
+        fullName: 'John Doe',
+        email: 'john.doe@doe.com',
+      };
   public dietas = [
-    {text: "Omnivora", value: 1},
-    {text: "Ovo-lacteo Vegetariana", value: 2},
-    {text: "Vegana", value: 3},
-    {text: "Crudivegana", value: 4},
+    {text: "Omnivora", value: "Omnivoro"},
+    {text: "Ovo-lacteo Vegetariana", value: "OLV"},
+    {text: "Vegana", value: "Vegetariano"},
+    {text: "Crudivegana", value: "Crudivegetariana"},
+  ];
+
+  public tiempo = [
+    {text: "Desayuno", value: "Desayuno"},
+    {text: "Comida", value: "Comida"},
+    {text: "Cena", value: "Cena"},
+    {text: "Colación", value: "Colacion"},
+  ];
+
+  public origen = [
+    {text: "Mexicana", value: "Mexicana"},
+    {text: "Americana", value: "Americana"},
+    {text: "Italiana", value: "Italiana"},
+    {text: "China", value: "China"},
   ];
 
   public recipeRegister: CreateRecipeInput ={
@@ -313,6 +397,9 @@ export default class Principal extends Vue{
     fat: null,
     carbs: null,
     proteins: null,
+    user: {
+      connect: "8",
+    }
     /* FALTAN INGREDIENTES Y PASOS */
   };
 /*   @RecipesModule.State("recipes")
