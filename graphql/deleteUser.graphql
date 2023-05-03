@@ -1,15 +1,15 @@
-mutation DeleteUser($id: ID!){
-    deleteUser(id: $id){
-        id
-        name
-        email
-        email_verified_at
-        created_at
-        updated_at
-        birthday
-        recipes {
-            id
-            title
-        }
+mutation deleteUser($id: ID!) {
+  deleteUser(id: $id) {
+    id
+    name
+    email
+    email_verified_at
+    created_at
+    updated_at
+    birthday
+    recipes {
+      id
+      title
     }
+  }
 }

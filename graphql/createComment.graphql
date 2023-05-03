@@ -1,4 +1,4 @@
-mutation CreateComment($crearComentario: createCommentInput!){
+mutation createComment($crearComentario: createCommentInput!) {
   createComment(input: $crearComentario) {
     id
     comentario
@@ -7,7 +7,6 @@ mutation CreateComment($crearComentario: createCommentInput!){
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -16,16 +15,16 @@ mutation CreateComment($crearComentario: createCommentInput!){
       fat
       carbs
       proteins
+      porcion
       rate
-      user{
+      user {
         name
         email
       }
-      steps{
+      steps {
         description
-        imagen_path
       }
-      Comments{
+      Comments {
         comentario
         rating
       }

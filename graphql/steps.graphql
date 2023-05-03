@@ -1,10 +1,13 @@
-
-query Steps($description: String){
+query Steps($description: String) {
   steps(description: $description) {
     data {
       description
-      imagen_path
-      
+      image {
+        url
+        imageable {
+          __typename
+        }
+      }
     }
   }
 }

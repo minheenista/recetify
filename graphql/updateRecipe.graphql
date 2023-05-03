@@ -1,4 +1,4 @@
-mutation UpdateRecipe(
+mutation updateRecipe(
   $id: ID!
   $title: String
   $description: String
@@ -10,6 +10,7 @@ mutation UpdateRecipe(
   $fat: Float
   $carbs: Float
   $proteins: Float
+  $porcion: Float
 ) {
   updateRecipe(
     id: $id
@@ -23,11 +24,11 @@ mutation UpdateRecipe(
     fat: $fat
     carbs: $carbs
     proteins: $proteins
+    porcion: $porcion
   ) {
     id
     title
     description
-    image_pf_path
     origen_food
     time_food
     diet
@@ -36,6 +37,13 @@ mutation UpdateRecipe(
     fat
     carbs
     proteins
+    porcion
+    image {
+      url
+      imageable {
+        __typename
+      }
+    }
     rate
     user {
       id
@@ -48,7 +56,12 @@ mutation UpdateRecipe(
     }
     steps {
       description
-      imagen_path
+      image {
+        url
+        imageable {
+          __typename
+        }
+      }
     }
     Comments {
       id

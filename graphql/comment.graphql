@@ -1,5 +1,4 @@
-
-query Comment($id: ID ){
+query Comment($id: ID) {
   Comment(id: $id) {
     id
     comentario
@@ -8,7 +7,6 @@ query Comment($id: ID ){
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -17,14 +15,14 @@ query Comment($id: ID ){
       fat
       carbs
       proteins
+      porcion
       rate
       user {
-      id
-      name
-      email
-      birthday
-    }
-      
+        id
+        name
+        email
+        birthday
+      }
     }
   }
 }

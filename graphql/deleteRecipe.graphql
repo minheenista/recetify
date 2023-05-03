@@ -1,9 +1,8 @@
-mutation DeleteRecipe($id: ID!){
+mutation deleteRecipe($id: ID!){
   deleteRecipe(id: $id){
     id
     title
     description
-    image_pf_path
     origen_food
     time_food
     diet
@@ -12,6 +11,7 @@ mutation DeleteRecipe($id: ID!){
     fat
     carbs
     proteins
+    porcion
     rate
     user {
       id
@@ -25,7 +25,6 @@ mutation DeleteRecipe($id: ID!){
     }
     steps {
       description
-      imagen_path
     }
     Comments {
       comentario
