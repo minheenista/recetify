@@ -12,7 +12,7 @@ class RecipesModule extends VuexModule{
     public loadingRecipesStatus = false;
     public snackbarSucessCreateRecipe = false;
     public snackbarSucessMessageCreateRecipe = "";
-    /* @Action
+    @Action
     async fetchRecipes() {
         this.context.commit("loadingRecipes", true);
         return await RecipesService.getRecipes()
@@ -24,7 +24,7 @@ class RecipesModule extends VuexModule{
         .catch((error) => {
             console.log(error);
         });
-    } */
+    } 
     @Action
     async CreateRecipes(data: CreateRecipeInput) {
         this.context.commit("loadingCreate", true);

@@ -294,6 +294,7 @@
     <div class="d-flex justify-space-around bg-surface-variant">
       <v-row class="ml-12">
       <card-recetas></card-recetas>
+      <card-recetas></card-recetas><card-recetas></card-recetas><card-recetas></card-recetas><card-recetas></card-recetas>
         <!-- <v-col sm="2" md="2" lg="2" xl="2" cols="10">
           <card-recetas></card-recetas>
         </v-col>
@@ -400,7 +401,7 @@ export default class Principal extends Vue{
     carbs: null,
     proteins: null,
     user: {
-      connect: "8",
+      connect: "15",
      }
     /* FALTAN INGREDIENTES Y PASOS */
   };

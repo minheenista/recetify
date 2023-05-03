@@ -37,6 +37,7 @@ class AuthModule extends VuexModule {
   @Mutation
   public loginSuccess(auth: any): void {
     console.log(auth);
+    console.log(this.user);
     this.nextPage = true;
     window.$nuxt.$cookies.set("token", auth.accessToken, {
       path: "/recetas",
