@@ -1,0 +1,28 @@
+query Comment($id: ID) {
+  Comment(id: $id) {
+    id
+    comentario
+    rating
+    Recipe {
+      id
+      title
+      description
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      porcion
+      rate
+      user {
+        id
+        name
+        email
+        birthday
+      }
+    }
+  }
+}

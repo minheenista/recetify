@@ -1,0 +1,34 @@
+mutation deleteRecipe($id: ID!){
+  deleteRecipe(id: $id){
+    id
+    title
+    description
+    origen_food
+    time_food
+    diet
+    prep_time
+    calories
+    fat
+    carbs
+    proteins
+    porcion
+    rate
+    user {
+      id
+      name
+      lastname
+      email
+      email_verified_at
+      created_at
+      updated_at
+      birthday
+    }
+    steps {
+      description
+    }
+    Comments {
+      comentario
+      rating
+    }
+  }
+}

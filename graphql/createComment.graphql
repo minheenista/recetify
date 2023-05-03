@@ -1,0 +1,33 @@
+mutation createComment($crearComentario: createCommentInput!) {
+  createComment(input: $crearComentario) {
+    id
+    comentario
+    rating
+    Recipe {
+      id
+      title
+      description
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      porcion
+      rate
+      user {
+        name
+        email
+      }
+      steps {
+        description
+      }
+      Comments {
+        comentario
+        rating
+      }
+    }
+  }
+}

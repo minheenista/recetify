@@ -1,0 +1,9 @@
+query Comments($comentario: String) {
+  Comments(comentario: $comentario) {
+    data {
+      id
+      comentario
+      rating
+    }
+  }
+}

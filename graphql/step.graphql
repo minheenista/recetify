@@ -1,0 +1,32 @@
+query Step($id: ID) {
+  step(id: $id) {
+    description
+    image {
+      url
+      imageable {
+        __typename
+      }
+    }
+    Recipe {
+      id
+      title
+      description
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      porcion
+      image {
+        url
+        imageable {
+          __typename
+        }
+      }
+      rate
+    }
+  }
+}

@@ -1,0 +1,44 @@
+query Recipe($id: ID ){
+  recipe(id: $id) {
+    id
+    title
+    description
+    origen_food
+    time_food
+    diet
+    prep_time
+    calories
+    fat
+    carbs
+    proteins
+    porcion
+    image{
+      url
+      imageable{
+        __typename
+      }
+    }
+    rate
+    user {
+      id
+      name
+      email
+      birthday
+    }
+    steps {
+      description
+      image{
+        url
+        imageable{
+          __typename
+        }
+      }
+    }
+    Comments {
+      id
+      comentario
+      rating
+
+    }
+  }
+}

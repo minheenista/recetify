@@ -1,0 +1,27 @@
+query Me {
+  me {
+    id
+    name
+    email
+
+    birthday
+    recipes {
+      id
+      title
+      description
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      porcion
+      image{
+        url
+      }
+      rate
+    }
+  }
+}

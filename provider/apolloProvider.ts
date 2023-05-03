@@ -13,6 +13,7 @@ function createLink() {
   const authLink = setContext((_, { headers }) => {
     const cookies = Cookie();
     const token = cookies.get("token");
+    console.log(token);
     return {
       headers: { ...headers, authorization: token ? `Bearer ${token}` : "" },
     };

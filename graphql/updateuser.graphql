@@ -1,0 +1,29 @@
+mutation updateUser($id: ID!, $email: String, $password: String) {
+  updateUser(id: $id, email: $email, password: $password) {
+    id
+    name
+    email
+    email_verified_at
+    created_at
+    updated_at
+    birthday
+    recipes {
+      id
+      title
+      description
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      porcion
+      image {
+        url
+      }
+      rate
+    }
+  }
+}

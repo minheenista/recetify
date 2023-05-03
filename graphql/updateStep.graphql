@@ -1,0 +1,45 @@
+mutation updateStep($id: ID!, $description: String){
+  updateStep(id: $id, description: $description) {
+    description
+    image{
+      url
+      imageable{
+        __typename
+      }
+    }
+    Recipe {
+      id
+      title
+      description
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      porcion
+      image{
+        url
+        imageable{
+          __typename
+        }
+      }
+      rate
+      user{
+        name
+        email
+      }
+      steps{
+        description
+        image{
+          url
+          imageable{
+            __typename
+          }
+        }
+      }
+    }
+  }
+}

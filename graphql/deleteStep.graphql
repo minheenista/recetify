@@ -1,0 +1,30 @@
+mutation deleteStep($id: ID!) {
+  deleteStep(id: $id) {
+    description
+    image{
+      url
+    }
+    Recipe {
+      id
+      title
+      description
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      porcion
+      rate
+      user {
+        name
+        email
+      }
+      steps {
+        description
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+mutation createStep($crearPaso: createStepInput!){
+  createStep(input: $crearPaso) {
+    description
+    Recipe {
+      id
+      title
+      description
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      porcion
+      rate
+      steps{
+        description
+      }
+    }
+  }
+}

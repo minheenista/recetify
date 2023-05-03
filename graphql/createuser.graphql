@@ -1,0 +1,25 @@
+mutation CreateUser($input: createUserInput!) {
+    createUser(input: $input) {
+        id
+        name
+        email
+        email_verified_at
+        created_at
+        updated_at
+        birthday
+        recipes {
+            id
+            title
+            description
+            origen_food
+            time_food
+            diet
+            prep_time
+            calories
+            fat
+            carbs
+            proteins
+            rate
+        }
+    }
+}
