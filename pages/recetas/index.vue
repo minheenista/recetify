@@ -1,6 +1,6 @@
 <template>
   <div class="container1">
-    <v-card class="pa-5" flat width="100%" min-width="1500">
+    <v-card class="pa-5" flat width="100%" min-width="1600">
       <v-toolbar floating>
       <v-avatar class="ml-3 mr-4">
         <v-img src="logo.png"></v-img>
@@ -21,7 +21,7 @@
         <v-spacer></v-spacer>
         <!-- ======================= modal crear receta ============================= -->
         <v-row justify="center">
-          <v-dialog v-model="dialog" persistent max-width="1100px">
+          <v-dialog v-model="dialog" persistent max-width="1150px">
             <!-- BOTON CREAR RECETA -->
             <template v-slot:activator="{ on, attrs }">
               <v-btn
@@ -79,12 +79,12 @@
                         label="Tiempo de preparacion"
                         type="number"
                         suffix="mins."
-                        v-model="recipeRegister.prep_time"
+                        v-model.number="recipeRegister.prep_time"
                       ></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="3">
-                      <v-text-field
+                      <v-text-field v-model.number="recipeRegister.porcion"
                         label="Porciones"
                         type="number"
                         suffix=""
@@ -124,7 +124,7 @@
                         label="Calorias"
                         type="number"
                         suffix="cals"
-                        v-model="recipeRegister.calories"
+                        v-model.number="recipeRegister.calories"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="2">
@@ -132,7 +132,7 @@
                         label="Grasas"
                         type="number"
                         suffix="ag"
-                        v-model="recipeRegister.fat"
+                        v-model.number="recipeRegister.fat"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="2">
@@ -140,7 +140,7 @@
                         label="Carbohidratos"
                         type="number"
                         suffix="carbs"
-                        v-model="recipeRegister.carbs"
+                        v-model.number="recipeRegister.carbs"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="2">
@@ -148,7 +148,7 @@
                         label="Proteinas"
                         type="number"
                         suffix="P"
-                        v-model="recipeRegister.proteins"
+                        v-model.number="recipeRegister.proteins"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -257,11 +257,11 @@
                     <v-avatar
                       color="primary"
                     >
-                      <span class="white--text text-h5">{{ user.initials }}</span>
+                      <span class="white--text text-h5">{{ userProfile.initials }}</span>
                     </v-avatar>
-                    <h3>{{ user.fullName }}</h3>
+                    <h3>{{ userProfile.fullName }}</h3>
                     <p class="text-caption mt-1">
-                      {{ user.email }}
+                      {{ userProfile.email }}
                     </p>
                     <v-divider class="my-3"></v-divider>
                     <v-btn
@@ -293,8 +293,9 @@
     <p class="text-h5 text-center">Recetas recomendadas</p>
     <div class="d-flex justify-space-around bg-surface-variant">
       <v-row class="ml-12">
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
+      <card-recetas></card-recetas>
+        <!-- <v-col sm="2" md="2" lg="2" xl="2" cols="10">
+          <card-recetas></card-recetas>
         </v-col>
         <v-col sm="2" md="2" lg="2" xl="2" cols="10">
           <recetas></recetas>
@@ -307,7 +308,7 @@
         </v-col>
         <v-col sm="2" md="2" lg="2" xl="2" cols="10">
           <recetas></recetas>
-        </v-col>
+        </v-col> -->
       </v-row>
     </div>
 
@@ -340,7 +341,7 @@ import Component from 'vue-class-component';
 import { namespace } from "vuex-class";
 import { CreateRecipeInput, Recipe, LoginInput, User } from "~/gql/graphql";
 
-import Recetas from '~/components/recetas.vue';
+import CardRecetas from '~/components/CardRcetas.vue';
 import buttonStep from "~/components/buttonStep.vue";
 import verReceta from '~/components/verReceta.vue';
 
@@ -351,7 +352,7 @@ const Auth = namespace("AuthModule");
   components: {
     buttonStep,
     verReceta,
-    Recetas,
+    CardRecetas,
   },
 })
 export default class Principal extends Vue{
@@ -361,7 +362,7 @@ export default class Principal extends Vue{
   public loaded = false;
   public loading = false;
 
-  public user = {
+  public userProfile = {
         initials: 'JD',
         fullName: 'John Doe',
         email: 'john.doe@doe.com',
@@ -394,12 +395,13 @@ export default class Principal extends Vue{
     time_food: '',
     prep_time: null,
     calories: null,
+    porcion: 0,
     fat: null,
     carbs: null,
     proteins: null,
     user: {
       connect: "8",
-    }
+     }
     /* FALTAN INGREDIENTES Y PASOS */
   };
 /*   @RecipesModule.State("recipes")
@@ -411,12 +413,15 @@ export default class Principal extends Vue{
     await this.fetchRecipes();
   }  */
   @RecipesModule.Action
-  private createRecipe!: (data: CreateRecipeInput) => Promise<void>;
+  private CreateRecipes!: (data: CreateRecipeInput) => Promise<void>;
 
   async handleCreateRecipe(){
-    await this.createRecipe(this.recipeRegister);
+    await this.CreateRecipes(this.recipeRegister);
     this.dialog = false;
   }
+
+  /* @Auth.Getter
+  private UserID! () => Promise<void>; */
 /* 
   @Auth.Action
   private CerrarSesion!: () => void; */
@@ -510,6 +515,8 @@ export default class Principal extends Vue{
   width: 100%;
   background: #fff;
   box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  align-content: center;
+  align-items: center;
 
 }
 

@@ -7,7 +7,7 @@ import RecipesService from "~/services/recipes.service";
 @Module({ namespaced: true })
 class RecipesModule extends VuexModule{
     public recipes?: Recipe[] = undefined;
-    public recipe?: Recipe = undefined;
+    public recipe?: Recipe[] = undefined;
     public loadingRecipeStatus = false;
     public loadingRecipesStatus = false;
     public snackbarSucessCreateRecipe = false;
@@ -34,8 +34,8 @@ class RecipesModule extends VuexModule{
             console.log(recipes);
             this.context.commit("CreateSuccess", recipes);
             this.context.commit("loadingCreate", false);
-            this.context.commit("setsnackbarSucessMessageCreateRecipe");
-            this.context.commit("setsnackbarSucessCreateRecipe");
+            /* this.context.commit("setsnackbarSucessMessageCreateRecipe");
+            this.context.commit("setsnackbarSucessCreateRecipe"); */
         })
         .catch((error) => {
             //console.log(error);

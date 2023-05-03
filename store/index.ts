@@ -1,5 +1,6 @@
 import Vuex, { Store } from 'vuex';
 import AuthModule from './modules/auth.module';
+import RecipesModule from './modules/recipes.module';
 
 export interface RootState {}
 export const store = new Vuex.Store<RootState>({
@@ -8,7 +9,7 @@ export const store = new Vuex.Store<RootState>({
   },
   modules: {
     AuthModule,
-
+    RecipesModule,
   },
 });
 const createStore = (): Store<RootState> => {

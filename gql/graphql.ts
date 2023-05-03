@@ -21,7 +21,7 @@ export type CommentQueryVariables = Exact<{
 }>;
 
 
-export type CommentQuery = { __typename?: 'Query', Comment?: { __typename?: 'Comment', id: string, comentario: string, rating?: number | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any } | null } } | null };
+export type CommentQuery = { __typename?: 'Query', Comment?: { __typename?: 'Comment', id: string, comentario: string, rating?: number | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any } | null } } | null };
 
 export type CommentsQueryVariables = Exact<{
   comentario?: InputMaybe<Scalars['String']>;
@@ -35,42 +35,42 @@ export type CreateCommentMutationVariables = Exact<{
 }>;
 
 
-export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'Comment', id: string, comentario: string, rating?: number | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', name: string, email: string } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }>, Comments: Array<{ __typename?: 'Comment', comentario: string, rating?: number | null }> } } };
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'Comment', id: string, comentario: string, rating?: number | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, user?: { __typename?: 'User', name: string, email: string } | null, steps: Array<{ __typename?: 'Step', description: string }>, Comments: Array<{ __typename?: 'Comment', comentario: string, rating?: number | null }> } } };
 
 export type CreateRecipeMutationVariables = Exact<{
   input: CreateRecipeInput;
 }>;
 
 
-export type CreateRecipeMutation = { __typename?: 'Mutation', createRecipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null } };
+export type CreateRecipeMutation = { __typename?: 'Mutation', createRecipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null } };
 
 export type CreateStepMutationVariables = Exact<{
   crearPaso: CreateStepInput;
 }>;
 
 
-export type CreateStepMutation = { __typename?: 'Mutation', createStep: { __typename?: 'Step', description: string, imagen_path?: string | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, steps: Array<{ __typename?: 'Step', description: string }> } } };
+export type CreateStepMutation = { __typename?: 'Mutation', createStep: { __typename?: 'Step', description: string, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, steps: Array<{ __typename?: 'Step', description: string }> } } };
 
 export type CreateUserMutationVariables = Exact<{
   input: CreateUserInput;
 }>;
 
 
-export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null }> } };
+export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null }> } };
 
 export type DeleteRecipeMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type DeleteRecipeMutation = { __typename?: 'Mutation', deleteRecipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, lastname: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }>, Comments: Array<{ __typename?: 'Comment', comentario: string, rating?: number | null }> } };
+export type DeleteRecipeMutation = { __typename?: 'Mutation', deleteRecipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, lastname: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string }>, Comments: Array<{ __typename?: 'Comment', comentario: string, rating?: number | null }> } };
 
 export type DeleteStepMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type DeleteStepMutation = { __typename?: 'Mutation', deleteStep: { __typename?: 'Step', description: string, imagen_path?: string | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', name: string, email: string } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }> } } };
+export type DeleteStepMutation = { __typename?: 'Mutation', deleteStep: { __typename?: 'Step', description: string, image: { __typename?: 'Image', url: string }, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, user?: { __typename?: 'User', name: string, email: string } | null, steps: Array<{ __typename?: 'Step', description: string }> } } };
 
 export type DeleteUserMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -82,14 +82,14 @@ export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser: { __type
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, email: string, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null }> } };
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, email: string, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, image: { __typename?: 'Image', url: string } }> } };
 
 export type RecipeQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type RecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }>, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null }> } | null };
+export type RecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } }, user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } } }>, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null }> } | null };
 
 export type RecipesQueryVariables = Exact<{
   title?: InputMaybe<Scalars['String']>;
@@ -102,21 +102,21 @@ export type RecipesQueryVariables = Exact<{
 }>;
 
 
-export type RecipesQuery = { __typename?: 'Query', recipes: { __typename?: 'RecipePaginator', data: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any } | null }> } };
+export type RecipesQuery = { __typename?: 'Query', recipes: { __typename?: 'RecipePaginator', data: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } }, user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } } }>, Comments: Array<{ __typename?: 'Comment', comentario: string, rating?: number | null }> }> } };
 
 export type StepQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type StepQuery = { __typename?: 'Query', step?: { __typename?: 'Step', description: string, imagen_path?: string | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null } } | null };
+export type StepQuery = { __typename?: 'Query', step?: { __typename?: 'Step', description: string, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } }, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } } } } | null };
 
 export type StepsQueryVariables = Exact<{
   description?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type StepsQuery = { __typename?: 'Query', steps: { __typename?: 'StepPaginator', data: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }> } };
+export type StepsQuery = { __typename?: 'Query', steps: { __typename?: 'StepPaginator', data: Array<{ __typename?: 'Step', description: string, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } } }> } };
 
 export type UpdateRecipeMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -130,10 +130,11 @@ export type UpdateRecipeMutationVariables = Exact<{
   fat?: InputMaybe<Scalars['Float']>;
   carbs?: InputMaybe<Scalars['Float']>;
   proteins?: InputMaybe<Scalars['Float']>;
+  porcion?: InputMaybe<Scalars['Float']>;
 }>;
 
 
-export type UpdateRecipeMutation = { __typename?: 'Mutation', updateRecipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }>, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null }> } };
+export type UpdateRecipeMutation = { __typename?: 'Mutation', updateRecipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } }, user?: { __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } } }>, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null }> } };
 
 export type UpdateStepMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -141,7 +142,7 @@ export type UpdateStepMutationVariables = Exact<{
 }>;
 
 
-export type UpdateStepMutation = { __typename?: 'Mutation', updateStep: { __typename?: 'Step', description: string, imagen_path?: string | null, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, user?: { __typename?: 'User', name: string, email: string } | null, steps: Array<{ __typename?: 'Step', description: string, imagen_path?: string | null }> } } };
+export type UpdateStepMutation = { __typename?: 'Mutation', updateStep: { __typename?: 'Step', description: string, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } }, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } }, user?: { __typename?: 'User', name: string, email: string } | null, steps: Array<{ __typename?: 'Step', description: string, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } } }> } } };
 
 export type UpdateUserMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -150,7 +151,7 @@ export type UpdateUserMutationVariables = Exact<{
 }>;
 
 
-export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null }> } };
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, name: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, image: { __typename?: 'Image', url: string } }> } };
 
 export type UserQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
@@ -158,7 +159,7 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, image_pf_path?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null }> } | null };
+export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, email: string, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } } }> } | null };
 
 export type UsersQueryVariables = Exact<{
   name?: InputMaybe<Scalars['String']>;
@@ -199,7 +200,6 @@ export const Comment = gql`
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -208,6 +208,7 @@ export const Comment = gql`
       fat
       carbs
       proteins
+      porcion
       rate
       user {
         id
@@ -231,7 +232,7 @@ export const Comments = gql`
 }
     `;
 export const CreateComment = gql`
-    mutation CreateComment($crearComentario: createCommentInput!) {
+    mutation createComment($crearComentario: createCommentInput!) {
   createComment(input: $crearComentario) {
     id
     comentario
@@ -240,7 +241,6 @@ export const CreateComment = gql`
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -249,6 +249,7 @@ export const CreateComment = gql`
       fat
       carbs
       proteins
+      porcion
       rate
       user {
         name
@@ -256,7 +257,6 @@ export const CreateComment = gql`
       }
       steps {
         description
-        imagen_path
       }
       Comments {
         comentario
@@ -272,7 +272,6 @@ export const CreateRecipe = gql`
     id
     title
     description
-    image_pf_path
     origen_food
     time_food
     diet
@@ -285,15 +284,13 @@ export const CreateRecipe = gql`
 }
     `;
 export const CreateStep = gql`
-    mutation CreateStep($crearPaso: createStepInput!) {
+    mutation createStep($crearPaso: createStepInput!) {
   createStep(input: $crearPaso) {
     description
-    imagen_path
     Recipe {
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -302,6 +299,7 @@ export const CreateStep = gql`
       fat
       carbs
       proteins
+      porcion
       rate
       steps {
         description
@@ -324,7 +322,6 @@ export const CreateUser = gql`
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -339,12 +336,11 @@ export const CreateUser = gql`
 }
     `;
 export const DeleteRecipe = gql`
-    mutation DeleteRecipe($id: ID!) {
+    mutation deleteRecipe($id: ID!) {
   deleteRecipe(id: $id) {
     id
     title
     description
-    image_pf_path
     origen_food
     time_food
     diet
@@ -353,6 +349,7 @@ export const DeleteRecipe = gql`
     fat
     carbs
     proteins
+    porcion
     rate
     user {
       id
@@ -366,7 +363,6 @@ export const DeleteRecipe = gql`
     }
     steps {
       description
-      imagen_path
     }
     Comments {
       comentario
@@ -376,15 +372,16 @@ export const DeleteRecipe = gql`
 }
     `;
 export const DeleteStep = gql`
-    mutation DeleteStep($id: ID!) {
+    mutation deleteStep($id: ID!) {
   deleteStep(id: $id) {
     description
-    imagen_path
+    image {
+      url
+    }
     Recipe {
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -393,6 +390,7 @@ export const DeleteStep = gql`
       fat
       carbs
       proteins
+      porcion
       rate
       user {
         name
@@ -400,14 +398,13 @@ export const DeleteStep = gql`
       }
       steps {
         description
-        imagen_path
       }
     }
   }
 }
     `;
 export const DeleteUser = gql`
-    mutation DeleteUser($id: ID!) {
+    mutation deleteUser($id: ID!) {
   deleteUser(id: $id) {
     id
     name
@@ -434,7 +431,6 @@ export const Me = gql`
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -443,6 +439,10 @@ export const Me = gql`
       fat
       carbs
       proteins
+      porcion
+      image {
+        url
+      }
       rate
     }
   }
@@ -454,7 +454,6 @@ export const Recipe = gql`
     id
     title
     description
-    image_pf_path
     origen_food
     time_food
     diet
@@ -463,6 +462,13 @@ export const Recipe = gql`
     fat
     carbs
     proteins
+    porcion
+    image {
+      url
+      imageable {
+        __typename
+      }
+    }
     rate
     user {
       id
@@ -472,7 +478,12 @@ export const Recipe = gql`
     }
     steps {
       description
-      imagen_path
+      image {
+        url
+        imageable {
+          __typename
+        }
+      }
     }
     Comments {
       id
@@ -497,7 +508,6 @@ export const Recipes = gql`
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -506,12 +516,32 @@ export const Recipes = gql`
       fat
       carbs
       proteins
+      porcion
+      image {
+        url
+        imageable {
+          __typename
+        }
+      }
       rate
       user {
         id
         name
         email
         birthday
+      }
+      steps {
+        description
+        image {
+          url
+          imageable {
+            __typename
+          }
+        }
+      }
+      Comments {
+        comentario
+        rating
       }
     }
   }
@@ -521,12 +551,16 @@ export const Step = gql`
     query Step($id: ID) {
   step(id: $id) {
     description
-    imagen_path
+    image {
+      url
+      imageable {
+        __typename
+      }
+    }
     Recipe {
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -535,6 +569,13 @@ export const Step = gql`
       fat
       carbs
       proteins
+      porcion
+      image {
+        url
+        imageable {
+          __typename
+        }
+      }
       rate
     }
   }
@@ -545,13 +586,18 @@ export const Steps = gql`
   steps(description: $description) {
     data {
       description
-      imagen_path
+      image {
+        url
+        imageable {
+          __typename
+        }
+      }
     }
   }
 }
     `;
 export const UpdateRecipe = gql`
-    mutation UpdateRecipe($id: ID!, $title: String, $description: String, $origen_food: String, $time_food: String, $diet: String, $prep_time: Float, $calories: Float, $fat: Float, $carbs: Float, $proteins: Float) {
+    mutation updateRecipe($id: ID!, $title: String, $description: String, $origen_food: String, $time_food: String, $diet: String, $prep_time: Float, $calories: Float, $fat: Float, $carbs: Float, $proteins: Float, $porcion: Float) {
   updateRecipe(
     id: $id
     title: $title
@@ -564,11 +610,11 @@ export const UpdateRecipe = gql`
     fat: $fat
     carbs: $carbs
     proteins: $proteins
+    porcion: $porcion
   ) {
     id
     title
     description
-    image_pf_path
     origen_food
     time_food
     diet
@@ -577,6 +623,13 @@ export const UpdateRecipe = gql`
     fat
     carbs
     proteins
+    porcion
+    image {
+      url
+      imageable {
+        __typename
+      }
+    }
     rate
     user {
       id
@@ -589,7 +642,12 @@ export const UpdateRecipe = gql`
     }
     steps {
       description
-      imagen_path
+      image {
+        url
+        imageable {
+          __typename
+        }
+      }
     }
     Comments {
       id
@@ -600,15 +658,19 @@ export const UpdateRecipe = gql`
 }
     `;
 export const UpdateStep = gql`
-    mutation UpdateStep($id: ID!, $description: String) {
+    mutation updateStep($id: ID!, $description: String) {
   updateStep(id: $id, description: $description) {
     description
-    imagen_path
+    image {
+      url
+      imageable {
+        __typename
+      }
+    }
     Recipe {
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -617,6 +679,13 @@ export const UpdateStep = gql`
       fat
       carbs
       proteins
+      porcion
+      image {
+        url
+        imageable {
+          __typename
+        }
+      }
       rate
       user {
         name
@@ -624,14 +693,19 @@ export const UpdateStep = gql`
       }
       steps {
         description
-        imagen_path
+        image {
+          url
+          imageable {
+            __typename
+          }
+        }
       }
     }
   }
 }
     `;
 export const UpdateUser = gql`
-    mutation UpdateUser($id: ID!, $email: String, $password: String) {
+    mutation updateUser($id: ID!, $email: String, $password: String) {
   updateUser(id: $id, email: $email, password: $password) {
     id
     name
@@ -644,7 +718,6 @@ export const UpdateUser = gql`
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -653,6 +726,10 @@ export const UpdateUser = gql`
       fat
       carbs
       proteins
+      porcion
+      image {
+        url
+      }
       rate
     }
   }
@@ -669,7 +746,6 @@ export const User = gql`
       id
       title
       description
-      image_pf_path
       origen_food
       time_food
       diet
@@ -678,6 +754,13 @@ export const User = gql`
       fat
       carbs
       proteins
+      porcion
+      image {
+        url
+        imageable {
+          __typename
+        }
+      }
       rate
     }
   }
@@ -741,6 +824,16 @@ export type CreateUserBelongsTo = {
   create?: InputMaybe<CreateUserInput>;
 };
 
+export type Image = {
+  __typename?: 'Image';
+  /** Tipo de la imagen */
+  imageable: Imageable;
+  /** Ruta de la imagen */
+  url: Scalars['String'];
+};
+
+export type Imageable = Recipe | Step;
+
 export type Mutation = {
   __typename?: 'Mutation';
   /** crear un comentario en una receta */
@@ -771,6 +864,10 @@ export type Mutation = {
   updateStep: Step;
   /** Actualiza un Usuario Ya Existente */
   updateUser: User;
+  /** Subir imagen una receta */
+  uploadImageRecipe: Recipe;
+  /** Subir imagen un paso */
+  uploadImageStep: Step;
 };
 
 
@@ -834,6 +931,7 @@ export type MutationUpdateRecipeArgs = {
   fat?: InputMaybe<Scalars['Float']>;
   id: Scalars['ID'];
   origen_food?: InputMaybe<Scalars['String']>;
+  porcion?: InputMaybe<Scalars['Float']>;
   prep_time?: InputMaybe<Scalars['Float']>;
   proteins?: InputMaybe<Scalars['Float']>;
   time_food?: InputMaybe<Scalars['String']>;
@@ -851,6 +949,18 @@ export type MutationUpdateUserArgs = {
   email?: InputMaybe<Scalars['String']>;
   id: Scalars['ID'];
   password?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationUploadImageRecipeArgs = {
+  id: Scalars['ID'];
+  image: Scalars['Upload'];
+};
+
+
+export type MutationUploadImageStepArgs = {
+  id: Scalars['ID'];
+  image: Scalars['Upload'];
 };
 
 /** Allows ordering a list of records. */
@@ -969,6 +1079,7 @@ export type QueryRecipesArgs = {
   first?: Scalars['Int'];
   origen_food?: InputMaybe<Origen>;
   page?: InputMaybe<Scalars['Int']>;
+  porcion?: InputMaybe<Scalars['Float']>;
   prep_time?: InputMaybe<Scalars['Float']>;
   rate?: InputMaybe<Scalars['Float']>;
   time_food?: InputMaybe<Time>;
@@ -1022,9 +1133,11 @@ export type Recipe = {
   /** Id */
   id: Scalars['ID'];
   /** Imagen principal de la receta */
-  image_pf_path?: Maybe<Scalars['String']>;
+  image: Image;
   /** De donde es la Receta. Ej, Mexicana */
   origen_food: Origen;
+  /** Cuantas Porciones o para cuantas personas alcanza la receta. */
+  porcion: Scalars['Float'];
   /** Tiempo de preparación de la receta en Float. */
   prep_time: Scalars['Float'];
   /** Cantidad de proteinas que contiene la receta */
@@ -1086,11 +1199,12 @@ export enum SortOrder {
 
 export type Step = {
   __typename?: 'Step';
+  /** Receta */
   Recipe: Recipe;
   /** descripcion */
   description: Scalars['String'];
-  /** Direccion de Imagen */
-  imagen_path?: Maybe<Scalars['String']>;
+  /** Imagen del paso */
+  image: Image;
 };
 
 /** A paginated list of Step items. */
@@ -1165,10 +1279,10 @@ export type CreateRecipeInput = {
   diet: Scalars['String'];
   /** Cantidad de grasas en la receta */
   fat?: InputMaybe<Scalars['Float']>;
-  /** Imagen Principal de la receta */
-  image_pf_path?: InputMaybe<Scalars['Upload']>;
   /** Origen de comida. Ej, Mexicana */
   origen_food: Scalars['String'];
+  /** Cuantas Porciones o para cuantas personas alcanza la receta. */
+  porcion: Scalars['Float'];
   /** Tiempo de preparacion para la receta */
   prep_time?: InputMaybe<Scalars['Float']>;
   /** cantidad de proteinas en la receta */

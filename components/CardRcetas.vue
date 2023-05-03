@@ -1,9 +1,9 @@
 <template>
+<v-col sm="2" md="2" lg="2" xl="2" cols="10">
     <v-card
     class="mx-auto my-2"
     max-width="230"
   >
-   
     <v-img
       cover
       height="100"
@@ -11,22 +11,22 @@
     ></v-img>
 
     <v-card-item>
-      <v-card-title>Nombre <v-spacer></v-spacer>
+      <v-card-title>{{title}} <v-spacer></v-spacer>
       <v-btn
-              icon
-              color="pink"
-            >
-              <v-icon>mdi-heart</v-icon>
-            </v-btn>
-            <v-btn @click.stop="dialog = true"
-              icon
-              color="green"
-            >
-              <v-icon>mdi-eye</v-icon>
-            </v-btn>
+        icon
+        color="pink"
+      >
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+      <v-btn @click.stop="dialog = true"
+        icon
+        color="green"
+      >
+        <v-icon>mdi-eye</v-icon>
+      </v-btn>
       </v-card-title>
       <v-card-subtitle>
-        <span class="me-1">Tipo</span>
+        <span class="me-1">{{diet}}</span>
         <v-spacer></v-spacer><span class="me-1">4.5 (413)</span>
       </v-card-subtitle>
     </v-card-item>
@@ -41,23 +41,23 @@
       </v-row>
 
       <div class="my-1">
-        <v-chip>tag</v-chip>
+        <v-chip>{{origen}}</v-chip>
 
-        <v-chip>tag</v-chip>
+        <v-chip>{{time_food}}</v-chip>
 
-        <v-chip>tag</v-chip>
+        <v-chip>{{prep_time}}</v-chip>
 
-        <v-chip>tag</v-chip>
-    </div>
+<!--         <v-chip>tag</v-chip>
+ -->    </div>
     </v-card-text>
 
-  <v-dialog
+    <v-dialog
       v-model="dialog"
       max-width="290"
     >
       <v-card>
         <v-card-title class="text-h5">
-          Use Google's location service?
+          {{title}}
         </v-card-title>
 
         <v-card-text>
@@ -72,7 +72,7 @@
             text
             @click="dialog = false"
           >
-            Disagree
+            Cerrar
           </v-btn>
 
           <v-btn
@@ -80,7 +80,7 @@
             text
             @click="dialog = false"
           >
-            Agree
+            Oka
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -89,26 +89,29 @@
 
     
   </v-card>
+</v-col>
 </template>
 
-<script>
-import verReceta from './verReceta.vue';
-
+<script >
+/* import { component, prop, PropSync, Ref, Vue } from 'vue-property-decorator';
+ */import verReceta from './verReceta.vue';
+/* import { component } from 'vue/types/umd';
+ */
 
 export default {
   name: "recetas",
   components: {
     verReceta,
   },
-  
-  data () {
-      return {
-        dialog: false,
-      }
-    },
+
+  data() {
+    return {
+      dialog: false,
+    }
+  },
   methods: {
     openDialog() {
-     this.$refs.verReceta.dialog = true;
+      this.$refs.verReceta.dialog = true;
     },
   },
 };

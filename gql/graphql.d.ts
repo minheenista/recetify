@@ -38,7 +38,7 @@ declare module '*/comments.graphql' {
 declare module '*/createComment.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const CreateComment: DocumentNode;
+  export const createComment: DocumentNode;
 
   export default defaultDocument;
 }
@@ -56,13 +56,13 @@ declare module '*/createRecipe.graphql' {
 declare module '*/createStep.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const CreateStep: DocumentNode;
+  export const createStep: DocumentNode;
 
   export default defaultDocument;
 }
     
 
-declare module '*/createUser.graphql' {
+declare module '*/createuser.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
   export const CreateUser: DocumentNode;
@@ -74,7 +74,7 @@ declare module '*/createUser.graphql' {
 declare module '*/deleteRecipe.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const DeleteRecipe: DocumentNode;
+  export const deleteRecipe: DocumentNode;
 
   export default defaultDocument;
 }
@@ -83,7 +83,7 @@ declare module '*/deleteRecipe.graphql' {
 declare module '*/deleteStep.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const DeleteStep: DocumentNode;
+  export const deleteStep: DocumentNode;
 
   export default defaultDocument;
 }
@@ -92,7 +92,7 @@ declare module '*/deleteStep.graphql' {
 declare module '*/deleteUser.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const DeleteUser: DocumentNode;
+  export const deleteUser: DocumentNode;
 
   export default defaultDocument;
 }
@@ -146,7 +146,7 @@ declare module '*/steps.graphql' {
 declare module '*/updateRecipe.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const UpdateRecipe: DocumentNode;
+  export const updateRecipe: DocumentNode;
 
   export default defaultDocument;
 }
@@ -155,16 +155,16 @@ declare module '*/updateRecipe.graphql' {
 declare module '*/updateStep.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const UpdateStep: DocumentNode;
+  export const updateStep: DocumentNode;
 
   export default defaultDocument;
 }
     
 
-declare module '*/updateUser.graphql' {
+declare module '*/updateuser.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const UpdateUser: DocumentNode;
+  export const updateUser: DocumentNode;
 
   export default defaultDocument;
 }

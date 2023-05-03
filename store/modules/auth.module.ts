@@ -15,6 +15,7 @@ class AuthModule extends VuexModule {
 
   @Action
   async login(data: LoginInput): Promise<void> {
+
     this.context.commit("loadingLogin", true);
     this.context.commit("resetErrorMessage");
     return await AuthService.login(data)
@@ -32,16 +33,18 @@ class AuthModule extends VuexModule {
       });
   }
 
+
   @Mutation
   public loginSuccess(auth: any): void {
     console.log(auth);
     this.nextPage = true;
-    window.$nuxt.$cookies.set("token", auth.token, {
-      path: "/preferencias",
+    window.$nuxt.$cookies.set("token", auth.accessToken, {
+      path: "/recetas",
     });
     window.$nuxt.$router.push("./preferencias");
-
-  }
+    const token = window.$nuxt.$cookies.get("token");
+/*     const userID = auth.User.ID
+ */  }
 
  @Mutation
   public loginFaile(error: any) {
@@ -118,6 +121,8 @@ class AuthModule extends VuexModule {
             console.log(auth);
             this.context.commit("loginSuccess", auth);
             this.context.commit("loadingRegister", false);
+            window.$nuxt.$router.push("/preferencias");
+
           })
           .catch((error: string) => {
             console.log(error);

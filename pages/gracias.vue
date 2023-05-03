@@ -43,7 +43,7 @@ export default {
     methods: {
       
       fullregistro(){
-      this.$router.push('./recipes/index');
+      this.$router.push('./recetas');
     }
     },
   }
