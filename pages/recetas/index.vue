@@ -225,11 +225,8 @@
         <!-- <v-btn class="mx-auto" color="gray" dense @click="handleLogout()">
           Cerrar Sesión
         </v-btn> -->
-
-        <!-- <v-container
-          fluid
-          style="height: 300px"
-        > -->
+        
+          <!-- USER PROFILE -->
             <v-menu
               bottom
               min-width="200px"
@@ -283,8 +280,7 @@
                 </v-list-item-content>
               </v-card>
             </v-menu>
-<!--         </v-container>
- -->
+
       </v-toolbar>
 
       <!-- ================= LISTA DE RECETAS ======================== -->
@@ -292,56 +288,26 @@
 
     <p class="text-h5 text-center">Recetas recomendadas</p>
     <div class="d-flex justify-space-around bg-surface-variant">
-      <v-row class="ml-12">
-      <card-recetas></card-recetas>
-        <!-- <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <card-recetas></card-recetas>
+     <v-row class="ml-12" v-if="me && me.recipes">
+        <v-col cols="3" v-for="(recipe) in me.recipes" :key="recipe.id">
+          <CardRecipes :recipe="recipe" />
         </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col> -->
+       
       </v-row>
     </div>
 
-    <p class="text-h5 text-center">Recetas mejor valoradas</p>
-    <div class="d-flex justify-space-around bg-surface-variant">
-      <v-row class="ml-12">
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-        <v-col sm="2" md="2" lg="2" xl="2" cols="10">
-          <recetas></recetas>
-        </v-col>
-      </v-row>
-    </div>
+    
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import Component from 'vue-class-component';
-import { namespace } from "vuex-class";
-import { CreateRecipeInput, Recipe, LoginInput, User } from "~/gql/graphql";
+import { mapState } from 'vuex';
 
-import CardRecetas from '~/components/CardRcetas.vue';
+import { Component, Watch } from "vue-property-decorator";
+import { namespace } from "vuex-class";
+import { CreateRecipeInput, Recipe, Recipes, User } from "~/gql/graphql";
+import CardRecipes from "~/components/CardRecipes.vue";
 import buttonStep from "~/components/buttonStep.vue";
 import verReceta from '~/components/verReceta.vue';
 
@@ -352,8 +318,11 @@ const Auth = namespace("AuthModule");
   components: {
     buttonStep,
     verReceta,
-    CardRecetas,
+    CardRecipes,
   },
+  layout(context){
+    return "dashboard";
+  }
 })
 export default class Principal extends Vue{
   public dialog = false;
@@ -388,7 +357,48 @@ export default class Principal extends Vue{
     {text: "China", value: "China"},
   ];
 
-  public recipeRegister: CreateRecipeInput ={
+ 
+
+  @RecipesModule.Action
+  private CreateRecipes!: (data: CreateRecipeInput) => Promise<void>;
+
+  async handleCreateRecipe(){
+    const data = {...this.recipeRegister, user: {connect: this.me.id}};
+    await this.CreateRecipes(data);
+    this.dialog = false;
+    await this.fetchMe();
+  }
+
+
+
+   @RecipesModule.State("snackbarSucessCreateRecipe")
+  public snackbarSucessCreateRecipe?: boolean;
+  @RecipesModule.State("snackbarSucessMessageCreateRecipe")
+  public snackbarSucessMessageCreateRecipe?: string;
+  @RecipesModule.Action
+  private changeStatusSnackbarCreateRecipe!: () => void; 
+   @Auth.State("user")
+  private user!: User;
+  @Auth.Action
+  private fetchMe!: () => Promise<void>;
+  @RecipesModule.State("recipes")
+  public recipe!: Recipe[];
+  @RecipesModule.Action
+  private fetchRecipes!: () => Promise<void>; 
+  @Auth.State("me")
+  private me!: User;
+
+  async onClick(){
+    this.loading = true;
+    setTimeout(() =>{
+      this.loading = false
+      this.loaded = true
+    }, 2000)
+  }
+
+  
+
+   public recipeRegister: CreateRecipeInput ={
     title: '',
     diet: '',
     origen_food: '',
@@ -399,114 +409,26 @@ export default class Principal extends Vue{
     fat: null,
     carbs: null,
     proteins: null,
-    user: {
-      connect: "8",
-     }
+    /* user: {
+      connect: this.me.id,
+     }   */
     /* FALTAN INGREDIENTES Y PASOS */
   };
-/*   @RecipesModule.State("recipes")
-  private recipes!: Recipe[];
 
-  @RecipesModule.Action
-  private fetchRecipes!: () => Promise<void>;
-  async created() {
-    await this.fetchRecipes();
-  }  */
-  @RecipesModule.Action
-  private CreateRecipes!: (data: CreateRecipeInput) => Promise<void>;
+  async created(){
+    await this.fetchMe();
 
-  async handleCreateRecipe(){
-    await this.CreateRecipes(this.recipeRegister);
-    this.dialog = false;
-  }
-
-  /* @Auth.Getter
-  private UserID! () => Promise<void>; */
-/* 
-  @Auth.Action
-  private CerrarSesion!: () => void; */
-
-  @RecipesModule.State("snackbarSucessCreateRecipe")
-  public snackbarSucessCreateRecipe?: boolean;
-  @RecipesModule.State("snackbarSucessMessageCreateRecipe")
-  public snackbarSucessMessageCreateRecipe?: string;
-  @RecipesModule.Action
-  private changeStatusSnackbarCreateRecipe!: () => void;
-
-  async onClick(){
-    this.loading = true;
-    setTimeout(() =>{
-      this.loading = false
-      this.loaded = true
-    }, 2000)
-  }
+  } 
 
   async handleLogout(){
     this.$router.push('/')
   }
   
+  
 }
 
 
-/* export default {
-  name: "Inicio",
-   components: {
-    buttonStep,
-    verReceta,
-    Recetas,
-  }, 
- 
 
-  data: () => ({
-    dialog: false,
-    drawer: false,
-    group: null,
-    loaded: false,
-    loading: false,
- 
-    items: [
-      {
-        title: 'Foo',
-        value: 'foo',
-      },
-      {
-        title: 'Bar',
-        value: 'bar',
-      },
-      {
-        title: 'Fizz',
-        value: 'fizz',
-      },
-      {
-        title: 'Buzz',
-        value: 'buzz',
-      },
-    ],
-  }),
-
-  methods: {
-    onClick() {
-      this.loading = true
-
-      setTimeout(() => {
-        this.loading = false
-        this.loaded = true
-      }, 2000)
-    },
-    openDialog(recipe) {
-      this.$refs.modalRecipe[recipe.id].dialog = true;
-    },
-    handleLogout() {
-      this.$router.push('/');
-    }
-  },
-
-  watch: {
-    group() {
-      this.drawer = false
-    },
-  },
-} */
 </script>
 
 <style scoped>

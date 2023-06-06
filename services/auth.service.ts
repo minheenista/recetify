@@ -36,7 +36,7 @@ class AuthService {
         query: Me,
         fetchPolicy: "network-only",
       })
-    ).data;
+    ).data.me;
   }
 
   async logout(): Promise<boolean> {

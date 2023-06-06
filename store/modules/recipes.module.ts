@@ -1,6 +1,6 @@
 import { ApolloError } from "@apollo/client/errors";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
-import { CreateRecipeInput, Recipe } from "~/gql/graphql";
+import { CreateRecipeInput, Recipe, Recipes, User,  } from "~/gql/graphql";
 
 import RecipesService from "~/services/recipes.service";
 
@@ -8,11 +8,12 @@ import RecipesService from "~/services/recipes.service";
 class RecipesModule extends VuexModule{
     public recipes?: Recipe[] = undefined;
     public recipe?: Recipe[] = undefined;
+    public user: User[] | null = null;
     public loadingRecipeStatus = false;
     public loadingRecipesStatus = false;
     public snackbarSucessCreateRecipe = false;
     public snackbarSucessMessageCreateRecipe = "";
-    /* @Action
+    @Action
     async fetchRecipes() {
         this.context.commit("loadingRecipes", true);
         return await RecipesService.getRecipes()
@@ -24,7 +25,7 @@ class RecipesModule extends VuexModule{
         .catch((error) => {
             console.log(error);
         });
-    } */
+    } 
     @Action
     async CreateRecipes(data: CreateRecipeInput) {
         this.context.commit("loadingCreate", true);

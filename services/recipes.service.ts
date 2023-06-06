@@ -2,10 +2,13 @@ import { apolloClient } from "@/provider/apolloProvider";
 import { 
     CreateRecipe, 
     CreateRecipeInput,
+    Recipes,
+    Recipe,
+    User,
  } from "~/gql/graphql";
 
  class RecipesService {
-    /* async getRecipes() {
+    async getRecipes() {
       return (
         await apolloClient.query({
           query: Recipes,
@@ -23,7 +26,7 @@ import {
           },
         })
       ).data;
-    } */
+    }
     async createRecipe(data: CreateRecipeInput) {
       return (
         await apolloClient.mutate({
