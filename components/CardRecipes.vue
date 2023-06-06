@@ -1,7 +1,7 @@
 <template>
     <v-card
     class="mx-auto my-2"
-    max-width="230"
+    max-width="250"
   >
     <v-img
       cover
@@ -42,11 +42,11 @@
       </v-row>
 
       <div class="my-1">
-        <v-chip>{{ recipe.origen_food }}</v-chip>
+        <v-chip small>{{ recipe.origen_food }}</v-chip>
 
-        <v-chip>{{ recipe.time_food }}</v-chip>
+        <v-chip small>{{ recipe.time_food }}</v-chip>
 
-        <v-chip>{{ recipe.prep_time }}</v-chip>
+        <v-chip small>{{ recipe.prep_time }}</v-chip>
    </div>
     </v-card-text>
 
@@ -71,10 +71,10 @@
         <v-card-subtitle class="ml-8 my-0" > {{recipe.user.name}} </v-card-subtitle>
         <v-spacer></v-spacer>
         <div class="mx-4>">
-        <v-chip class="mr-4">Dieta</v-chip>
-        <v-chip class="mr-4">Tiempo</v-chip>
-        <v-chip class="mr-4">Origen</v-chip>
-        <v-chip>Prep time</v-chip>
+        <v-chip class="mr-4">{{recipe.diet}}</v-chip>
+        <v-chip class="mr-4">{{ recipe.time_food }}</v-chip>
+        <v-chip class="mr-4">{{ recipe.origen_food }}</v-chip>
+        <v-chip>{{ recipe.prep_time }}</v-chip>
         </div>
         <v-spacer></v-spacer>
 
@@ -96,13 +96,13 @@
         <v-row>
           <h4 class="ml-10">Informacion nutrimental</h4>
           <v-spacer></v-spacer>
-          <p>3547 calorias</p>
+          <p>{{recipe.calories}} calorias</p>
           <v-spacer></v-spacer>
-          <p>3547 grasas</p>
+          <p>{{recipe.fat}} grasas</p>
           <v-spacer></v-spacer>
-          <p>3547 carbohidratos</p>
+          <p>{{ recipe.carbs }} carbohidratos</p>
           <v-spacer></v-spacer>
-          <p>3547 proteinas</p>
+          <p>{{ recipe.proteins }} proteinas</p>
           <v-spacer></v-spacer>
           
 
@@ -113,7 +113,7 @@
 
         <v-card-text>
         <h3 class="mt-5 ml-4"  color="black">Descripcion</h3>
-        Hola
+        {{ recipe.description }}
         </v-card-text>
         <v-divider></v-divider>
         <br>
@@ -314,21 +314,12 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-
           <v-btn
             color="green darken-1"
             text
             @click="dialog = false"
           >
             Cerrar
-          </v-btn>
-
-          <v-btn
-            color="green darken-1"
-            text
-            @click="dialog = false"
-          >
-            Oka
           </v-btn>
         </v-card-actions>
       </v-card>

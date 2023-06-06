@@ -289,7 +289,7 @@
     <p class="text-h5 text-center">Recetas recomendadas</p>
     <div class="d-flex justify-space-around bg-surface-variant">
      <v-row class="ml-12" v-if="me && me.recipes">
-        <v-col cols="10" v-for="(recipe) in me.recipes" :key="recipe.id">
+        <v-col cols="3" v-for="(recipe) in me.recipes" :key="recipe.id">
           <CardRecipes :recipe="recipe" />
         </v-col>
        
@@ -366,6 +366,7 @@ export default class Principal extends Vue{
     const data = {...this.recipeRegister, user: {connect: this.me.id}};
     await this.CreateRecipes(data);
     this.dialog = false;
+    await this.fetchMe();
   }
 
 
