@@ -1,6 +1,6 @@
 import { ApolloError } from "@apollo/client/errors";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
-import {CreateUserInput, LoginInput, User } from "~/gql/graphql";
+import {CreateUserInput, LoginInput, Recipe, User } from "~/gql/graphql";
 
 import AuthService from "~/services/auth.service";
 
@@ -15,7 +15,6 @@ class AuthModule extends VuexModule {
 
   @Action
   async login(data: LoginInput): Promise<void> {
-
     this.context.commit("loadingLogin", true);
     this.context.commit("resetErrorMessage");
     return await AuthService.login(data)
@@ -37,7 +36,6 @@ class AuthModule extends VuexModule {
   @Mutation
   public loginSuccess(auth: any): void {
     console.log(auth);
-    console.log(this.user);
     this.nextPage = true;
     window.$nuxt.$cookies.set("token", auth.accessToken, {
       path: "/recetas",
@@ -85,14 +83,11 @@ class AuthModule extends VuexModule {
   public logoutFailure(): void {
     /*  this.status.logged = false; */
   }
-
-
  
   @Mutation
   public resetErrorMessage() {
     this.errorMessage = undefined;
   } 
-
   
   @Mutation
   public removeCookies() {
@@ -104,10 +99,6 @@ class AuthModule extends VuexModule {
   logout(): void {
     this.context.commit("removeCookies");
   } */
-
-  
-
-   
 
   @Action
   async createUser(data: CreateUserInput) {
@@ -159,6 +150,35 @@ class AuthModule extends VuexModule {
 
   get getAuthToken(): string | null {
     return window.$nuxt.$cookies.get('token');
+  }
+
+  @Action
+  async fetchMe(){
+    this.context.commit("loadingUser", true);
+    return await AuthService.currentUser()
+    .then((user: User) =>{
+      console.log(user);
+      this.context.commit("userSuccess", user);
+      this.context.commit("loadingUser", false);
+    })
+    .catch((error) =>{
+      console.log(error.message);
+      this.context.commit("userFailure", error);
+      this.context.commit("loadingUser", false);
+    })
+  }
+
+  /* SET DELETE RECIPES */
+
+  @Mutation
+  public setCreateRecipe(data: Recipe){
+    console.log("lleho set recipe");
+    if(this.user){
+      const copyUser = {...this.user};
+      copyUser.recipes = [...copyUser.recipes];
+      copyUser.recipes.push(data);
+      this.user = copyUser;
+    }
   }
 
 

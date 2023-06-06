@@ -4,6 +4,7 @@ import {
     CreateRecipeInput,
     Recipes,
     Recipe,
+    User,
  } from "~/gql/graphql";
 
  class RecipesService {

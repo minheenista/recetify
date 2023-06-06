@@ -11,7 +11,7 @@
     ></v-img>
 
     <v-card-item>
-      <v-card-title>{{title}} <v-spacer></v-spacer>
+      <v-card-title>{{ recipe.title }} <v-spacer></v-spacer>
       <v-btn
         icon
         color="pink"
@@ -26,7 +26,7 @@
       </v-btn>
       </v-card-title>
       <v-card-subtitle>
-        <span class="me-1">{{diet}}</span>
+        <span class="me-1">{{ recipe.diet }}</span>
         <v-spacer></v-spacer>
 
         
@@ -43,11 +43,11 @@
       </v-row>
 
       <div class="my-1">
-        <v-chip>{{origen}}</v-chip>
+        <v-chip>{{ recipe.origen_food }}</v-chip>
 
-        <v-chip>{{time_food}}</v-chip>
+        <v-chip>{{ recipe.time_food }}</v-chip>
 
-        <v-chip>{{prep_time}}</v-chip>
+        <v-chip>{{ recipe.prep_time }}</v-chip>
    </div>
     </v-card-text>
 
@@ -66,7 +66,7 @@
         ></v-img>
 
         <v-card-title class="text-h5">
-          AAAAAAAAAAAAA
+          {{ recipe.title }}
         </v-card-title>
         <v-row>
         <v-card-subtitle class="ml-8 my-0"> AUTOR </v-card-subtitle>
@@ -341,32 +341,31 @@
 </v-col>
 </template>
 
-<script >
-/* import { component, prop, PropSync, Ref, Vue } from 'vue-property-decorator';
- */import verReceta from './verReceta.vue';
-/* import { component } from 'vue/types/umd';
- */
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import { namespace } from 'vuex-class';
+import { Recipe } from '~/gql/graphql';
+import { Prop } from "vue-property-decorator";
 
-export default {
-  name: "recetas",
-  components: {
-    verReceta,
-  },
+const RecipesModule = namespace("RecipesModule");
 
-  data() {
-    return {
-      dialog: false,
-      rating: 4.3,
-       pictures: ["https://source.unsplash.com/random/1150×250/?food"],
-      picToShow: "https://source.unsplash.com/random/1150×250/?food",
-    }
-  },
-  methods: {
-    openDialog() {
-      this.$refs.verReceta.dialog = true;
-    },
-  },
-};
+@Component
+export default class CardRecipes extends Vue{
+  public dialog = false;
+  public rating = 4.3;
+
+  @Prop({
+    required: false,
+  })
+  public recipe!: Recipe;
+
+  
+
+
+
+}
+
 </script>
 
 <style>
