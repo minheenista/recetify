@@ -3,7 +3,6 @@ query Me {
     id
     name
     email
-
     birthday
     recipes {
       id
@@ -18,10 +17,11 @@ query Me {
       carbs
       proteins
       porcion
-      image{
-        url
-      }
       rate
+      user{
+        id
+        name
+      }
     }
   }
 }

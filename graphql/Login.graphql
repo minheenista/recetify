@@ -7,8 +7,6 @@ mutation Login($input: loginInput!) {
       lastname
       email
       birthday
-      recipes
     }
-
   }
 }

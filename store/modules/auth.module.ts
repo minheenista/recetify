@@ -7,8 +7,11 @@ import AuthService from "~/services/auth.service";
 @Module({ namespaced: true })
 class AuthModule extends VuexModule {
   public user?: User = undefined;
+  public me?: User = undefined;
   public loadingLoginStatus = false;
   public loadingRegisterStatus = false;
+  public loadingUser = false;
+  public userFailure = undefined
   public errorMessage?: string = undefined;
   public nextPage = false;
   context: any;
@@ -38,7 +41,7 @@ class AuthModule extends VuexModule {
     console.log(auth);
     this.nextPage = true;
     window.$nuxt.$cookies.set("token", auth.accessToken, {
-      path: "/recetas",
+      path: "/",
     });
     window.$nuxt.$router.push("./preferencias");
     const token = window.$nuxt.$cookies.get("token");
@@ -179,6 +182,11 @@ class AuthModule extends VuexModule {
       copyUser.recipes.push(data);
       this.user = copyUser;
     }
+  }
+
+  @Mutation
+  public userSuccess(user: User){
+    this.me = user;
   }
 
 

@@ -288,12 +288,12 @@
 
     <p class="text-h5 text-center">Recetas recomendadas</p>
     <div class="d-flex justify-space-around bg-surface-variant">
-     <!-- <v-row class="ml-12" v-if="user & user.recipes">
-        <v-col cols="10" v-for="(recipe, index) in user.recipes" :key="index">
+     <v-row class="ml-12" v-if="me && me.recipes">
+        <v-col cols="10" v-for="(recipe) in me.recipes" :key="recipe.id">
           <CardRecipes :recipe="recipe" />
         </v-col>
        
-      </v-row> -->
+      </v-row>
     </div>
 
     
@@ -363,7 +363,8 @@ export default class Principal extends Vue{
   private CreateRecipes!: (data: CreateRecipeInput) => Promise<void>;
 
   async handleCreateRecipe(){
-    await this.CreateRecipes(this.recipeRegister);
+    const data = {...this.recipeRegister, user: {connect: this.me.id}};
+    await this.CreateRecipes(data);
     this.dialog = false;
   }
 
@@ -383,6 +384,8 @@ export default class Principal extends Vue{
   public recipe!: Recipe[];
   @RecipesModule.Action
   private fetchRecipes!: () => Promise<void>; 
+  @Auth.State("me")
+  private me!: User;
 
   async onClick(){
     this.loading = true;
@@ -391,6 +394,8 @@ export default class Principal extends Vue{
       this.loaded = true
     }, 2000)
   }
+
+  
 
    public recipeRegister: CreateRecipeInput ={
     title: '',
@@ -404,13 +409,14 @@ export default class Principal extends Vue{
     carbs: null,
     proteins: null,
     /* user: {
-      connect: '12',
-     }  */
+      connect: this.me.id,
+     }   */
     /* FALTAN INGREDIENTES Y PASOS */
   };
 
   async created(){
     await this.fetchMe();
+
   } 
 
   async handleLogout(){

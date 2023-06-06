@@ -1,5 +1,4 @@
 <template>
-<v-col sm="2" md="2" lg="2" xl="2" cols="10">
     <v-card
     class="mx-auto my-2"
     max-width="230"
@@ -69,7 +68,7 @@
           {{ recipe.title }}
         </v-card-title>
         <v-row>
-        <v-card-subtitle class="ml-8 my-0"> AUTOR </v-card-subtitle>
+        <v-card-subtitle class="ml-8 my-0" > {{recipe.user.name}} </v-card-subtitle>
         <v-spacer></v-spacer>
         <div class="mx-4>">
         <v-chip class="mr-4">Dieta</v-chip>
@@ -338,7 +337,6 @@
 
     
   </v-card>
-</v-col>
 </template>
 
 <script lang="ts">
