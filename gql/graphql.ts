@@ -101,7 +101,7 @@ export type IngredientQuery = { __typename?: 'Query', cat_ingredient?: { __typen
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, lastname: string, email: string, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, lastname: string } | null }>, favoriteRecipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, porcion: number }> } };
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, lastname: string, email: string, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, lastname: string } | null, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null }> }>, favoriteRecipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, porcion: number }> } };
 
 export type RecipeQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
@@ -276,7 +276,7 @@ export const Comments = gql`
 }
     `;
 export const CreateComment = gql`
-    mutation createComment($crearComentario: createCommentInput!) {
+    mutation CreateComment($crearComentario: createCommentInput!) {
   createComment(input: $crearComentario) {
     id
     comentario
@@ -499,6 +499,11 @@ export const Me = gql`
         id
         name
         lastname
+      }
+      Comments {
+        id
+        comentario
+        rating
       }
     }
     favoriteRecipes {

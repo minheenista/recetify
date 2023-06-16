@@ -56,7 +56,7 @@ declare module '*/comments.graphql' {
 declare module '*/createComment.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const createComment: DocumentNode;
+  export const CreateComment: DocumentNode;
 
   export default defaultDocument;
 }

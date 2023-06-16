@@ -24,6 +24,12 @@ query Me {
         name
         lastname
       }
+      Comments {
+      id
+      comentario
+      rating
+
+    }
     }
     favoriteRecipes {
       id

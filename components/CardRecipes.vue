@@ -358,28 +358,37 @@
 
         </v-row>
 
-        <v-row>
-        <v-col cols="2">
+        </center>
+        <div v-if="recipe.Comments">
+        <v-row v-for="(coment) in recipe.Comments" :key="coment.id">
+        <v-col cols="1">
           <v-avatar
             color="primary"
             size="45"
-            class="mr-3"
+            class="mr-0 ml-10"
           >
             <span class="white--text text-h5 ml-3 mr-3">  AA </span>
           </v-avatar>
         </v-col>
-        <v-col>
-          <v-card-title class="text-h5">
-            <strong>Nombre {{recipe.Comments}}</strong>
-          </v-card-title>
-          <v-card-text class="text-h6">
-            {{recipe.Comments}}
+        <v-col cols="8">
+          <v-card-text class="subtitle-1 ml-3">
+            {{coment.comentario}}
           </v-card-text>
         </v-col>
+        <v-col cols="3">
+          <v-rating class="mt-5"
+              v-model="coment.rating"
+              background-color="amber lighten-2"
+              color="amber darken-2"
+              dense
+              half-increments
+              size="25"
+            ></v-rating>
+        </v-col>
         </v-row>
+        </div>
 
-
-        </center>
+        
 
 
         <v-card-actions>
@@ -755,6 +764,7 @@ export default class CardRecipes extends Vue{
  */    const data = {...this.commentRegister, recipe: {connect: this.recipe.id}};
     await this.createRecipeComment(data);
     await this.fetchRecipes();
+    this.fetchMe();
   }
 
   public commentRegister: CreateCommentInput = {
