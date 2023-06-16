@@ -10,7 +10,9 @@ import {
     UpdateRecipe,
     UpdateRecipeInput,
     AddRecipeToFavorites,
-    RemoveRecipeToFavorites
+    RemoveRecipeToFavorites,
+    CreateCommentInput,
+    CreateComment
  } from "~/gql/graphql";
 
  class RecipesService {
@@ -97,6 +99,19 @@ import {
         })
       ).data.removeRecipesToFavorites;
     }
+
+    async createRecipeComment(data: CreateCommentInput){
+      return (
+        await apolloClient.mutate({
+          mutation: CreateComment,
+          fetchPolicy: "network-only",
+          variables: {
+            crearComentario: data,
+          }
+        })
+      ).data.createComment;
+    }
+
   }
   
   export default new RecipesService();

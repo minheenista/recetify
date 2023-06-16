@@ -329,6 +329,57 @@
 
         <v-divider></v-divider>
 
+        <h1 class="ml-10">Comentarios</h1>
+        <center>
+        <v-row>
+          <v-col cols="8" >
+            <v-textarea class="ml-10"
+              label="Escribe un comentario"
+              rows="1"
+              auto-grow
+              clearable
+              v-model="commentRegister.comentario"
+            ></v-textarea>
+          </v-col>
+          <v-col cols="2" sm="2">
+            <v-rating class="mt-5"
+              v-model="commentRegister.rating"
+              background-color="amber lighten-2"
+              color="amber darken-2"
+              dense
+              half-increments
+              hover
+              size="25"
+            ></v-rating>
+          </v-col>
+          <v-col cols="1" sm="1">
+            <v-btn color="primary" class="mt-3" @click="handleCreateComment()"> Enviar </v-btn>
+          </v-col>
+
+        </v-row>
+
+        <v-row>
+        <v-col cols="2">
+          <v-avatar
+            color="primary"
+            size="45"
+            class="mr-3"
+          >
+            <span class="white--text text-h5 ml-3 mr-3">  AA </span>
+          </v-avatar>
+        </v-col>
+        <v-col>
+          <v-card-title class="text-h5">
+            <strong>Nombre {{recipe.Comments}}</strong>
+          </v-card-title>
+          <v-card-text class="text-h6">
+            {{recipe.Comments}}
+          </v-card-text>
+        </v-col>
+        </v-row>
+
+
+        </center>
 
 
         <v-card-actions>
@@ -601,7 +652,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { namespace } from 'vuex-class';
-import { Recipe, DeleteRecipeMutation, User, Cat_Ingredient, UpdateRecipeInput } from '~/gql/graphql';
+import { Recipe, DeleteRecipeMutation, User, Cat_Ingredient, UpdateRecipeInput, CreateCommentInput, Comments } from '~/gql/graphql';
 import { Prop } from "vue-property-decorator";
 
 const RecipesModule = namespace("RecipesModule");
@@ -684,6 +735,7 @@ export default class CardRecipes extends Vue{
     await this.fetchMe();
   }
 
+
   @RecipesModule.Action
   private deleteRecipe!: (recipeId: string) => Promise<void>;
   async handleDeleteRecipe(idReceta: string) {
@@ -694,6 +746,21 @@ export default class CardRecipes extends Vue{
     this.fetchMe();
 
   }
+
+  @RecipesModule.Action 
+  private createRecipeComment!: (createCommentInput: CreateCommentInput) => Promise<void>;
+  async handleCreateComment(){
+    console.log("recipeId", this.recipe.id);
+/*     const recipeId = this.recipe.id;
+ */    const data = {...this.commentRegister, recipe: {connect: this.recipe.id}};
+    await this.createRecipeComment(data);
+    await this.fetchRecipes();
+  }
+
+  public commentRegister: CreateCommentInput = {
+    comentario: "",
+    rating: 0,
+  };
 
  
 

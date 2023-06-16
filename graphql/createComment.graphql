@@ -1,4 +1,4 @@
-mutation createComment($crearComentario: createCommentInput!) {
+mutation CreateComment($crearComentario: createCommentInput!) {
   createComment(input: $crearComentario) {
     id
     comentario

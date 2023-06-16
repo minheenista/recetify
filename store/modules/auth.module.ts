@@ -1,7 +1,7 @@
 import { ApolloError } from "@apollo/client/errors";
 import Vue from "vue";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
-import {CreateUserInput, LoginInput, Recipe, User } from "~/gql/graphql";
+import {CreateUserInput, LoginInput, Recipe, User, Comment } from "~/gql/graphql";
 
 import AuthService from "~/services/auth.service";
 
@@ -9,6 +9,7 @@ import AuthService from "~/services/auth.service";
 class AuthModule extends VuexModule {
   public user?: User = undefined;
   public me?: User = undefined;
+  public comments?: Comment[] = undefined;
   public loadingLoginStatus = false;
   public loadingRegisterStatus = false;
   public loadingUserStatus = false;
@@ -252,6 +253,11 @@ public removeRecipeToFavoritesSuccess(recipeId: Recipe){
     }
   }
 }
+
+/* @Mutation
+public createCommentSuccess(data: Comment){
+
+} */
 
 
 

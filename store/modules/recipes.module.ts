@@ -1,6 +1,6 @@
 import { ApolloError } from "@apollo/client/errors";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
-import { CreateRecipeInput, Recipe, Recipes, User,  CatIngredients, Ingredient, DeleteRecipe, Cat_Ingredient, UpdateRecipeInput} from "~/gql/graphql";
+import { CreateRecipeInput, Recipe, Recipes, User,  CatIngredients, Ingredient, DeleteRecipe, Cat_Ingredient, UpdateRecipeInput, CreateCommentInput, Comment, Comments} from "~/gql/graphql";
 
 import RecipesService from "~/services/recipes.service";
 
@@ -10,6 +10,8 @@ class RecipesModule extends VuexModule{
     public recipe?: Recipe[] = undefined;
     public user: User[] | null = null;
     public ingredients?: Cat_Ingredient[] = undefined;
+    public comments?: Comment[] = undefined;
+    public comment?: Comment[] = undefined;
     public loadingRecipeStatus = false;
     public loadingRecipesStatus = false;
     public snackbarSucessCreateRecipe = false;
@@ -132,6 +134,39 @@ class RecipesModule extends VuexModule{
             return removeToFavs;
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    @Action 
+    async createRecipeComment(data: CreateCommentInput){
+        this.context.commit("loadingCreateComment", true);
+        console.log("createComment", data);
+        return await RecipesService.createRecipeComment(data)
+        .then((comment: Comment) => {
+            console.log(comment);
+            this.context.commit("createCommentSuccess", comment);
+            this.context.commit("loadingCreateComment", false);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        /* try{
+            const createComment = await RecipesService.createRecipeComment(data);
+            console.log("createComment", createComment);
+            this.context.commit("AuthModule/createCommentSuccess", createComment, {
+                root: true,
+            });
+            this.context.commit("loadingCreateComment", false);
+            return createComment;
+        } catch (error) {
+            console.log(error);
+        } */
+    }
+
+    @Mutation
+    public createCommentSuccess(comments: Comment): void {
+        if (this.comments) {
+        this.comments = [comments, ...this.comments];
         }
     }
 
