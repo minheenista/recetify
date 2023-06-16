@@ -141,7 +141,7 @@
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
                           v-model="dataRegister.birthday"
-                          label="Picker in menu"
+                          label="Fecha de nacimiento"
                           prepend-icon="mdi-calendar"
                           readonly
                           v-bind="attrs"

@@ -1,5 +1,6 @@
-mutation UpdateRecipe($UpdateRecipeInput: updateRecipeInput!){
-  updateRecipe(input:$UpdateRecipeInput) {
+mutation RemoveRecipeToFavorites($id: ID!) {
+  removeRecipeToFavorites(id: $id) {
+    id
     title
     description
     origen_food
@@ -10,6 +11,7 @@ mutation UpdateRecipe($UpdateRecipeInput: updateRecipeInput!){
     fat
     carbs
     proteins
+    rate
     porcion
   }
 }

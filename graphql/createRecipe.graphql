@@ -11,5 +11,6 @@ mutation CreateRecipe($input: createRecipeInput!) {
     fat
     carbs
     proteins
+    porcion
   }
 }

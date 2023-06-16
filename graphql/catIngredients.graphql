@@ -1,0 +1,8 @@
+query CatIngredients {
+  cat_ingredients {
+    data {
+      id
+      name
+    }
+  }
+}

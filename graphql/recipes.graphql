@@ -29,31 +29,31 @@ query Recipes(
       carbs
       proteins
       porcion
-      image {
-        url
-        imageable {
-          __typename
-        }
-      }
       rate
       user {
         id
         name
+        lastname
         email
         birthday
       }
       steps {
         description
-        image {
-          url
-          imageable {
-            __typename
-          }
-        }
+        
       }
       Comments {
         comentario
         rating
+      }
+      favoriteby {
+        id
+        name
+        lastname
+        email
+        email_verified_at
+        created_at
+        updated_at
+        birthday
       }
     }
   }

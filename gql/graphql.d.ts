@@ -17,6 +17,24 @@ declare module '*/Logout.graphql' {
 }
     
 
+declare module '*/addRecipeToFavorite.graphql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const AddRecipeToFavorites: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
+declare module '*/catIngredients.graphql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const CatIngredients: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
 declare module '*/comment.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
@@ -98,6 +116,15 @@ declare module '*/deleteUser.graphql' {
 }
     
 
+declare module '*/ingredient.graphql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const Ingredient: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
 declare module '*/me.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
@@ -125,6 +152,15 @@ declare module '*/recipes.graphql' {
 }
     
 
+declare module '*/removeRecipeToFavorites.graphql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const RemoveRecipeToFavorites: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
 declare module '*/step.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
@@ -146,7 +182,7 @@ declare module '*/steps.graphql' {
 declare module '*/updateRecipe.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const updateRecipe: DocumentNode;
+  export const UpdateRecipe: DocumentNode;
 
   export default defaultDocument;
 }

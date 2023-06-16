@@ -22,6 +22,7 @@ query Recipe($id: ID ){
     user {
       id
       name
+      lastname
       email
       birthday
     }
@@ -39,6 +40,16 @@ query Recipe($id: ID ){
       comentario
       rating
 
+    }
+    favoriteby {
+      id
+      name
+      lastname
+      email
+      email_verified_at
+      created_at
+      updated_at
+      birthday
     }
   }
 }

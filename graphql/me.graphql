@@ -2,6 +2,7 @@ query Me {
   me {
     id
     name
+    lastname
     email
     birthday
     recipes {
@@ -21,7 +22,24 @@ query Me {
       user{
         id
         name
+        lastname
       }
+    }
+    favoriteRecipes {
+      id
+      title
+      description
+      origen_food
+      time_food
+      diet
+      prep_time
+      calories
+      fat
+      carbs
+      proteins
+      rate
+      porcion
+    
     }
   }
 }

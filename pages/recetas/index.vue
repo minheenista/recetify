@@ -1,5 +1,5 @@
 <template>
-  <div class="container1">
+  <div class="container1" v-if="me">
     <v-card class="pa-5" flat width="100%" min-width="1600">
       <v-toolbar floating>
       <v-avatar class="ml-3 mr-4">
@@ -15,8 +15,14 @@
           append-icon="mdi-magnify"
           single-line
           hide-details
+          v-model="searchQuery"
           @click:append-inner="onClick"
         ></v-text-field>
+        <ul>
+          <li v-for="(recipe) in filteredRecipes" :key="recipe.id">
+            {{ recipe.title }}
+          </li>
+        </ul>
 
         <v-spacer></v-spacer>
         <!-- ======================= modal crear receta ============================= -->
@@ -163,8 +169,36 @@
                     </v-col>
                   </v-row>
 
-                  <h3>Ingredientes</h3>
-                  <v-row> LOS FUCKING INGREDIENTES </v-row>
+                  
+                  <v-row> <h3>Ingredientes</h3></v-row>
+                  <v-row>
+                    <template v-if="ingredients && ingredients.data">
+                      <v-combobox
+                        v-model="chips"
+                        :items="ingredients.data"
+                        chips
+                        clearable
+                        label="Selecciona Ingredientes o Busca por nombre"
+                        multiple
+                        item-text="name"
+                        solo
+                        prepend-inner-icon="mdi-magnify"
+                      >
+                      
+                        <template v-slot:selection="{ attrs, item, select, selected }">
+                          <v-chip
+                            v-bind="attrs"
+                            :input-value="selected"
+                            close
+                            @click="select"
+                            @click:close="remove(item)"
+                          >
+                            <strong>{{ item.name }}</strong>&nbsp;
+                          </v-chip>
+                        </template>
+                      </v-combobox>
+                    </template>
+                  </v-row>
                   <v-row>
                     <span class="text-h5">Procedimiento</span>
                   </v-row>
@@ -206,25 +240,6 @@
             </v-card>
           </v-dialog>
         </v-row>
-
-        <!-- <v-snackbar v-model="snackbarSucessCreateRecipe">
-          {{ snackbarSucessMessageCreateRecipe }}
-
-          <template v-slot:action="{ attrs }">
-            <v-btn
-              color="green"
-              text
-              v-bind="attrs"
-              @click="changeStatusSnackbarCreateRecipe()"
-            >
-              Close
-            </v-btn>
-          </template>
-        </v-snackbar> -->
-
-        <!-- <v-btn class="mx-auto" color="gray" dense @click="handleLogout()">
-          Cerrar Sesión
-        </v-btn> -->
         
           <!-- USER PROFILE -->
             <v-menu
@@ -244,31 +259,30 @@
                     size="45"
                     class="mr-3"
                   >
-                    <span class="white--text text-h5"> AA </span>
+                    <span class="white--text text-h5 ml-3 mr-3"> {{ me.name[0] }}{{ me.lastname[0] }} </span>
                   </v-avatar>
                 </v-btn>
               </template>
               <v-card>
                 <v-list-item-content class="justify-center">
-                  <div class="mx-auto text-center">
+                  <div class="mx-auto text-center mx-3">
                     <v-avatar
                       color="primary"
                     >
-                      <span class="white--text text-h5">{{ userProfile.initials }}</span>
+                      <span class="white--text text-h5">{{ me.name[0] }}{{ me.lastname[0] }}</span>
                     </v-avatar>
-                    <h3>{{ userProfile.fullName }}</h3>
+                    <h3>{{ me.name }} {{me.lastname}}</h3>
                     <p class="text-caption mt-1">
-                      {{ userProfile.email }}
+                      {{ me.email }}
                     </p>
                     <v-divider class="my-3"></v-divider>
-                    <v-btn
+                    <!-- <v-btn
                       depressed
                       rounded
                       text
                     >
                       Mi perfil
-                    </v-btn>
-                    <v-divider class="my-3"></v-divider>
+                    </v-btn> -->
                     <v-btn @click="handleLogout()"
                       depressed
                       rounded
@@ -286,10 +300,20 @@
       <!-- ================= LISTA DE RECETAS ======================== -->
     </v-card>
 
-    <p class="text-h5 text-center">Recetas recomendadas</p>
+    <p class="text-h5 text-center">Tus Recetas</p>
     <div class="d-flex justify-space-around bg-surface-variant">
      <v-row class="ml-12" v-if="me && me.recipes">
         <v-col cols="3" v-for="(recipe) in me.recipes" :key="recipe.id">
+          <CardRecipes :recipe="recipe" />
+        </v-col>
+       
+      </v-row>
+    </div>
+
+    <p class="text-h5 text-center">Recetas Recomendadas</p>
+    <div class="d-flex justify-space-around bg-surface-variant">
+     <v-row class="ml-12" v-if="recipes && recipes.data">
+        <v-col cols="3" v-for="(recipe) in recipes.data" :key="recipe.id">
           <CardRecipes :recipe="recipe" />
         </v-col>
        
@@ -302,11 +326,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapState } from 'vuex';
-
 import { Component, Watch } from "vue-property-decorator";
 import { namespace } from "vuex-class";
-import { CreateRecipeInput, Recipe, Recipes, User } from "~/gql/graphql";
+
+import { CreateRecipeInput, Recipe, Recipes, User, CatIngredientsQuery, Cat_Ingredient } from "~/gql/graphql";
+
 import CardRecipes from "~/components/CardRecipes.vue";
 import buttonStep from "~/components/buttonStep.vue";
 import verReceta from '~/components/verReceta.vue';
@@ -357,6 +381,23 @@ export default class Principal extends Vue{
     {text: "China", value: "China"},
   ];
 
+  public chips = [
+    
+  ]
+
+  public ingredientes = [
+    {text: "Leche", value: "Leche"},
+    {text: "Huevo", value: "Huevo"},
+    {text: "Queso", value: "Queso"},
+    {text: "Pollo", value: "Pollo"},
+  ]; 
+
+  public searchQuery = "";
+
+  /* public remove (item) {
+    this.chips.splice(this.chips.indexOf(item), 1)
+  }; */
+
  
 
   @RecipesModule.Action
@@ -382,11 +423,17 @@ export default class Principal extends Vue{
   @Auth.Action
   private fetchMe!: () => Promise<void>;
   @RecipesModule.State("recipes")
-  public recipe!: Recipe[];
+  public recipes!: Recipe[];
   @RecipesModule.Action
   private fetchRecipes!: () => Promise<void>; 
   @Auth.State("me")
   private me!: User;
+  @RecipesModule.Action
+  private fetchIngredients!: () => Promise<void>;
+  @RecipesModule.State("CatIngredients")
+  public CatIngredients!: Cat_Ingredient[];
+  @RecipesModule.State("ingredients")
+  public ingredients!: Cat_Ingredient[];
 
   async onClick(){
     this.loading = true;
@@ -396,7 +443,17 @@ export default class Principal extends Vue{
     }, 2000)
   }
 
-  
+  async filteredRecipes(){
+    const search = this.searchQuery;
+      if (!search) return this.recipes;
+      
+      return this.recipes.filter(recipe => {
+        console.log(recipe);
+        const title = recipe.title;
+        return title.includes(search);
+      });
+    
+  }
 
    public recipeRegister: CreateRecipeInput ={
     title: '',
@@ -417,7 +474,8 @@ export default class Principal extends Vue{
 
   async created(){
     await this.fetchMe();
-
+    await this.fetchRecipes();
+    await this.fetchIngredients();
   } 
 
   async handleLogout(){

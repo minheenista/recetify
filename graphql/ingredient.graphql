@@ -1,0 +1,6 @@
+query Ingredient($id: ID!) {
+  cat_ingredient(id: $id) {
+    name
+    id
+  }
+}

@@ -1,4 +1,5 @@
 import { ApolloError } from "@apollo/client/errors";
+import Vue from "vue";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import {CreateUserInput, LoginInput, Recipe, User } from "~/gql/graphql";
 
@@ -10,7 +11,7 @@ class AuthModule extends VuexModule {
   public me?: User = undefined;
   public loadingLoginStatus = false;
   public loadingRegisterStatus = false;
-  public loadingUser = false;
+  public loadingUserStatus = false;
   public userFailure = undefined
   public errorMessage?: string = undefined;
   public nextPage = false;
@@ -185,9 +186,73 @@ class AuthModule extends VuexModule {
   }
 
   @Mutation
+  public setDeleteRecipe(data: {id: string}){
+    console.log("lleho set delete recipe");
+    if(this.me){
+      const index = this.me.recipes.findIndex((recipe) => {
+        return recipe.id === data.id
+      });
+      if(index != -1){
+        const copyUser = {...this.me};
+        copyUser.recipes = [...copyUser.recipes];
+
+        Vue.delete(copyUser.recipes, index);
+/*         copyUser.recipes.splice(index, 1);
+ */        this.me = copyUser;
+      }
+    }
+  }
+
+  @Mutation
+  public updateRecipeSuccess(updaterecipe: Recipe): void{
+    if(this.me){
+      const index = this.me.recipes.findIndex((recipe) => {
+        return recipe.id === updaterecipe.id;
+      });
+      if(index != -1){
+        const copyUser = {...this.me};
+        copyUser.recipes = [...copyUser.recipes];
+        copyUser.recipes[index] = updaterecipe;
+        this.me = copyUser;
+      }
+    }
+  }
+
+  @Mutation
   public userSuccess(user: User){
     this.me = user;
   }
+
+  @Mutation
+  public loadingUser(status: boolean) {
+    this.loadingUserStatus = status;
+}
+
+@Mutation
+public addRecipeToFavoritesSuccess(recipeId: Recipe){
+  if(this.me){
+    const copyUser = {...this.me};
+    copyUser.favoriteRecipes = [...copyUser.favoriteRecipes];
+    copyUser.favoriteRecipes.push(recipeId);
+    this.me = copyUser;
+  }
+}
+
+@Mutation
+public removeRecipeToFavoritesSuccess(recipeId: Recipe){
+  if(this.me){
+    const index = this.me.favoriteRecipes.findIndex((recipe) => {
+      return recipe.id === recipeId.id
+    });
+    if(index != -1){
+      const copyUser = {...this.me};
+      copyUser.favoriteRecipes = [...copyUser.favoriteRecipes];
+
+      Vue.delete(copyUser.favoriteRecipes, index);
+    }
+  }
+}
+
 
 
 

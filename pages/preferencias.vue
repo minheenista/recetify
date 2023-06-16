@@ -1,136 +1,250 @@
 
-  <template>
-            <div class="container">
-                <center>
-                    <div class="titulo">
-                        <h1>
-                            Queremos conocerte mas ^^
-                        </h1>
-                        <br>
-                    </div>
-                   <div class="subtitulo">
-                    <h3 class="subtitulo">Cuales son tus alergias?</h3>
-                    <br>
-                    <br>
-                   </div>
-                   <!-- CHIPS ALERGIAS PRE -->
-                    <v-row justify="space-around">
-                        <v-col cols="auto">
-                            <v-sheet
-                                elevation="0"
-                                class="py-4 px-4"
-                            >
-                                <v-chip-group 
-                                multiple
-                                selected-class="text-primary"
-                                >
-                                    <v-chip size="x-large" 
-                                        v-for="tag in tags"
-                                        :key="tag"
-                                    >
-                                        {{ tag }}
-                                    </v-chip>
-                                </v-chip-group>
-                            </v-sheet>
-                        </v-col>
-                    </v-row>
-              </center>
-              <br>
-                <!-- BUsqueda de alergias -->
-    
-              
-                  <v-container>
-                    <v-row
-                      align="center"
-                      justify="start"
+<template>
+  <div class="container1">
+    <center>
+      <div class="titulo">
+          <h1>
+              Queremos conocerte mas ^^
+          </h1>
+          <br>
+      </div>
+      <div class="subtitulo">
+        <h3 class="subtitulo">Cuales son tus alergias?</h3>
+        <br>
+        <br>
+      </div>
+        <!-- CHIPS ALERGIAS PRE -->
+        <v-row justify="space-around">
+            <v-col cols="auto">
+                <!-- <v-sheet
+                    elevation="0"
+                    class="mr-3"
+                > -->
+                    <v-chip-group 
+                    multiple
+                    selected-class="text-primary"
                     >
-                      <v-col
-                        v-for="(selection, i) in selections"
-                        :key="selection.text"
-                        cols="auto"
-                        class="py-1 pe-0"
-                      >
-                        <v-chip closable
-                          :disabled="loading"
-                          @click:close="selected.splice(i, 1)"
+                        <v-chip size="x-large"
+                            v-for="alergia in alergias"
+                            :key="alergia.item"
                         >
-                          <v-icon
-                            :icon="selection.icon"
-                            start
-                          ></v-icon>
-              
-                          {{ selection.text }}
+                            {{ alergia.text }}
                         </v-chip>
-                      </v-col>
-              
-                      <v-col  cols="12">
-                        <v-text-field
-                          ref="search"
-                          v-model="search"
-                          hide-details
-                          label="Search"
-                          single-line
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-              
-                  <v-divider ></v-divider>
-              
-                  <v-list>
-                    <template v-for="item in categories">
-                      <v-list-item
-                        v-if="!selected.includes(item)"
-                        :key="item.text"
-                        :disabled="loading"
-                        @click="selected.push(item)"
-                      >
-                        <template v-slot:prepend>
-                          <v-icon
-                            :disabled="loading"
-                            :icon="item.icon"
-                          ></v-icon>
-                        </template>
-              
-                        <v-list-item-title v-text="item.text"></v-list-item-title>
-                      </v-list-item>
-                    </template>
-                  </v-list>
-    
+                    </v-chip-group>
+<!--                 </v-sheet>
+ -->            </v-col>
+        </v-row>
+    </center>
+      <br>
+        <!-- BUsqueda de alergias -->
+
       
-                  <br>
-                  <br>
-                  <div class="text-center">
-                    <v-btn color=green @click="alimentacion()"
-                      prepend-icon="mdi-check-circle"
-                    >
-                      <template v-slot:prepend>
-                        <v-icon color="default"></v-icon>
-                      </template>
-                
-                      Continuar
-                
-                    </v-btn>
-                  </div>
-    
-            </div>
-    </template>
+          <v-container>
+            <v-row
+              align="center"
+              justify="start"
+            >
+              <v-col
+                v-for="(selection, i) in selections"
+                :key="selection.text"
+                cols="auto"
+                class="py-1 pe-0"
+              >
+                <v-chip closable
+                  :disabled="loading"
+                  @click:close="selected.splice(i, 1)"
+                >
+                  <v-icon
+                    :icon="selection.icon"
+                    start
+                  ></v-icon>
+      
+                  {{ selection.text }}
+                </v-chip>
+              </v-col>
+      
+              <v-col  cols="12">
+                <v-text-field
+                  ref="search"
+                  v-model="search"
+                  hide-details
+                  label="Search"
+                  single-line
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+      
+          <v-divider ></v-divider>
+      
+          <v-list>
+            <template v-for="item in categories">
+              <v-list-item
+                v-if="!selected.includes(item)"
+                :key="item.text"
+                :disabled="loading"
+                @click="selected.push(item)"
+              >
+                <template v-slot:prepend>
+                  <v-icon
+                    :disabled="loading"
+                    :icon="item.icon"
+                  ></v-icon>
+                </template>
+      
+                <v-list-item-title v-text="item.text"></v-list-item-title>
+              </v-list-item>
+            </template>
+          </v-list>
 
 
-<script>
-export default {
-    name: "Preferencias",
+          <br>
+          <br>
+          <div class="text-center">
+            <v-btn color=green @click="alimentacion()"
+              prepend-icon="mdi-check-circle"
+            >
+              <template v-slot:prepend>
+                <v-icon color="default"></v-icon>
+              </template>
+        
+              Continuar
+        
+            </v-btn>
+          </div>
+
+    </div>
+</template>
+
+
+<script lang='ts'>
+/* import Vue from "vue";
+import Component from "vue-class-component"; */
+import { Component, Vue, Watch } from "vue-property-decorator";
+import { namespace } from "vuex-class";
+
+import { Cat_Ingredient, User } from "~/gql/graphql";
+import { CatIngredients,  } from "~/gql/graphql";
+
+const RecipesModule = namespace("RecipesModule");
+const Auth = namespace("AuthModule");
+
+export default class Preferencias extends Vue {
+
+  
+  
+  public alergias = [
+    {text: 'Nuez', value: 'Nuez'},
+    {text: 'Cacahuate', value: 'Cacahuate'},
+    {text: 'Huevo', value: 'Huevo'},
+    {text: 'Gluten', value: 'Gluten'},        
+    {text: 'Soja', value: 'Soja'},
+    {text: 'Manzana', value: 'Manzana'},
+    {text: 'Sesamo', value: 'Sesamo'},
+    {text: 'Melon', value: 'Melon'},
+    {text: 'Piña', value: 'Piña'},
+  ];
+
+  public items = [
+    {
+      text: 'Nature',
+      icon: 'mdi-nature',
+    },
+    {
+      text: 'Nightlife',
+      icon: 'mdi-glass-wine',
+    },
+    {
+      text: 'November',
+      icon: 'mdi-calendar-range',
+    },
+    {
+      text: 'Portland',
+      icon: 'mdi-map-marker',
+    },
+    {
+      text: 'Biking',
+      icon: 'mdi-bike',
+    },
+  ];
+
+  public loading = false;
+  public search = '';
+  public selected = [];
+
+  allSelected(): boolean {
+  return this.selected.length === this.items.length;
+  };
+  categories(): any[] {
+    const search = this.search.toLowerCase();
+
+    if (!search) return this.items;
+
+    return this.items.filter((item: any) => {
+      const text = item.text.toLowerCase();
+
+      return text.indexOf(search) > -1;
+    });
+  };
+  selections(): any[] {
+    const selections: any[] = [];
+
+    for (const selection of this.selected) {
+      selections.push(selection);
+    }
+
+    return selections;
+  };
+
+  /* get selected(): void {
+      this.search = '';
+  }; */
+  
+  next () {
+    this.loading = true
+
+    setTimeout(() => {
+      this.search = ''
+      this.selected = []
+      this.loading = false
+    }, 2000)
+  };
+  alimentacion(){
+    this.$router.push('./alimentacion');
+  };
+
+  @Auth.State("user")
+  private user!: User;
+  @Auth.Action
+  private fetchMe!: () => Promise<void>;
+  @RecipesModule.Action
+  private fetchIngredients!: () => Promise<void>; 
+  @Auth.State("me")
+  private me!: User;
+  @RecipesModule.State("ingredients")
+  private ingredients!: Cat_Ingredient[];
+
+
+  async created() {
+    await this.fetchMe();
+    await this.fetchIngredients();
+    console.log(this.me);
+    console.log(this.fetchIngredients());
+  }
+
+ 
+/* 
     data: () => ({
       tags: [
-        'Work',
-        'Home Improvement',
-        'Vacation',
-        'Food',
-        'Drawers',
-        'Shopping',
-        'Art',
-        'Tech',
-        'Creative Writing',
+        {text: 'Nuez', value: 'Nuez'},
+        {text: 'Cacahuate', value: 'Cacahuate'},
+        {text: 'Huevo', value: 'Huevo'},
+        {text: 'Gluten', value: 'Gluten'},        
+        {text: 'Soja', value: 'Soja'},
+        {text: 'Manzana', value: 'Manzana'},
+        {text: 'Sesamo', value: 'Sesamo'},
+        {text: 'Melon', value: 'Melon'},
+        {text: 'Piña', value: 'Piña'},
       ],
       items: [
         {
@@ -157,8 +271,8 @@ export default {
       loading: false,
       search: '',
       selected: [],
-    }),
-    computed: {
+    }), */
+    /* computed: {
       allSelected () {
         return this.selected.length === this.items.length
       },
@@ -183,8 +297,8 @@ export default {
         return selections
       },
     },
-
-    watch: {
+ */
+    /* watch: {
       selected () {
         this.search = ''
       },
@@ -203,7 +317,7 @@ export default {
       alimentacion(){
       this.$router.push('./alimentacion');
     }
-    },
+    }, */
   }
 </script>
 
@@ -222,7 +336,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #00c1770e;
+  
   padding: 30px;
 }
 .container{
@@ -230,11 +344,22 @@ export default {
   justify-content: center;
   max-width: fit-content;
   width: 100%;
-  background: #fff;
+   background-image: ('https://source.unsplash.com/random/1600x800/?food');
   padding: 40px 30px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.2);
   perspective: 2700px;
   top: 10%;
+
+}
+.container1{
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  align-content: center;
+  align-items: center;
+  margin-top: 50px;
 
 }
 .titulo{
