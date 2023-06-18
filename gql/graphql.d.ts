@@ -17,6 +17,15 @@ declare module '*/Logout.graphql' {
 }
     
 
+declare module '*/addIngredienttoRecipe.graphql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const AddIngredientToRecipe: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
 declare module '*/addRecipeToFavorite.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
@@ -74,7 +83,7 @@ declare module '*/createRecipe.graphql' {
 declare module '*/createStep.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const createStep: DocumentNode;
+  export const CreateStep: DocumentNode;
 
   export default defaultDocument;
 }

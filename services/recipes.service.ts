@@ -12,8 +12,10 @@ import {
     AddRecipeToFavorites,
     RemoveRecipeToFavorites,
     CreateCommentInput,
-    CreateComment
- } from "~/gql/graphql";
+    CreateComment,
+    AddIngredientToRecipe,
+    AddIngredienttoRecipeInput
+  } from "~/gql/graphql";
 
  class RecipesService {
     async getRecipes() {
@@ -112,6 +114,20 @@ import {
       ).data.createComment;
     }
 
+    async addIngredientToRecipe(data: AddIngredienttoRecipeInput){
+      console.log("id receta: addIngredientToRecipe", data)
+      return (
+        await apolloClient.mutate({
+          mutation: AddIngredientToRecipe,
+          fetchPolicy: "network-only",
+          variables: {
+            addingredientInput: data,
+          }
+        })
+      ).data.AddIngredientToRecipe;
+    }
+
   }
+
   
   export default new RecipesService();

@@ -1,6 +1,21 @@
 import { ApolloError } from "@apollo/client/errors";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
-import { CreateRecipeInput, Recipe, Recipes, User,  CatIngredients, Ingredient, DeleteRecipe, Cat_Ingredient, UpdateRecipeInput, CreateCommentInput, Comment, Comments} from "~/gql/graphql";
+import { 
+    CreateRecipeInput, 
+    Recipe, 
+    Recipes, 
+    User,  
+    CatIngredients, 
+    Ingredient, 
+    DeleteRecipe, 
+    Cat_Ingredient, 
+    UpdateRecipeInput, 
+    CreateCommentInput, 
+    Comment, 
+    Comments,
+    AddIngredientToRecipe,
+    AddIngredienttoRecipeInput
+} from "~/gql/graphql";
 
 import RecipesService from "~/services/recipes.service";
 
@@ -150,17 +165,23 @@ class RecipesModule extends VuexModule{
         .catch((error) => {
             console.log(error);
         })
-        /* try{
-            const createComment = await RecipesService.createRecipeComment(data);
-            console.log("createComment", createComment);
-            this.context.commit("AuthModule/createCommentSuccess", createComment, {
+    }
+
+    @Action
+    async addIngredientToRecipe(data: AddIngredienttoRecipeInput){
+        this.context.commit("loadingUpdateRecipe", true);
+        console.log("ingredientadd", data);
+        try{
+            const addIngredients = await RecipesService.addIngredientToRecipe(data);
+            console.log("updateRecipe", data);
+            this.context.commit("AuthModule/addIngredientSuccess", data, {
                 root: true,
             });
-            this.context.commit("loadingCreateComment", false);
-            return createComment;
+            this.context.commit("loadingUpdateRecipe", false);
+            return data;
         } catch (error) {
             console.log(error);
-        } */
+        }
     }
 
     @Mutation

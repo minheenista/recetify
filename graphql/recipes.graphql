@@ -30,6 +30,17 @@ query Recipes(
       proteins
       porcion
       rate
+      cat_ingredients {
+      id
+      name
+      image{
+        url
+      }
+      pivot{
+        quantity
+        unit
+      }
+    }
       user {
         id
         name
@@ -44,6 +55,11 @@ query Recipes(
       Comments {
         comentario
         rating
+        user {
+          id
+          name
+          lastname
+        }
       }
       favoriteby {
         id

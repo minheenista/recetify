@@ -4,7 +4,7 @@
     <div v-for="(step, index) in steps" :key="index">
       <add-step :index="index" @remove="removeStep"/>
     </div>
-    <v-btn @click="addStep"
+    <v-btn @click="addStep" class="mt-3 ml-10"
         color="primary"
         elevation="2"
         > + paso

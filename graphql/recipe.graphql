@@ -12,6 +12,17 @@ query Recipe($id: ID ){
     carbs
     proteins
     porcion
+    cat_ingredients {
+      id
+      name
+      image{
+        url
+      }
+      pivot{
+        quantity
+        unit
+      }
+    }
     image{
       url
       imageable{
@@ -39,7 +50,11 @@ query Recipe($id: ID ){
       id
       comentario
       rating
-
+      user {
+        id
+        name
+        lastname
+      }
     }
     favoriteby {
       id

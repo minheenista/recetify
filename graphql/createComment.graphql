@@ -29,5 +29,6 @@ mutation CreateComment($crearComentario: createCommentInput!) {
         rating
       }
     }
+    
   }
 }

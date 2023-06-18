@@ -46,8 +46,22 @@
               <v-card-title>
                 <span class="text-h5">Crear receta</span>
               </v-card-title>
+              
               <v-card-text>
                 <v-container>
+                <v-stepper
+                  v-model="e6"
+                  vertical
+                >
+                <!-- INFO RECETA -->
+                  <v-stepper-step
+                    :complete="e6 > 1"
+                    step="1"
+                  >
+                  <h2> Informacion básica de la receta</h2>
+                  </v-stepper-step>
+
+                  <v-stepper-content step="1">
                   <!-- TITULO, DIETA, TIEMPO -->
                   <v-row class="my-0">
                   <!-- Titulo -->
@@ -169,44 +183,180 @@
                     </v-col>
                   </v-row>
 
-                  
-                  <v-row> <h3>Ingredientes</h3></v-row>
+                    <v-btn
+                      color="primary"
+                      @click="handleCreateRecipe()"
+                      class="mb-3"
+                    >
+                      Siguiente
+                    </v-btn>
+                    <v-btn text class="mb-3 ml-3"
+                      @click="dialog=false; e6 = 1"
+                    >
+                      Cancelar
+                    </v-btn>
+                  </v-stepper-content>
+
+                  <!-- paso ingredientes -->
+                  <v-stepper-step
+                    :complete="e6 > 2"
+                    step="2"
+                  >
+                    <h2> Ingredientes de la receta</h2>
+                  </v-stepper-step>
+                  <v-stepper-content step="2">
+                  <v-row> <h4 class="ml-5 mt-5">Selecciona los ingredientes</h4></v-row>
                   <v-row>
-                    <template v-if="ingredients && ingredients.data">
-                      <v-combobox
-                        v-model="chips"
-                        :items="ingredients.data"
-                        chips
-                        clearable
-                        label="Selecciona Ingredientes o Busca por nombre"
-                        multiple
-                        item-text="name"
-                        solo
-                        prepend-inner-icon="mdi-magnify"
+                    <v-col cols="6">
+                      <template v-if="ingredients && ingredients.data">
+                        <v-combobox class="ml-5 mt-5 mr-3"
+                          :items="ingredients.data"
+                          chips
+                          clearable
+                          label="Selecciona Ingredientes o Busca por nombre"
+                          item-text="name"
+                          item-value="id"
+                          color="primary"
+                          prepend-inner-icon="mdi-magnify"
+                        >
+                        
+                          <template v-slot:selection="{ attrs, item, select, selected }">
+                            <v-chip :itemid="item.id"
+                              v-bind="attrs"
+                              :input-value="selected"
+                              v-model="addIngredientsRegister.ingredients_id"
+                              @click="select"
+                              :key="item.id"
+                            >
+                              <strong>{{ item.name}} {{item.id}}</strong>&nbsp;
+                            </v-chip>
+                          </template>
+                        </v-combobox>
+                      </template>
+                    </v-col>
+                    <v-col cols="2">
+                      <v-text-field class="mt-6"
+                        label="Cantidad"
+                        type="number"
+                        v-model.number="addIngredientsRegister.quantity"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="2" >
+                      <v-select class="mt-6"
+                        :items="unit"
+                        label="Unidad*"
+                        required
+                        v-model="addIngredientsRegister.unit"
+                      ></v-select>
+                    </v-col>
+                    <v-col
+                      cols="1"
+                      sm="1"
+                    > 
+                      <v-btn
+                        class="mx-2 mr-3 mt-6"
+                        fab
+                        dark
+                        small
+                        color="error"
                       >
-                      
-                        <template v-slot:selection="{ attrs, item, select, selected }">
-                          <v-chip
-                            v-bind="attrs"
-                            :input-value="selected"
-                            close
-                            @click="select"
-                            @click:close="remove(item)"
-                          >
-                            <strong>{{ item.name }}</strong>&nbsp;
-                          </v-chip>
-                        </template>
-                      </v-combobox>
+                        <v-icon>
+                          mdi-trash-can
+                        </v-icon>
+                      </v-btn>
+                    </v-col>
+                    <v-col
+                      cols="1"
+                      sm="1"
+                    > 
+                      <v-btn
+                        class="mx-2 mr-1 mt-6"
+                        fab
+                        dark
+                        small
+                        color="primary"
+                        @click="handleAddIngredientToRecipe()"
+                      >
+                        <v-icon>
+                          mdi-plus
+                        </v-icon>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                  <!-- ======= TABLA INGREDIENTES =========== -->
+                  <v-data-table
+                    :headers="headers"
+                    :items="ingredientes"
+                    class="elevation-1 ml-6 mr-6 mb-10"
+                  >
+                    <template v-slot:top>
+                      <v-toolbar
+                        flat
+                      >
+                        <v-toolbar-title>Ingredientes Seleccionados</v-toolbar-title>
+                        <v-divider
+                          class="mx-4"
+                          inset
+                          vertical
+                        ></v-divider>
+                        <v-spacer></v-spacer>
+                        
+                      </v-toolbar>
                     </template>
+                    <template v-slot:item.actions="{ item }">
+                      <!-- <v-icon
+                        small
+                        class="mr-2"
+                        @click="editItem(item)"
+                      >
+                        mdi-pencil
+                      </v-icon> -->
+                      <v-icon
+                        small
+                        @click="deleteItem(item)"
+                      >
+                        mdi-delete
+                      </v-icon>
+                    </template>
+                    <template v-slot:no-data>
+                      <v-btn @click="initialize()"
+                        color="primary"
+                      >
+                        No hay ingredientes seleccionados
+                      </v-btn>
+                    </template>
+                  </v-data-table>
+
+
+                  <!-- BOTON SIGUIENTE -->
+                  <v-btn class="mb-3 ml-3"
+                    color="primary"
+                    @click="e6 = 3"
+                  >
+                    Siguiente
+                  </v-btn>
+                  <v-btn text class="mb-3 ml-3"
+                    @click="handleDeleteRecipe(idTemp); dialog=false; e6 = 1"
+                  >
+                    Cancelar
+                  </v-btn>
+                </v-stepper-content>
+
+                <v-stepper-step
+                  :complete="e6 > 3"
+                  step="3"
+                >
+                  <h2> Procedimiento de la receta</h2>
+                </v-stepper-step>
+                <v-stepper-content step="3">
+                  <v-row>
+                    <span class="text-h5 ml-5 mt-5">Procedimiento</span>
                   </v-row>
                   <v-row>
-                    <span class="text-h5">Procedimiento</span>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12" sm="7">
+                    <v-col cols="7" sm="7" class="ml-0">
                       <v-text-field label="Paso 1 *" required></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="4">
+                    <v-col cols="3" >
                       <v-file-input
                         color=""
                         counter
@@ -220,15 +370,34 @@
                         </template>
                       </v-file-input>
                     </v-col>
+                    
                   </v-row>
+                  <button-step />
+
+                  
 
                   <!-- PASOS -->
 
-                  <button-step />
+                  
+
+                  <v-btn class="mt-5"
+                    color="primary"
+                    @click="e6 = 1; dialog = false"
+                  >
+                    Continue
+                  </v-btn>
+                  <v-btn text>
+                    Cancel
+                  </v-btn>
+                </v-stepper-content>
+                  </v-stepper>
                 </v-container>
-                <small>*indicates required field</small>
+                <!-- <small>*indicates required field</small> -->
               </v-card-text>
-              <v-card-actions>
+
+              
+
+              <!-- <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="error" text @click="dialog = false">
                   Cancelar
@@ -236,7 +405,7 @@
                 <v-btn color="green" text @click="handleCreateRecipe()">
                   Guardar Receta
                 </v-btn>
-              </v-card-actions>
+              </v-card-actions> -->
             </v-card>
           </v-dialog>
         </v-row>
@@ -329,7 +498,7 @@ import Vue from 'vue';
 import { Component, Watch } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 
-import { CreateRecipeInput, Recipe, Recipes, User, CatIngredientsQuery, Cat_Ingredient } from "~/gql/graphql";
+import { CreateRecipeInput, Recipe, Recipes, User, CatIngredientsQuery, Cat_Ingredient, AddIngredienttoRecipeInput, Unittype } from "~/gql/graphql";
 
 import CardRecipes from "~/components/CardRecipes.vue";
 import buttonStep from "~/components/buttonStep.vue";
@@ -354,6 +523,25 @@ export default class Principal extends Vue{
   public group = null;
   public loaded = false;
   public loading = false;
+  public e6 = 1;
+  public indexTemp = 0;
+  public idTemp = '';
+  public recipeTemp: Recipe ={
+    title: '',
+    diet: '',
+    origen_food: '',
+    time_food: '',
+    prep_time: null,
+    calories: null,
+    porcion: 0,
+    fat: null,
+    carbs: null,
+    proteins: null,
+    ingredients: [],
+  };
+
+   public desserts = [];
+
 
   public userProfile = {
         initials: 'JD',
@@ -381,22 +569,31 @@ export default class Principal extends Vue{
     {text: "China", value: "China"},
   ];
 
+  public unit = [
+    {text: "Gramos", value: "g"},
+    {text: "Mililitros", value: "ml"},
+    {text: "Pieza", value: "unidad"},
+  ];
+
   public chips = [
     
   ]
-
-  public ingredientes = [
-    {text: "Leche", value: "Leche"},
-    {text: "Huevo", value: "Huevo"},
-    {text: "Queso", value: "Queso"},
-    {text: "Pollo", value: "Pollo"},
-  ]; 
+ public headers = [
+    {
+      text: 'Nombre',
+      value: 'name',
+    },
+    { text: 'Img', value: 'image.url' },
+    { text: 'Cantidad', value: 'pivot.quantity' },
+    { text: 'Unidad', value: 'pivot.unit' },
+    { text: 'Actions', value: 'actions', sortable: false },
+  ];
 
   public searchQuery = "";
 
-  /* public remove (item) {
+  public remove (item) {
     this.chips.splice(this.chips.indexOf(item), 1)
-  }; */
+  };
 
  
 
@@ -406,8 +603,13 @@ export default class Principal extends Vue{
   async handleCreateRecipe(){
     const data = {...this.recipeRegister, user: {connect: this.me.id}};
     await this.CreateRecipes(data);
-    this.dialog = false;
     await this.fetchMe();
+    this.e6 = 2;
+    this.indexTemp = this.me.recipes.length - 1;
+    this.idTemp = this.me.recipes[this.indexTemp].id;
+    this.recipeTemp = this.me.recipes[this.indexTemp];
+    console.log(this.idTemp);
+    console.log(this.recipeTemp);
   }
 
 
@@ -434,6 +636,41 @@ export default class Principal extends Vue{
   public CatIngredients!: Cat_Ingredient[];
   @RecipesModule.State("ingredients")
   public ingredients!: Cat_Ingredient[];
+  @RecipesModule.Action
+  private deleteRecipe!: (recipeId: string) => Promise<void>;
+  async handleDeleteRecipe(idReceta: string) {
+    console.log("idReceta", idReceta);
+    await this.deleteRecipe(idReceta);
+    this.dialog = false;
+    this.fetchMe();
+    this.fetchRecipes();
+  }
+
+  public addIngredientsRegister: AddIngredienttoRecipeInput = {
+    id_ingredient: '',
+    id_recipe: '',
+    quantity: 0,
+    unit: Unittype.G,
+  };
+
+
+  @RecipesModule.Action
+  private addIngredientToRecipe!: (data: AddIngredienttoRecipeInput) => Promise<void>;
+  async handleAddIngredientToRecipe(){
+    const data = {...this.addIngredientsRegister, id_recipe: this.idTemp, id_ingredient: "2"};
+    await this.addIngredientToRecipe(data);
+    console.log("dataIngrediente s add", data);
+    await this.fetchMe();
+    await this.fetchRecipes();
+    await this.initialize();
+  }
+
+  public ingredientes: any[] = [];
+
+  initialize(): void {
+    this.ingredientes = this.me.recipes[this.indexTemp].cat_ingredients;
+    console.log("ingredientes", this.ingredientes);
+  }
 
   async onClick(){
     this.loading = true;
@@ -473,9 +710,9 @@ export default class Principal extends Vue{
   };
 
   async created(){
-    await this.fetchMe();
-    await this.fetchRecipes();
-    await this.fetchIngredients();
+    this.fetchMe();
+    this.fetchRecipes();
+    this.fetchIngredients();
   } 
 
   async handleLogout(){

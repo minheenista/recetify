@@ -1,4 +1,4 @@
-mutation createStep($crearPaso: createStepInput!){
+mutation CreateStep($crearPaso: createStepInput!){
   createStep(input: $crearPaso) {
     description
     Recipe {

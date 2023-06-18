@@ -1,0 +1,15 @@
+mutation AddIngredientToRecipe(
+  $addingredientInput: addIngredienttoRecipeInput!
+) {
+  addIngredienttoRecipe(input: $addingredientInput) {
+    id
+    name
+    image {
+      url
+    }
+    pivot {
+      quantity
+      unit
+    }
+  }
+}

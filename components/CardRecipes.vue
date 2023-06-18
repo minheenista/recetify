@@ -1,7 +1,7 @@
 <template>
     <v-card v-if="me"
     class="mx-auto my-2"
-    max-width="250"
+    max-width="280"
   >
     <v-img
       cover
@@ -135,15 +135,15 @@
         </v-card-text>
         <v-divider></v-divider>
         <br>
-        <v-row>
-        <h3 class="ml-10 mr-12">Ingredientes</h3>
-        <v-spacer></v-spacer>
+        
+        <!-- <v-spacer></v-spacer>
         <v-select class="mr-10"
           :items="['1', '2', '3', '4', '5']"
           label="Porciones"
           
         ></v-select>
         <v-spacer></v-spacer>
+        {{recipe.cat_ingredients}}
         <v-btn 
           class="ma-2 mr-10"
           color="primary"
@@ -159,50 +159,36 @@
         <v-spacer></v-spacer>
 
         </v-row>
+ -->
+        <v-data-table 
+          :headers="headers"
+          :items="ingredientes"
+          class="elevation-1 ml-10 mr-10 mb-10"
+          disable-pagination
+      hide-default-footer
+      show-select
+        >
+          <template v-slot:top>
+            <v-toolbar
+              flat
+            >
+              <v-toolbar-title><h3>Ingredientes</h3></v-toolbar-title>
+               <v-divider
+                class="mx-8"
+                inset
+                vertical
+              ></v-divider>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+          </template>
+
+           <template v-slot:item.image="{ item }">
+            <img :src="item.image.url" alt="Recipe Image" width="50" height="50">
+          </template>
+        </v-data-table>
 
         
-        <div class="my-2">
-        <v-row> 
-          <v-icon class="ml-15"
-            dense
-          >
-            mdi-domain
-          </v-icon>
-          <v-col cols="12" sm="3"><v-checkbox 
-            label="Ingrediente 1"
-          ></v-checkbox>
-          </v-col>
-          <v-col cols="12" sm="1"> Cantidad </v-col>
-          <v-col cols="12" sm="6">  </v-col>
-        </v-row>
-        <v-row> 
-          <v-icon class="ml-15"
-            dense
-          >
-            mdi-domain
-          </v-icon>
-          <v-col cols="12" sm="3"><v-checkbox 
-            label="Ingrediente 1"
-          ></v-checkbox>
-          </v-col>
-          <v-col cols="12" sm="1"> Cantidad </v-col>
-          <v-col cols="12" sm="6">  </v-col>
-        </v-row>
-        <v-row> 
-          <v-icon class="ml-15"
-            dense
-          >
-            mdi-domain
-          </v-icon>
-          <v-col cols="12" sm="3"><v-checkbox 
-            label="Ingrediente 1"
-          ></v-checkbox>
-          </v-col>
-          <v-col cols="12" sm="1"> Cantidad </v-col>
-          <v-col cols="12" sm="6">  </v-col>
-        </v-row>
-        </div>
-
+       
         <v-divider></v-divider>
 
 
@@ -263,68 +249,7 @@
             </v-row>
           </v-timeline-item>
 
-          <!-- <v-timeline-item
-            color="teal lighten-3"
-            small
-          >
-            <v-row class="pt-1">
-              <v-col cols="3">
-                <strong>3-4pm</strong>
-              </v-col>
-              <v-col>
-                <strong>Design Stand Up</strong>
-                <div class="text-caption mb-2">
-                  Hangouts
-                </div>
-                <v-avatar>
-                  <v-img
-                    src="https://avataaars.io/?avatarStyle=Circle&topType=LongHairFrida&accessoriesType=Kurt&hairColor=Red&facialHairType=BeardLight&facialHairColor=BrownDark&clotheType=GraphicShirt&clotheColor=Gray01&graphicType=Skull&eyeType=Wink&eyebrowType=RaisedExcitedNatural&mouthType=Disbelief&skinColor=Brown"
-                  ></v-img>
-                </v-avatar>
-                <v-avatar>
-                  <v-img
-                    src="https://avataaars.io/?avatarStyle=Circle&topType=ShortHairFrizzle&accessoriesType=Prescription02&hairColor=Black&facialHairType=MoustacheMagnum&facialHairColor=BrownDark&clotheType=BlazerSweater&clotheColor=Black&eyeType=Default&eyebrowType=FlatNatural&mouthType=Default&skinColor=Tanned"
-                  ></v-img>
-                </v-avatar>
-                <v-avatar>
-                  <v-img
-                    src="https://avataaars.io/?avatarStyle=Circle&topType=LongHairMiaWallace&accessoriesType=Sunglasses&hairColor=BlondeGolden&facialHairType=Blank&clotheType=BlazerSweater&eyeType=Surprised&eyebrowType=RaisedExcited&mouthType=Smile&skinColor=Pale"
-                  ></v-img>
-                </v-avatar>
-              </v-col>
-            </v-row>
-          </v-timeline-item>
-
-          <v-timeline-item
-            color="pink"
-            small
-          >
-            <v-row class="pt-1">
-              <v-col cols="3">
-                <strong>12pm</strong>
-              </v-col>
-              <v-col>
-                <strong>Lunch break</strong>
-              </v-col>
-            </v-row>
-          </v-timeline-item>
-
-          <v-timeline-item
-            color="teal lighten-3"
-            small
-          >
-            <v-row class="pt-1">
-              <v-col cols="3">
-                <strong>9-11am</strong>
-              </v-col>
-              <v-col>
-                <strong>Finish Home Screen</strong>
-                <div class="text-caption">
-                  Web App
-                </div>
-              </v-col>
-            </v-row>
-          </v-timeline-item> -->
+          
         </v-timeline>
 
         <v-divider></v-divider>
@@ -365,13 +290,15 @@
           <v-avatar
             color="primary"
             size="45"
-            class="mr-0 ml-10"
+            class="mr-0 ml-10 pt-0"
           >
             <span class="white--text text-h5 ml-3 mr-3">  AA </span>
           </v-avatar>
         </v-col>
         <v-col cols="8">
           <v-card-text class="subtitle-1 ml-3">
+         <strong> {{coment.user.name}} {{coment.user.lastname}} </strong>
+          <br>
             {{coment.comentario}}
           </v-card-text>
         </v-col>
@@ -700,6 +627,18 @@ export default class CardRecipes extends Vue{
     {text: "China", value: "China"},
   ];
 
+  public headers = [
+    {
+      text: 'Nombre',
+      align: 'start',
+      sortable: false,
+      value: 'name',
+    },
+    {text: 'Img', value: 'image.url'},
+    { text: 'Cantidad', value: 'pivot.quantity' },
+    { text: 'Unidad', value: 'pivot.unit' },
+  ];
+
   public chips = [
     
   ]
@@ -753,7 +692,7 @@ export default class CardRecipes extends Vue{
     this.dialogDelete = false;
     this.dialog = false;
     this.fetchMe();
-
+    this.fetchRecipes();
   }
 
   @RecipesModule.Action 
@@ -831,6 +770,7 @@ export default class CardRecipes extends Vue{
     this.dialogEdit = false;
     this.dialog = false;
     this.fetchMe();
+    this.fetchRecipes();
   } 
 
   public deletRecetaId = "";
@@ -838,6 +778,18 @@ export default class CardRecipes extends Vue{
   public deleteReceta(idReceta: string): void {
     this.deletRecetaId = idReceta;
     this.dialogDelete = true;
+  }
+
+  public ingredientes: any[] = [];
+
+  initialize(): void {
+    this.ingredientes = this.recipe.cat_ingredients;
+    console.log("ingredientes", this.ingredientes);
+  }
+
+  created(): void {
+
+    this.initialize();
   }
 
 

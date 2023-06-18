@@ -1,12 +1,7 @@
 query Step($id: ID) {
   step(id: $id) {
     description
-    image {
-      url
-      imageable {
-        __typename
-      }
-    }
+    
     Recipe {
       id
       title
@@ -20,12 +15,7 @@ query Step($id: ID) {
       carbs
       proteins
       porcion
-      image {
-        url
-        imageable {
-          __typename
-        }
-      }
+      
       rate
     }
   }

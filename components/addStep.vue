@@ -4,7 +4,7 @@
     
     <v-row>
         <v-col
-        cols="12"
+        cols="7"
         sm="7"
         >
         <v-text-field
@@ -14,7 +14,7 @@
         ></v-text-field>
         </v-col>
         <v-col
-        cols="12"
+        cols="4"
         sm="4"
         >
         <v-file-input
@@ -41,10 +41,10 @@
         </v-file-input>
     </v-col>
     <v-col
-        cols="12"
+        cols="1"
         sm="1"
     > <v-btn @click="removeStep"
-      class="mx-2"
+      class="mx-2 mr-3"
       fab
       dark
       small

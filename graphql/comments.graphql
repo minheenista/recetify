@@ -1,9 +1,14 @@
-query Comments($comentario: String) {
-  Comments(comentario: $comentario) {
+query Comments {
+  Comments{
     data {
       id
       comentario
       rating
-    }
+      user {
+        id
+        name
+        lastname
+      }
   }
+}
 }

@@ -19,6 +19,17 @@ query Me {
       proteins
       porcion
       rate
+      cat_ingredients {
+      id
+      name
+      image{
+        url
+      }
+      pivot{
+        quantity
+        unit
+      }
+    }
       user{
         id
         name
@@ -28,8 +39,13 @@ query Me {
       id
       comentario
       rating
+      user {
+        id
+        name
+        lastname
+      }
 
-    }
+      }
     }
     favoriteRecipes {
       id

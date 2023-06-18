@@ -17,6 +17,17 @@ query User($id: ID, $email: String) {
       carbs
       proteins
       porcion
+      cat_ingredients {
+      id
+      name
+      image{
+        url
+      }
+      pivot{
+        quantity
+        unit
+      }
+    }
       image {
         url
         imageable {
