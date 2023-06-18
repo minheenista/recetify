@@ -14,7 +14,9 @@ import {
     CreateCommentInput,
     CreateComment,
     AddIngredientToRecipe,
-    AddIngredienttoRecipeInput
+    AddIngredienttoRecipeInput,
+    CreateStep,
+    CreateStepInput
   } from "~/gql/graphql";
 
  class RecipesService {
@@ -125,6 +127,19 @@ import {
           }
         })
       ).data.AddIngredientToRecipe;
+    }
+
+    async createStep(data: CreateStepInput){
+      console.log("createStep service", data)
+      return (
+        await apolloClient.mutate({
+          mutation: CreateStep,
+          fetchPolicy: "network-only",
+          variables: {
+            crearPaso: data,
+          }
+        })
+      ).data.CreateStep;
     }
 
   }

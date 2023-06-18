@@ -19,6 +19,10 @@ query Me {
       proteins
       porcion
       rate
+      steps {
+        description
+        
+      }
       cat_ingredients {
       id
       name

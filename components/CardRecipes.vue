@@ -193,68 +193,36 @@
 
 
 
-        <h1 class="ml-10">Procedimiento</h1>
-        <v-timeline
+        <h2 class="ml-10 mt-3">Procedimiento</h2>
+        <v-timeline class="mb-4"
           align-top
           dense
+          v-if="recipe.steps"
         >
         <!-- PASOS -->
           <v-timeline-item
             color="green"
             small
+            v-for="(step, index) in recipe.steps" :key="index"
           >
             <v-row class="pt-1">
               <v-col cols="1">
-                <strong>Paso 1</strong>
+                <strong>Paso {{ index + 1 }}:</strong>
               </v-col>
               <v-col>
                 <div class="body-1">
-                  lalalalllalall alalallala
+                  {{ step.description }}
                 </div>
               </v-col>
                
             </v-row>
             
           </v-timeline-item>
-
-          <v-timeline-item
-            color="green"
-            small
-          >
-            <v-row class="pt-1">
-              <v-col cols="1">
-                <strong>Paso 2</strong>
-              </v-col>
-              <v-col>
-                <div class="body-1">
-                  sisisisisisi sisisisisi
-                </div>
-              </v-col>
-            </v-row>
-          </v-timeline-item>
-
-          <v-timeline-item
-            color="green"
-            small
-          >
-            <v-row class="pt-1">
-              <v-col cols="1">
-                <strong>Paso 3</strong>
-              </v-col>
-              <v-col>
-                <div class="body-1">
-                  nanananan nanananan
-                </div>
-              </v-col>
-            </v-row>
-          </v-timeline-item>
-
-          
         </v-timeline>
 
         <v-divider></v-divider>
 
-        <h1 class="ml-10">Comentarios</h1>
+        <h2 class="ml-10 mt-3">Comentarios</h2>
         <center>
         <v-row>
           <v-col cols="8" >
@@ -315,7 +283,7 @@
         </v-row>
         </div>
 
-        
+        <v-divider></v-divider>
 
 
         <v-card-actions>

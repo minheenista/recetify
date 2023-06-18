@@ -350,11 +350,13 @@
                 </v-stepper-step>
                 <v-stepper-content step="3">
                   <v-row>
-                    <span class="text-h5 ml-5 mt-5">Procedimiento</span>
+                    <span class="text-h4 ml-3 mt-5">Agrega pasos</span>
                   </v-row>
                   <v-row>
                     <v-col cols="7" sm="7" class="ml-0">
-                      <v-text-field label="Paso 1 *" required></v-text-field>
+                      <v-text-field label="Descripcion del paso *" required
+                      v-model="addStepsRegister.description"
+                      ></v-text-field>
                     </v-col>
                     <v-col cols="3" >
                       <v-file-input
@@ -370,9 +372,69 @@
                         </template>
                       </v-file-input>
                     </v-col>
-                    
+                    <v-col cols="1" >
+                      <v-btn
+                        class="mx-2 mr-1 mt-6"
+                        fab
+                        small
+                        color="primary"
+                        @click="handleCreateStep()"
+                      >
+                        <v-icon>
+                          mdi-plus
+                        </v-icon>
+                        Paso
+                      </v-btn>
+                    </v-col>
                   </v-row>
-                  <button-step />
+                  
+
+                  <!-- ======= TABLA PROCEDIMIENTO =========== -->
+                  <v-data-table
+                    :headers="headersPasos"
+                    :items="pasos"
+                    class="elevation-1 ml-3 mr-3 mb-10"
+                  >
+                    <template v-slot:top>
+                      <v-toolbar
+                        flat
+                      >
+                        <v-toolbar-title> Pasos creados</v-toolbar-title>
+                        <v-divider
+                          class="mx-4"
+                          inset
+                          vertical
+                        ></v-divider>
+                        <v-spacer></v-spacer>
+                        
+                      </v-toolbar>
+                    </template>
+                    <template v-slot:item.index="{ item, index }">
+                       {{ index + 1 }}
+                    </template>
+                    <template v-slot:item.actions="{ item }">
+                      <!-- <v-icon
+                        small
+                        class="mr-2"
+                        @click="editItem(item)"
+                      >
+                        mdi-pencil
+                      </v-icon> -->
+                      <v-icon
+                        small
+                        @click="deleteItem(item)"
+                      >
+                        mdi-delete
+                      </v-icon>
+                    </template>
+                    <template v-slot:no-data>
+                      <v-btn @click="iniatializePasos()"
+                        color="primary"
+                      >
+                        No hay pasos agregados
+                      </v-btn>
+                    </template>
+                  </v-data-table>
 
                   
 
@@ -384,10 +446,10 @@
                     color="primary"
                     @click="e6 = 1; dialog = false"
                   >
-                    Continue
+                    Guardar Receta 
                   </v-btn>
-                  <v-btn text>
-                    Cancel
+                  <v-btn text @click="handleDeleteRecipe(idTemp); dialog=false; e6 = 1" class="mt-4 ml-3">
+                    Cancelar
                   </v-btn>
                 </v-stepper-content>
                   </v-stepper>
@@ -498,7 +560,7 @@ import Vue from 'vue';
 import { Component, Watch } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 
-import { CreateRecipeInput, Recipe, Recipes, User, CatIngredientsQuery, Cat_Ingredient, AddIngredienttoRecipeInput, Unittype } from "~/gql/graphql";
+import { CreateRecipeInput, Recipe, Recipes, User, CatIngredientsQuery, Cat_Ingredient, AddIngredienttoRecipeInput, Unittype, CreateStepInput } from "~/gql/graphql";
 
 import CardRecipes from "~/components/CardRecipes.vue";
 import buttonStep from "~/components/buttonStep.vue";
@@ -589,6 +651,12 @@ export default class Principal extends Vue{
     { text: 'Actions', value: 'actions', sortable: false },
   ];
 
+  public headersPasos = [
+    { text: 'Numero', value: 'index', width: '50px', sortable: false},
+    { text: 'Paso', value: 'description' },
+    { text: 'Actions', value: 'actions', sortable: false, width: '50px'},
+  ];
+
   public searchQuery = "";
 
   public remove (item) {
@@ -665,11 +733,33 @@ export default class Principal extends Vue{
     await this.initialize();
   }
 
+  public addStepsRegister: CreateStepInput = {
+    description: '',
+  };
+
+  @RecipesModule.Action
+  private createStep!: (data: CreateStepInput) => Promise<void>;
+  async handleCreateStep(){
+    const data = {...this.addStepsRegister, recipe: {connect: this.idTemp}};
+    await this.createStep(data);
+    console.log("dataIngrediente s add", data);
+    await this.fetchMe();
+    await this.fetchRecipes();
+    this.iniatializePasos();
+  }
+
   public ingredientes: any[] = [];
+
+  public pasos: any[] = [];
 
   initialize(): void {
     this.ingredientes = this.me.recipes[this.indexTemp].cat_ingredients;
     console.log("ingredientes", this.ingredientes);
+  }
+
+  iniatializePasos(): void {
+    this.pasos = this.me.recipes[this.indexTemp].steps;
+    console.log("pasos", this.pasos);
   }
 
   async onClick(){

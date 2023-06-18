@@ -14,7 +14,8 @@ import {
     Comment, 
     Comments,
     AddIngredientToRecipe,
-    AddIngredienttoRecipeInput
+    AddIngredienttoRecipeInput,
+    CreateStepInput
 } from "~/gql/graphql";
 
 import RecipesService from "~/services/recipes.service";
@@ -175,6 +176,23 @@ class RecipesModule extends VuexModule{
             const addIngredients = await RecipesService.addIngredientToRecipe(data);
             console.log("updateRecipe", data);
             this.context.commit("AuthModule/addIngredientSuccess", data, {
+                root: true,
+            });
+            this.context.commit("loadingUpdateRecipe", false);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    @Action
+    async createStep(data: CreateStepInput){
+        this.context.commit("loadingUpdateRecipe", true);
+        console.log("step", data);
+        try{
+            const addStep = await RecipesService.createStep(data);
+            console.log("updateRecipe", data);
+            this.context.commit("AuthModule/createStepSuccess", data, {
                 root: true,
             });
             this.context.commit("loadingUpdateRecipe", false);

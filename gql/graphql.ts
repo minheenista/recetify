@@ -106,7 +106,7 @@ export type IngredientQuery = { __typename?: 'Query', cat_ingredient?: { __typen
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, lastname: string, email: string, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, cat_ingredients: Array<{ __typename?: 'cat_ingredient', id: string, name: string, image?: { __typename?: 'Image', url: string } | null, pivot?: { __typename?: 'IngredientRecipePivot', quantity?: number | null, unit: Unittype } | null }>, user?: { __typename?: 'User', id: string, name: string, lastname: string } | null, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null, user: { __typename?: 'User', id: string, name: string, lastname: string } }> }>, favoriteRecipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, porcion: number }> } };
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, lastname: string, email: string, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, steps: Array<{ __typename?: 'Step', description: string }>, cat_ingredients: Array<{ __typename?: 'cat_ingredient', id: string, name: string, image?: { __typename?: 'Image', url: string } | null, pivot?: { __typename?: 'IngredientRecipePivot', quantity?: number | null, unit: Unittype } | null }>, user?: { __typename?: 'User', id: string, name: string, lastname: string } | null, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null, user: { __typename?: 'User', id: string, name: string, lastname: string } }> }>, favoriteRecipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, porcion: number }> } };
 
 export type RecipeQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
@@ -147,7 +147,7 @@ export type StepsQueryVariables = Exact<{
 }>;
 
 
-export type StepsQuery = { __typename?: 'Query', steps: { __typename?: 'StepPaginator', data: Array<{ __typename?: 'Step', description: string, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } | { __typename: 'cat_ingredient' } } }> } };
+export type StepsQuery = { __typename?: 'Query', steps: { __typename?: 'StepPaginator', data: Array<{ __typename?: 'Step', description: string }> } };
 
 export type UpdateRecipeMutationVariables = Exact<{
   UpdateRecipeInput: UpdateRecipeInput;
@@ -520,6 +520,9 @@ export const Me = gql`
       proteins
       porcion
       rate
+      steps {
+        description
+      }
       cat_ingredients {
         id
         name
@@ -752,12 +755,6 @@ export const Steps = gql`
   steps(description: $description) {
     data {
       description
-      image {
-        url
-        imageable {
-          __typename
-        }
-      }
     }
   }
 }

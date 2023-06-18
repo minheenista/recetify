@@ -1,7 +1,7 @@
 import { ApolloError } from "@apollo/client/errors";
 import Vue from "vue";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
-import {CreateUserInput, LoginInput, Recipe, User, Comment, AddIngredienttoRecipeInput } from "~/gql/graphql";
+import {CreateUserInput, LoginInput, Recipe, User, Comment, AddIngredienttoRecipeInput, CreateStepInput } from "~/gql/graphql";
 
 import AuthService from "~/services/auth.service";
 
@@ -264,6 +264,21 @@ public addIngredientSuccess(data: AddIngredienttoRecipeInput){
       const copyUser = {...this.me};
       copyUser.recipes = [...copyUser.recipes];
       copyUser.recipes[index].cat_ingredients.push(data);
+      this.me = copyUser;
+    }
+  }
+}
+
+@Mutation
+public createStepSuccess(data: CreateStepInput){
+  if(this.me){
+    const index = this.me.recipes.findIndex((recipe) => {
+      return recipe.id === data.recipe
+    });
+    if(index != -1){
+      const copyUser = {...this.me};
+      copyUser.recipes = [...copyUser.recipes];
+      copyUser.recipes[index].steps.push(data);
       this.me = copyUser;
     }
   }
