@@ -630,6 +630,26 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-snackbar v-model="showNotification" :timeout="3000" >
+          La receta se actualizó correctamente :D
+        </v-snackbar>
+
+        <v-snackbar v-model="showNotificationDelete" :timeout="3000" >
+          La receta se eliminó correctamente :c
+        </v-snackbar>
+
+        <v-snackbar v-model="showNotificationFav" :timeout="3000" >
+          La receta se agregó correctamente a favoritos uwu
+        </v-snackbar>
+
+        <v-snackbar v-model="showNotificationFavRem" :timeout="3000" >
+          La receta se eliminó correctamente de favoritos :c
+        </v-snackbar>
+
+        <v-snackbar v-model="showNotificationComment" :timeout="3000" >
+          El comentario se agregó correctamente ^^
+        </v-snackbar>
   </v-card>
 </template>
 
@@ -664,6 +684,11 @@ export default class CardRecipes extends Vue {
   public rating = 4.3;
   public dialogDelete = false;
   public dialogEdit = false;
+  public showNotification = false;
+  public showNotificationDelete = false;
+  public showNotificationFav = false;
+  public showNotificationComment = false;
+  public showNotificationFavRem = false;
 
   @Prop({
     required: false,
@@ -757,6 +782,7 @@ export default class CardRecipes extends Vue {
     const recipeId = this.recipe.id;
     await this.addRecipeToFavorite(recipeId);
     await this.fetchMe();
+    this.showNotificationFav = true;
   }
   @RecipesModule.Action
   private removeRecipeToFavorites!: (recipeId: string) => Promise<void>;
@@ -765,6 +791,7 @@ export default class CardRecipes extends Vue {
     const recipeId = this.recipe.id;
     await this.removeRecipeToFavorites(recipeId);
     await this.fetchMe();
+    this.showNotificationFavRem = true;
   }
 
   @RecipesModule.Action
@@ -776,6 +803,7 @@ export default class CardRecipes extends Vue {
     this.dialog = false;
     this.fetchMe();
     this.fetchRecipes();
+    this.showNotificationDelete = true;
   }
 
   @RecipesModule.Action
@@ -792,6 +820,7 @@ export default class CardRecipes extends Vue {
     await this.createRecipeComment(data);
     await this.fetchRecipes();
     this.fetchMe();
+    this.showNotificationComment = true;
   }
 
   public commentRegister: CreateCommentInput = {
@@ -918,6 +947,7 @@ iniatializePasos(): void {
     this.dialog = false;
     this.fetchMe();
     this.fetchRecipes();
+    this.showNotification = true;
   }
 
   public deletRecetaId = "";

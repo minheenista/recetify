@@ -364,7 +364,7 @@
                     <v-col cols="1" >
                       <v-btn
                         class="mx-2 mr-1 mt-6"
-                        
+                        :disabled="!addStepsRegister.description"
                         small
                         color="primary"
                         @click="handleCreateStep()"
@@ -428,7 +428,7 @@
                   <v-btn class="mt-5"
                     color="primary"
                     :disabled="!pasos.length"
-                    @click="e6 = 1; dialog = false; fetchMe(); fetchRecipes();"
+                    @click="e6 = 1; dialog = false; fetchMe(); fetchRecipes(); showNotification = true"
                   >
                     Guardar Receta 
                   </v-btn>
@@ -443,6 +443,10 @@
             </v-card>
           </v-dialog>
         </v-row>
+
+        <v-snackbar v-model="showNotification" :timeout="3000" >
+          La receta se creó correctamente
+        </v-snackbar>
         
           <!-- USER PROFILE -->
             <v-menu
@@ -557,6 +561,7 @@ export default class Principal extends Vue{
   public group = null;
   public loaded = false;
   public loading = false;
+  public showNotification = false;
   public e6 = 1;
   public indexTemp = 0;
   public idTemp = '';
@@ -660,6 +665,8 @@ export default class Principal extends Vue{
       carbs: null,
       proteins: null,
     };
+    this.iniatializePasos();
+    this.initialize();
   }
 
 
