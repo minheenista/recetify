@@ -21,7 +21,7 @@ query Me {
       rate
       steps {
         description
-        
+        id
       }
       cat_ingredients {
       id

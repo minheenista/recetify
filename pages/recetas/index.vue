@@ -53,7 +53,7 @@
                   v-model="e6"
                   vertical
                 >
-                <!-- INFO RECETA -->
+                <!-- ======== INFO RECETA========= -->
                   <v-stepper-step
                     :complete="e6 > 1"
                     step="1"
@@ -198,7 +198,7 @@
                     </v-btn>
                   </v-stepper-content>
 
-                  <!-- paso ingredientes -->
+                  <!-- ======= INGREDIENTES ======= -->
                   <v-stepper-step
                     :complete="e6 > 2"
                     step="2"
@@ -336,6 +336,7 @@
                 >
                   <h2> Procedimiento de la receta</h2>
                 </v-stepper-step>
+                <!-- ===== PROCEDIMIENTO ======= -->
                 <v-stepper-content step="3">
                   <v-row>
                     <span class="text-h4 ml-3 mt-5">Agrega pasos</span>
@@ -410,7 +411,7 @@
                       </v-icon> -->
                       <v-icon
                         small
-                        @click="deleteItem(item)"
+                        @click="handleRemoveStep(item)"
                       >
                         mdi-delete
                       </v-icon>
@@ -423,12 +424,6 @@
                       </v-btn>
                     </template>
                   </v-data-table>
-
-                  
-
-                  <!-- PASOS -->
-
-                  
 
                   <v-btn class="mt-5"
                     color="primary"
@@ -443,20 +438,8 @@
                 </v-stepper-content>
                   </v-stepper>
                 </v-container>
-                <!-- <small>*indicates required field</small> -->
               </v-card-text>
 
-              
-
-              <!-- <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="error" text @click="dialog = false">
-                  Cancelar
-                </v-btn>
-                <v-btn color="green" text @click="handleCreateRecipe()">
-                  Guardar Receta
-                </v-btn>
-              </v-card-actions> -->
             </v-card>
           </v-dialog>
         </v-row>
@@ -665,6 +648,18 @@ export default class Principal extends Vue{
     this.recipeTemp = this.me.recipes[this.indexTemp];
     console.log(this.idTemp);
     console.log(this.recipeTemp);
+    this.recipeRegister = {
+      title: '',
+      diet: Diet.Omnivoro,
+      origen_food: Origen.Mexicana,
+      time_food: Time.Desayuno,
+      prep_time: 0,
+      calories: null,
+      porcion: 0,
+      fat: null,
+      carbs: null,
+      proteins: null,
+    };
   }
 
 
@@ -719,6 +714,12 @@ export default class Principal extends Vue{
     await this.fetchMe();
     await this.fetchRecipes();
     await this.initialize();
+    this.addIngredientsRegister = {
+      id_ingredient: '',
+      id_recipe: '',
+      quantity: 0,
+      unit: Unittype.G,
+    };
   }
 
   public removeIngredient: RemoveIngredienttoRecipeInput = {
@@ -750,6 +751,17 @@ export default class Principal extends Vue{
     console.log("dataIngrediente s add", data);
     await this.fetchMe();
     await this.fetchRecipes();
+    this.iniatializePasos();
+    this.addStepsRegister.description = '';
+  }
+
+  @RecipesModule.Action
+  private deleteStep!: (stepId: string) => Promise<void>;
+  async handleRemoveStep(data: any) {
+    console.log("idStep", data);
+    await this.deleteStep(data.id);
+    this.fetchMe();
+    this.fetchRecipes();
     this.iniatializePasos();
   }
 

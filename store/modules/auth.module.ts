@@ -322,6 +322,28 @@ public createStepSuccess(data: CreateStepInput){
   }
 }
 
+@Mutation
+public deleteStepSuccess(stepId: string){
+  if(this.me){
+    const index = this.me.recipes.findIndex((recipe) => {
+      return recipe.steps.findIndex((step) => {
+        return step.id === stepId;
+      })
+    });
+    if(index != -1){
+      const copyUser = {...this.me};
+      copyUser.recipes = [...copyUser.recipes];
+      const indexStep = copyUser.recipes[index].steps.findIndex((step) => {
+        return step.id === stepId
+      });
+      if(indexStep != -1){
+        copyUser.recipes[index].steps.splice(indexStep, 1);
+        this.me = copyUser;
+      }
+    }
+  }
+}
+
 /* @Mutation
 public createCommentSuccess(data: Comment){
 

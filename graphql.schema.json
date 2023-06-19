@@ -56,6 +56,22 @@
             "deprecationReason": null
           },
           {
+            "name": "created_at",
+            "description": "When the account was created.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "id",
             "description": "Id",
             "args": [],
@@ -79,6 +95,22 @@
               "kind": "SCALAR",
               "name": "Float",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated_at",
+            "description": "When the account was last updated.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1553,7 +1585,7 @@
                     "ofType": null
                   }
                 },
-                "defaultValue": "50",
+                "defaultValue": "200",
                 "isDeprecated": false,
                 "deprecationReason": null
               },
@@ -1635,7 +1667,7 @@
                     "ofType": null
                   }
                 },
-                "defaultValue": "56",
+                "defaultValue": "60",
                 "isDeprecated": false,
                 "deprecationReason": null
               },
@@ -1680,7 +1712,7 @@
                     "ofType": null
                   }
                 },
-                "defaultValue": "11",
+                "defaultValue": "200",
                 "isDeprecated": false,
                 "deprecationReason": null
               },
@@ -1835,7 +1867,7 @@
                     "ofType": null
                   }
                 },
-                "defaultValue": "10",
+                "defaultValue": "300",
                 "isDeprecated": false,
                 "deprecationReason": null
               },
@@ -1989,7 +2021,7 @@
                     "ofType": null
                   }
                 },
-                "defaultValue": "50",
+                "defaultValue": "300",
                 "isDeprecated": false,
                 "deprecationReason": null
               },
@@ -2071,7 +2103,7 @@
                     "ofType": null
                   }
                 },
-                "defaultValue": "10",
+                "defaultValue": "200",
                 "isDeprecated": false,
                 "deprecationReason": null
               },
@@ -2190,6 +2222,22 @@
                     "ofType": null
                   }
                 }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "created_at",
+            "description": "When the account was created.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
               }
             },
             "isDeprecated": false,
@@ -2413,6 +2461,22 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated_at",
+            "description": "When the account was last updated.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -2671,6 +2735,22 @@
             "deprecationReason": null
           },
           {
+            "name": "created_at",
+            "description": "When the account was created.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "description",
             "description": "descripcion",
             "args": [],
@@ -2687,6 +2767,22 @@
             "deprecationReason": null
           },
           {
+            "name": "id",
+            "description": "Id",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "image",
             "description": "Imagen del paso",
             "args": [],
@@ -2696,6 +2792,22 @@
               "ofType": {
                 "kind": "OBJECT",
                 "name": "Image",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated_at",
+            "description": "When the account was last updated.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -4054,6 +4166,22 @@
         "description": null,
         "fields": [
           {
+            "name": "created_at",
+            "description": "When the account was created.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "id",
             "description": "Id",
             "args": [],
@@ -4105,6 +4233,22 @@
               "kind": "OBJECT",
               "name": "IngredientRecipePivot",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated_at",
+            "description": "When the account was last updated.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null

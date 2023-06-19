@@ -76,12 +76,12 @@
           </v-container>
       
           <v-divider ></v-divider>
-      
+      {{ingredients}}
           <v-list>
-            <template v-for="item in categories">
+            <template v-for="ingrediente in ingredients">
               <v-list-item
                 v-if="!selected.includes(item)"
-                :key="item.text"
+                :key="item.id"
                 :disabled="loading"
                 @click="selected.push(item)"
               >
@@ -92,7 +92,7 @@
                   ></v-icon>
                 </template>
       
-                <v-list-item-title v-text="item.text"></v-list-item-title>
+                <v-list-item-title v-text="item.name"></v-list-item-title>
               </v-list-item>
             </template>
           </v-list>
@@ -123,7 +123,7 @@ import Component from "vue-class-component"; */
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 
-import { Cat_Ingredient, User } from "~/gql/graphql";
+import { Cat_Ingredient, Recipe, User } from "~/gql/graphql";
 import { CatIngredients,  } from "~/gql/graphql";
 
 const RecipesModule = namespace("RecipesModule");
@@ -210,26 +210,31 @@ export default class Preferencias extends Vue {
     }, 2000)
   };
   alimentacion(){
-    this.$router.push('./alimentacion');
+    this.$router.push('./gracias');
   };
 
   @Auth.State("user")
   private user!: User;
   @Auth.Action
   private fetchMe!: () => Promise<void>;
+  @RecipesModule.State("recipes")
+  public recipes!: Recipe[];
   @RecipesModule.Action
-  private fetchIngredients!: () => Promise<void>; 
+  private fetchRecipes!: () => Promise<void>; 
   @Auth.State("me")
   private me!: User;
+  @RecipesModule.Action
+  private fetchIngredients!: () => Promise<void>;
+  @RecipesModule.State("CatIngredients")
+  public CatIngredients!: Cat_Ingredient[];
   @RecipesModule.State("ingredients")
-  private ingredients!: Cat_Ingredient[];
+  public ingredients!: Cat_Ingredient[];
 
-
-  async created() {
-    await this.fetchMe();
-    await this.fetchIngredients();
+  async mounted() {
+     this.fetchMe();
+     this.fetchIngredients();
     console.log(this.me);
-    console.log(this.fetchIngredients());
+    console.log(this.ingredients);
   }
 
  

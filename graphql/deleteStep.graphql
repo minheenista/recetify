@@ -1,9 +1,7 @@
-mutation deleteStep($id: ID!) {
+mutation DeleteStep($id: ID!) {
   deleteStep(id: $id) {
     description
-    image{
-      url
-    }
+    id
     Recipe {
       id
       title
@@ -19,11 +17,13 @@ mutation deleteStep($id: ID!) {
       porcion
       rate
       user {
+        id
         name
         email
       }
       steps {
         description
+        id
       }
     }
   }

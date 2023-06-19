@@ -50,7 +50,7 @@ query Recipes(
       }
       steps {
         description
-        
+        id
       }
       Comments {
         comentario

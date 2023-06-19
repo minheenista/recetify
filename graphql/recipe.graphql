@@ -34,7 +34,7 @@ query Recipe($id: ID ){
     }
     steps {
       description
-      
+      id
     }
     Comments {
       id

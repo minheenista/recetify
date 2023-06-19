@@ -18,7 +18,8 @@ import {
     RemoveIngredienttoRecipeInput,
     CreateStep,
     CreateStepInput,
-    RemoveIngredient
+    RemoveIngredient,
+    DeleteStep
   } from "~/gql/graphql";
 
  class RecipesService {
@@ -155,6 +156,18 @@ import {
           }
         })
       ).data.CreateStep;
+    }
+
+    async deleteStep(stepId: string){
+      console.log("deleteStep service", stepId)
+      return (
+        await apolloClient.mutate({
+          mutation: DeleteStep,
+          variables: {
+            id: stepId,
+          },
+        })
+      ).data?.deleteStep;
     }
 
   }

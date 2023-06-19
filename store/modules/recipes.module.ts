@@ -220,6 +220,23 @@ class RecipesModule extends VuexModule{
         }
     }
 
+    @Action
+    async deleteStep(stepId: string){
+        this.context.commit("loadingUpdateRecipe", true);
+        console.log("step", stepId);
+        try{
+            const deleteStep = await RecipesService.deleteStep(stepId);
+            console.log("updateRecipe", stepId);
+            this.context.commit("AuthModule/deleteStepSuccess", stepId, {
+                root: true,
+            });
+            this.context.commit("loadingUpdateRecipe", false);
+            return stepId;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     @Mutation
     public createCommentSuccess(comments: Comment): void {
         if (this.comments) {

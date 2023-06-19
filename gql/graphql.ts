@@ -87,7 +87,7 @@ export type DeleteStepMutationVariables = Exact<{
 }>;
 
 
-export type DeleteStepMutation = { __typename?: 'Mutation', deleteStep: { __typename?: 'Step', description: string, image: { __typename?: 'Image', url: string }, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, user?: { __typename?: 'User', name: string, email: string } | null, steps: Array<{ __typename?: 'Step', description: string }> } } };
+export type DeleteStepMutation = { __typename?: 'Mutation', deleteStep: { __typename?: 'Step', description: string, id: string, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, user?: { __typename?: 'User', id: string, name: string, email: string } | null, steps: Array<{ __typename?: 'Step', description: string, id: string }> } } };
 
 export type DeleteUserMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -106,14 +106,14 @@ export type IngredientQuery = { __typename?: 'Query', cat_ingredient?: { __typen
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, lastname: string, email: string, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, steps: Array<{ __typename?: 'Step', description: string }>, cat_ingredients: Array<{ __typename?: 'cat_ingredient', id: string, name: string, image?: { __typename?: 'Image', url: string } | null, pivot?: { __typename?: 'IngredientRecipePivot', quantity?: number | null, unit: Unittype } | null }>, user?: { __typename?: 'User', id: string, name: string, lastname: string } | null, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null, user: { __typename?: 'User', id: string, name: string, lastname: string } }> }>, favoriteRecipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, porcion: number }> } };
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, lastname: string, email: string, birthday: any, recipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, steps: Array<{ __typename?: 'Step', description: string, id: string }>, cat_ingredients: Array<{ __typename?: 'cat_ingredient', id: string, name: string, image?: { __typename?: 'Image', url: string } | null, pivot?: { __typename?: 'IngredientRecipePivot', quantity?: number | null, unit: Unittype } | null }>, user?: { __typename?: 'User', id: string, name: string, lastname: string } | null, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null, user: { __typename?: 'User', id: string, name: string, lastname: string } }> }>, favoriteRecipes: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, rate?: number | null, porcion: number }> } };
 
 export type RecipeQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type RecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, cat_ingredients: Array<{ __typename?: 'cat_ingredient', id: string, name: string, image?: { __typename?: 'Image', url: string } | null, pivot?: { __typename?: 'IngredientRecipePivot', quantity?: number | null, unit: Unittype } | null }>, user?: { __typename?: 'User', id: string, name: string, lastname: string, email: string, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string }>, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null, user: { __typename?: 'User', id: string, name: string, lastname: string } }>, favoriteby: Array<{ __typename?: 'User', id: string, name: string, lastname: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any }> } | null };
+export type RecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, cat_ingredients: Array<{ __typename?: 'cat_ingredient', id: string, name: string, image?: { __typename?: 'Image', url: string } | null, pivot?: { __typename?: 'IngredientRecipePivot', quantity?: number | null, unit: Unittype } | null }>, user?: { __typename?: 'User', id: string, name: string, lastname: string, email: string, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string, id: string }>, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null, user: { __typename?: 'User', id: string, name: string, lastname: string } }>, favoriteby: Array<{ __typename?: 'User', id: string, name: string, lastname: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any }> } | null };
 
 export type RecipesQueryVariables = Exact<{
   title?: InputMaybe<Scalars['String']>;
@@ -126,7 +126,7 @@ export type RecipesQueryVariables = Exact<{
 }>;
 
 
-export type RecipesQuery = { __typename?: 'Query', recipes: { __typename?: 'RecipePaginator', data: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, cat_ingredients: Array<{ __typename?: 'cat_ingredient', id: string, name: string, image?: { __typename?: 'Image', url: string } | null, pivot?: { __typename?: 'IngredientRecipePivot', quantity?: number | null, unit: Unittype } | null }>, user?: { __typename?: 'User', id: string, name: string, lastname: string, email: string, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string }>, Comments: Array<{ __typename?: 'Comment', comentario: string, rating?: number | null, user: { __typename?: 'User', id: string, name: string, lastname: string } }>, favoriteby: Array<{ __typename?: 'User', id: string, name: string, lastname: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any }> }> } };
+export type RecipesQuery = { __typename?: 'Query', recipes: { __typename?: 'RecipePaginator', data: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, cat_ingredients: Array<{ __typename?: 'cat_ingredient', id: string, name: string, image?: { __typename?: 'Image', url: string } | null, pivot?: { __typename?: 'IngredientRecipePivot', quantity?: number | null, unit: Unittype } | null }>, user?: { __typename?: 'User', id: string, name: string, lastname: string, email: string, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string, id: string }>, Comments: Array<{ __typename?: 'Comment', comentario: string, rating?: number | null, user: { __typename?: 'User', id: string, name: string, lastname: string } }>, favoriteby: Array<{ __typename?: 'User', id: string, name: string, lastname: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any }> }> } };
 
 export type RemoveIngredientMutationVariables = Exact<{
   removeIngredientInput: RemoveIngredienttoRecipeInput;
@@ -147,14 +147,14 @@ export type StepQueryVariables = Exact<{
 }>;
 
 
-export type StepQuery = { __typename?: 'Query', step?: { __typename?: 'Step', description: string, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null } } | null };
+export type StepQuery = { __typename?: 'Query', step?: { __typename?: 'Step', description: string, id: string, Recipe: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null } } | null };
 
 export type StepsQueryVariables = Exact<{
   description?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type StepsQuery = { __typename?: 'Query', steps: { __typename?: 'StepPaginator', data: Array<{ __typename?: 'Step', description: string }> } };
+export type StepsQuery = { __typename?: 'Query', steps: { __typename?: 'StepPaginator', data: Array<{ __typename?: 'Step', description: string, id: string }> } };
 
 export type UpdateRecipeMutationVariables = Exact<{
   UpdateRecipeInput: UpdateRecipeInput;
@@ -449,12 +449,10 @@ export const DeleteRecipe = gql`
 }
     `;
 export const DeleteStep = gql`
-    mutation deleteStep($id: ID!) {
+    mutation DeleteStep($id: ID!) {
   deleteStep(id: $id) {
     description
-    image {
-      url
-    }
+    id
     Recipe {
       id
       title
@@ -470,11 +468,13 @@ export const DeleteStep = gql`
       porcion
       rate
       user {
+        id
         name
         email
       }
       steps {
         description
+        id
       }
     }
   }
@@ -529,6 +529,7 @@ export const Me = gql`
       rate
       steps {
         description
+        id
       }
       cat_ingredients {
         id
@@ -611,6 +612,7 @@ export const Recipe = gql`
     }
     steps {
       description
+      id
     }
     Comments {
       id
@@ -680,6 +682,7 @@ export const Recipes = gql`
       }
       steps {
         description
+        id
       }
       Comments {
         comentario
@@ -742,6 +745,7 @@ export const Step = gql`
     query Step($id: ID) {
   step(id: $id) {
     description
+    id
     Recipe {
       id
       title
@@ -765,6 +769,7 @@ export const Steps = gql`
   steps(description: $description) {
     data {
       description
+      id
     }
   }
 }
@@ -939,10 +944,14 @@ export type Comment = {
   Recipe: Recipe;
   /** Comentario */
   comentario: Scalars['String'];
+  /** When the account was created. */
+  created_at: Scalars['DateTime'];
   /** Id */
   id: Scalars['ID'];
   /** Calificacion */
   rating?: Maybe<Scalars['Float']>;
+  /** When the account was last updated. */
+  updated_at: Scalars['DateTime'];
   /** Author */
   user: User;
 };
@@ -1336,6 +1345,8 @@ export type Recipe = {
   carbs?: Maybe<Scalars['Float']>;
   /** Ingredientes de la receta */
   cat_ingredients: Array<Cat_Ingredient>;
+  /** When the account was created. */
+  created_at: Scalars['DateTime'];
   /** Descripcion de la receta */
   description?: Maybe<Scalars['String']>;
   /** Tipo de dieta de la receta. Ej, Omnivoro */
@@ -1364,6 +1375,8 @@ export type Recipe = {
   time_food: Time;
   /** Titulo de la receta */
   title: Scalars['String'];
+  /** When the account was last updated. */
+  updated_at: Scalars['DateTime'];
   /** El usuario que creo la receta */
   user?: Maybe<User>;
 };
@@ -1415,10 +1428,16 @@ export type Step = {
   __typename?: 'Step';
   /** Receta */
   Recipe: Recipe;
+  /** When the account was created. */
+  created_at: Scalars['DateTime'];
   /** descripcion */
   description: Scalars['String'];
+  /** Id */
+  id: Scalars['ID'];
   /** Imagen del paso */
   image: Image;
+  /** When the account was last updated. */
+  updated_at: Scalars['DateTime'];
 };
 
 /** A paginated list of Step items. */
@@ -1485,6 +1504,8 @@ export type AddIngredienttoRecipeInput = {
 
 export type Cat_Ingredient = {
   __typename?: 'cat_ingredient';
+  /** When the account was created. */
+  created_at: Scalars['DateTime'];
   /** Id */
   id: Scalars['ID'];
   /** imagen del ingrediente */
@@ -1492,6 +1513,8 @@ export type Cat_Ingredient = {
   /** Nombre del ingrediente */
   name: Scalars['String'];
   pivot?: Maybe<IngredientRecipePivot>;
+  /** When the account was last updated. */
+  updated_at: Scalars['DateTime'];
 };
 
 /** A paginated list of cat_ingredient items. */

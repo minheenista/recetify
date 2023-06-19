@@ -110,7 +110,7 @@ declare module '*/deleteRecipe.graphql' {
 declare module '*/deleteStep.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const deleteStep: DocumentNode;
+  export const DeleteStep: DocumentNode;
 
   export default defaultDocument;
 }
