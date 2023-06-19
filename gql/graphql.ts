@@ -113,7 +113,7 @@ export type RecipeQueryVariables = Exact<{
 }>;
 
 
-export type RecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, cat_ingredients: Array<{ __typename?: 'cat_ingredient', id: string, name: string, image?: { __typename?: 'Image', url: string } | null, pivot?: { __typename?: 'IngredientRecipePivot', quantity?: number | null, unit: Unittype } | null }>, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } | { __typename: 'cat_ingredient' } }, user?: { __typename?: 'User', id: string, name: string, lastname: string, email: string, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string, image: { __typename?: 'Image', url: string, imageable: { __typename: 'Recipe' } | { __typename: 'Step' } | { __typename: 'cat_ingredient' } } }>, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null, user: { __typename?: 'User', id: string, name: string, lastname: string } }>, favoriteby: Array<{ __typename?: 'User', id: string, name: string, lastname: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any }> } | null };
+export type RecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, cat_ingredients: Array<{ __typename?: 'cat_ingredient', id: string, name: string, image?: { __typename?: 'Image', url: string } | null, pivot?: { __typename?: 'IngredientRecipePivot', quantity?: number | null, unit: Unittype } | null }>, user?: { __typename?: 'User', id: string, name: string, lastname: string, email: string, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string }>, Comments: Array<{ __typename?: 'Comment', id: string, comentario: string, rating?: number | null, user: { __typename?: 'User', id: string, name: string, lastname: string } }>, favoriteby: Array<{ __typename?: 'User', id: string, name: string, lastname: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any }> } | null };
 
 export type RecipesQueryVariables = Exact<{
   title?: InputMaybe<Scalars['String']>;
@@ -601,12 +601,6 @@ export const Recipe = gql`
         unit
       }
     }
-    image {
-      url
-      imageable {
-        __typename
-      }
-    }
     rate
     user {
       id
@@ -617,12 +611,6 @@ export const Recipe = gql`
     }
     steps {
       description
-      image {
-        url
-        imageable {
-          __typename
-        }
-      }
     }
     Comments {
       id

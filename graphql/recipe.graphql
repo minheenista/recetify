@@ -23,12 +23,7 @@ query Recipe($id: ID ){
         unit
       }
     }
-    image{
-      url
-      imageable{
-        __typename
-      }
-    }
+  
     rate
     user {
       id
@@ -39,12 +34,7 @@ query Recipe($id: ID ){
     }
     steps {
       description
-      image{
-        url
-        imageable{
-          __typename
-        }
-      }
+      
     }
     Comments {
       id

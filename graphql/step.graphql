@@ -1,7 +1,7 @@
 query Step($id: ID) {
   step(id: $id) {
     description
-    
+    id
     Recipe {
       id
       title

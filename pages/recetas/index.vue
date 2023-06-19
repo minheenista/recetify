@@ -184,6 +184,7 @@
                   </v-row>
 
                     <v-btn
+                      :disabled="!recipeRegister.title || !recipeRegister.diet || !recipeRegister.time_food || !recipeRegister.prep_time || !recipeRegister.porcion || !recipeRegister.origen_food || !recipeRegister.calories || !recipeRegister.fat || !recipeRegister.carbs || !recipeRegister.proteins || !recipeRegister.description"
                       color="primary"
                       @click="handleCreateRecipe()"
                       class="mb-3"
@@ -212,12 +213,13 @@
                         <v-combobox class="ml-5 mt-5 mr-3"
                           :items="ingredients.data"
                           chips
-                          clearable
+                          
                           label="Selecciona Ingredientes o Busca por nombre"
                           item-text="name"
                           item-value="id"
                           color="primary"
                           prepend-inner-icon="mdi-magnify"
+                          v-model="idIngredient"
                         >
                         
                           <template v-slot:selection="{ attrs, item, select, selected }">
@@ -228,7 +230,7 @@
                               @click="select"
                               :key="item.id"
                             >
-                              <strong>{{ item.name}} {{item.id}}</strong>&nbsp;
+                              <strong>{{ item.name}}</strong>&nbsp;
                             </v-chip>
                           </template>
                         </v-combobox>
@@ -317,6 +319,7 @@
                   <v-btn class="mb-3 ml-3"
                     color="primary"
                     @click="e6 = 3"
+                    :disabled="!ingredientes.length"
                   >
                     Siguiente
                   </v-btn>
@@ -360,7 +363,7 @@
                     <v-col cols="1" >
                       <v-btn
                         class="mx-2 mr-1 mt-6"
-                        fab
+                        
                         small
                         color="primary"
                         @click="handleCreateStep()"
@@ -429,7 +432,8 @@
 
                   <v-btn class="mt-5"
                     color="primary"
-                    @click="e6 = 1; dialog = false"
+                    :disabled="!pasos.length"
+                    @click="e6 = 1; dialog = false; fetchMe(); fetchRecipes();"
                   >
                     Guardar Receta 
                   </v-btn>
@@ -586,6 +590,9 @@ export default class Principal extends Vue{
     carbs: null,
     proteins: null,
     cat_ingredients: [],
+    Comments: [],
+    steps: [],
+    favoriteby: [],
   };
 
    public desserts = [];
@@ -617,9 +624,9 @@ export default class Principal extends Vue{
     {text: "Pieza", value: "unidad"},
   ];
 
-  public chips = [
+  /* public chips = [
     
-  ]
+  ] */
  public headers = [
     {
       text: 'Nombre',
@@ -639,9 +646,9 @@ export default class Principal extends Vue{
 
   public searchQuery = "";
 
-  public remove (item) {
+ /*  public remove (item) {
     this.chips.splice(this.chips.indexOf(item), 1)
-  };
+  }; */
 
  
 
@@ -701,11 +708,12 @@ export default class Principal extends Vue{
     unit: Unittype.G,
   };
 
+  public idIngredient = {id: '', name: ''};
 
   @RecipesModule.Action
   private addIngredientToRecipe!: (data: AddIngredienttoRecipeInput) => Promise<void>;
   async handleAddIngredientToRecipe(){
-    const data = {...this.addIngredientsRegister, id_recipe: this.idTemp, id_ingredient: "2"};
+    const data = {...this.addIngredientsRegister, id_recipe: this.idTemp, id_ingredient: this.idIngredient.id};
     await this.addIngredientToRecipe(data);
     console.log("dataIngrediente s add", data);
     await this.fetchMe();
