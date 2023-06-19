@@ -1,6 +1,6 @@
 import { ApolloError } from "@apollo/client/errors";
 import Vue from "vue";
-import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
+import { Action, Module, Mutation, MutationAction, VuexModule } from "vuex-module-decorators";
 import {CreateUserInput, LoginInput, Recipe, User, Comment, AddIngredienttoRecipeInput, CreateStepInput } from "~/gql/graphql";
 
 import AuthService from "~/services/auth.service";
@@ -15,6 +15,7 @@ class AuthModule extends VuexModule {
   public loadingUserStatus = false;
   public userFailure = undefined
   public errorMessage?: string = undefined;
+  public errorMessageReg?: string = undefined;
   public nextPage = false;
   context: any;
 
@@ -59,7 +60,20 @@ class AuthModule extends VuexModule {
     } else if (error.message === "Argument Validation Error") {
       this.errorMessage = "Argumentos Invalidos";
     } else {
-      this.errorMessage = "A ocurrido un error";
+      this.errorMessage = "Datos incorrectos";
+    }
+  }
+
+  @Mutation
+  public registerFaile(error: any) {
+    if (error.message === "Tus datos son incorrectos") {
+      this.errorMessageReg = "Tus datos son incorrectos";
+    } else if (error.message === "No Used found") {
+      this.errorMessageReg = "Usuario no encontrado";
+    } else if (error.message === "Argument Validation Error") {
+      this.errorMessageReg = "Argumentos Invalidos";
+    } else {
+      this.errorMessageReg = "Ha ocurrido un error";
     }
   }
 
@@ -123,11 +137,15 @@ class AuthModule extends VuexModule {
           })
           .catch((error: string) => {
             console.log(error);
+            this.context.commit("registerFaile", error);
+            this.context.commit("loadingRegister", false);
           });
       })
       .catch((error) => {
         console.log(error);
         window.$nuxt.$router.push("/");
+        this.context.commit("registerFaile", error);
+        this.context.commit("loadingRegister", false);
       });
   }
 
@@ -265,6 +283,26 @@ public addIngredientSuccess(data: AddIngredienttoRecipeInput){
       copyUser.recipes = [...copyUser.recipes];
       copyUser.recipes[index].cat_ingredients.push(data);
       this.me = copyUser;
+    }
+  }
+}
+
+@Mutation
+public removeIngredientSuccess(data: AddIngredienttoRecipeInput){
+  if(this.me){
+    const index = this.me.recipes.findIndex((recipe) => {
+      return recipe.id === data.id_recipe
+    });
+    if(index != -1){
+      const copyUser = {...this.me};
+      copyUser.recipes = [...copyUser.recipes];
+      const indexIngredient = copyUser.recipes[index].cat_ingredients.findIndex((ingredient) => {
+        return ingredient.id === data.id_ingredient
+      });
+      if(indexIngredient != -1){
+        copyUser.recipes[index].cat_ingredients.splice(indexIngredient, 1);
+        this.me = copyUser;
+      }
     }
   }
 }

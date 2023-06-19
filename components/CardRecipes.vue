@@ -182,9 +182,9 @@
             </v-toolbar>
           </template>
 
-           <template v-slot:item.image="{ item }">
+          <!--  <template v-slot:item.image="{ item }">
             <img :src="item.image.url" alt="Recipe Image" width="50" height="50">
-          </template>
+          </template> -->
         </v-data-table>
 
         
@@ -556,7 +556,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { namespace } from 'vuex-class';
-import { Recipe, DeleteRecipeMutation, User, Cat_Ingredient, UpdateRecipeInput, CreateCommentInput, Comments } from '~/gql/graphql';
+import { Recipe, DeleteRecipeMutation, User, Cat_Ingredient, UpdateRecipeInput, CreateCommentInput, Comments, Diet, Origen, Time } from '~/gql/graphql';
 import { Prop } from "vue-property-decorator";
 
 const RecipesModule = namespace("RecipesModule");
@@ -578,7 +578,7 @@ export default class CardRecipes extends Vue{
     {text: "Omnivora", value: "Omnivoro"},
     {text: "Ovo-lacteo Vegetariana", value: "OLV"},
     {text: "Vegana", value: "Vegetariano"},
-    {text: "Crudivegana", value: "Crudivegetariana"},
+    {text: "Crudivegana", value: "Crudivegana"},
   ];
 
   public tiempo = [
@@ -685,10 +685,10 @@ export default class CardRecipes extends Vue{
     id: "",
     title: "",
     description: "",
-    diet: '',
-    origen_food: '',
-    time_food: '',
-    prep_time: null,
+    diet: Diet.Omnivoro,
+    origen_food: Origen.Mexicana,
+    time_food: Time.Desayuno,
+    prep_time: 0,
     calories: null,
     porcion: 0,
     fat: null,

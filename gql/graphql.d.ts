@@ -161,6 +161,15 @@ declare module '*/recipes.graphql' {
 }
     
 
+declare module '*/removeIngredienttoRecipe.graphql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const RemoveIngredient: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
 declare module '*/removeRecipeToFavorites.graphql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;

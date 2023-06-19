@@ -249,22 +249,7 @@
                         v-model="addIngredientsRegister.unit"
                       ></v-select>
                     </v-col>
-                    <v-col
-                      cols="1"
-                      sm="1"
-                    > 
-                      <v-btn
-                        class="mx-2 mr-3 mt-6"
-                        fab
-                        dark
-                        small
-                        color="error"
-                      >
-                        <v-icon>
-                          mdi-trash-can
-                        </v-icon>
-                      </v-btn>
-                    </v-col>
+                  
                     <v-col
                       cols="1"
                       sm="1"
@@ -313,7 +298,7 @@
                       </v-icon> -->
                       <v-icon
                         small
-                        @click="deleteItem(item)"
+                        @click="handleRemoveIngredientToRecipe(item)"
                       >
                         mdi-delete
                       </v-icon>
@@ -560,7 +545,7 @@ import Vue from 'vue';
 import { Component, Watch } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 
-import { CreateRecipeInput, Recipe, Recipes, User, CatIngredientsQuery, Cat_Ingredient, AddIngredienttoRecipeInput, Unittype, CreateStepInput } from "~/gql/graphql";
+import { CreateRecipeInput, Recipe, Recipes, User, CatIngredientsQuery, Cat_Ingredient, AddIngredienttoRecipeInput, RemoveIngredient, RemoveIngredienttoRecipeInput, Unittype, CreateStepInput, Diet, Origen, Time  } from "~/gql/graphql";
 
 import CardRecipes from "~/components/CardRecipes.vue";
 import buttonStep from "~/components/buttonStep.vue";
@@ -589,32 +574,27 @@ export default class Principal extends Vue{
   public indexTemp = 0;
   public idTemp = '';
   public recipeTemp: Recipe ={
+    id: '',
     title: '',
-    diet: '',
-    origen_food: '',
-    time_food: '',
-    prep_time: null,
+    diet: Diet.Omnivoro,
+    origen_food: Origen.Mexicana,
+    time_food: Time.Desayuno,
+    prep_time: 0,
     calories: null,
     porcion: 0,
     fat: null,
     carbs: null,
     proteins: null,
-    ingredients: [],
+    cat_ingredients: [],
   };
 
    public desserts = [];
 
-
-  public userProfile = {
-        initials: 'JD',
-        fullName: 'John Doe',
-        email: 'john.doe@doe.com',
-      };
   public dietas = [
     {text: "Omnivora", value: "Omnivoro"},
     {text: "Ovo-lacteo Vegetariana", value: "OLV"},
     {text: "Vegana", value: "Vegetariano"},
-    {text: "Crudivegana", value: "Crudivegetariana"},
+    {text: "Crudivegana", value: "Crudivegana"},
   ];
 
   public tiempo = [
@@ -728,6 +708,23 @@ export default class Principal extends Vue{
     const data = {...this.addIngredientsRegister, id_recipe: this.idTemp, id_ingredient: "2"};
     await this.addIngredientToRecipe(data);
     console.log("dataIngrediente s add", data);
+    await this.fetchMe();
+    await this.fetchRecipes();
+    await this.initialize();
+  }
+
+  public removeIngredient: RemoveIngredienttoRecipeInput = {
+    id_ingredient: '',
+    id_recipe: '',
+  };
+
+  @RecipesModule.Action
+  private removeIngredientToRecipe!: (data: RemoveIngredienttoRecipeInput) => Promise<void>;
+  async handleRemoveIngredientToRecipe(data: any){
+    console.log("trae boton remove ing", data);
+    const dataRemove = {id_recipe: this.idTemp, id_ingredient: data.id };
+    await this.removeIngredientToRecipe(dataRemove);
+    
     await this.fetchMe();
     await this.fetchRecipes();
     await this.initialize();

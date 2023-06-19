@@ -128,6 +128,13 @@ export type RecipesQueryVariables = Exact<{
 
 export type RecipesQuery = { __typename?: 'Query', recipes: { __typename?: 'RecipePaginator', data: Array<{ __typename?: 'Recipe', id: string, title: string, description?: string | null, origen_food: Origen, time_food: Time, diet: Diet, prep_time: number, calories?: number | null, fat?: number | null, carbs?: number | null, proteins?: number | null, porcion: number, rate?: number | null, cat_ingredients: Array<{ __typename?: 'cat_ingredient', id: string, name: string, image?: { __typename?: 'Image', url: string } | null, pivot?: { __typename?: 'IngredientRecipePivot', quantity?: number | null, unit: Unittype } | null }>, user?: { __typename?: 'User', id: string, name: string, lastname: string, email: string, birthday: any } | null, steps: Array<{ __typename?: 'Step', description: string }>, Comments: Array<{ __typename?: 'Comment', comentario: string, rating?: number | null, user: { __typename?: 'User', id: string, name: string, lastname: string } }>, favoriteby: Array<{ __typename?: 'User', id: string, name: string, lastname: string, email: string, email_verified_at?: any | null, created_at: any, updated_at: any, birthday: any }> }> } };
 
+export type RemoveIngredientMutationVariables = Exact<{
+  removeIngredientInput: RemoveIngredienttoRecipeInput;
+}>;
+
+
+export type RemoveIngredientMutation = { __typename?: 'Mutation', removeIngredienttoRecipe?: { __typename?: 'cat_ingredient', id: string, name: string, image?: { __typename?: 'Image', url: string } | null, pivot?: { __typename?: 'IngredientRecipePivot', quantity?: number | null, unit: Unittype } | null } | null };
+
 export type RemoveRecipeToFavoritesMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -709,6 +716,21 @@ export const Recipes = gql`
   }
 }
     `;
+export const RemoveIngredient = gql`
+    mutation RemoveIngredient($removeIngredientInput: removeIngredienttoRecipeInput!) {
+  removeIngredienttoRecipe(input: $removeIngredientInput) {
+    id
+    name
+    image {
+      url
+    }
+    pivot {
+      quantity
+      unit
+    }
+  }
+}
+    `;
 export const RemoveRecipeToFavorites = gql`
     mutation RemoveRecipeToFavorites($id: ID!) {
   removeRecipeToFavorites(id: $id) {
@@ -1209,6 +1231,7 @@ export type Query = {
   Comments: CommentPaginator;
   cat_ingredient?: Maybe<Cat_Ingredient>;
   cat_ingredients: Cat_IngredientPaginator;
+  cleanrecipes: RecipePaginator;
   favorites: RecipePaginator;
   /** Regresa el Usuario Actual Loggeado */
   me: User;
@@ -1246,6 +1269,13 @@ export type QueryCat_IngredientArgs = {
 
 /** Indicates what fields are available at the top level of a query operation. */
 export type QueryCat_IngredientsArgs = {
+  first?: Scalars['Int'];
+  page?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** Indicates what fields are available at the top level of a query operation. */
+export type QueryCleanrecipesArgs = {
   first?: Scalars['Int'];
   page?: InputMaybe<Scalars['Int']>;
 };
@@ -1502,11 +1532,11 @@ export type CreateRecipeInput = {
   carbs?: InputMaybe<Scalars['Float']>;
   /** descripcion de la receta */
   description?: InputMaybe<Scalars['String']>;
-  /** Tipo de dieta. Ej. Vegano */
+  /** Tipo de dieta. Ej. OLV, Omnivoro, Vegetariano, Crudivegana */
   diet: Scalars['String'];
   /** Cantidad de grasas en la receta */
   fat?: InputMaybe<Scalars['Float']>;
-  /** Origen de comida. Ej, Mexicana */
+  /** Origen de comida. Ej, Mexicana, China, Americana, Italiana */
   origen_food: Scalars['String'];
   /** Cuantas Porciones o para cuantas personas alcanza la receta. */
   porcion: Scalars['Float'];
@@ -1514,7 +1544,7 @@ export type CreateRecipeInput = {
   prep_time?: InputMaybe<Scalars['Float']>;
   /** cantidad de proteinas en la receta */
   proteins?: InputMaybe<Scalars['Float']>;
-  /** Tiempo de comida. Ej, Desayuno */
+  /** Tiempo de comida. Ej, Desayuno, Comida, Cena, Colacion */
   time_food: Scalars['String'];
   /** Titulo de la receta */
   title: Scalars['String'];
@@ -1546,7 +1576,7 @@ export type CreateUserInput = {
 
 export enum Diet {
   /** Dieta Crudivegana */
-  Crudivegetariana = 'Crudivegetariana',
+  Crudivegana = 'Crudivegana',
   /** Dieta Ovo-Lactea Vegetariana */
   Olv = 'OLV',
   /** Dieta Omnivora */

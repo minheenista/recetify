@@ -15,8 +15,10 @@ import {
     CreateComment,
     AddIngredientToRecipe,
     AddIngredienttoRecipeInput,
+    RemoveIngredienttoRecipeInput,
     CreateStep,
-    CreateStepInput
+    CreateStepInput,
+    RemoveIngredient
   } from "~/gql/graphql";
 
  class RecipesService {
@@ -127,6 +129,19 @@ import {
           }
         })
       ).data.AddIngredientToRecipe;
+    }
+
+    async removeIngredientToRecipe(data: RemoveIngredienttoRecipeInput){
+      console.log("id receta: removeIngredientToRecipe", data)
+      return (
+        await apolloClient.mutate({
+          mutation: RemoveIngredient,
+          fetchPolicy: "network-only",
+          variables: {
+            removeIngredientInput: data,
+          }
+        })
+      ).data.removeIngredientToRecipe;
     }
 
     async createStep(data: CreateStepInput){

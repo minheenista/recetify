@@ -1,0 +1,13 @@
+mutation RemoveIngredient($removeIngredientInput: removeIngredienttoRecipeInput!) {
+  removeIngredienttoRecipe(input: $removeIngredientInput) {
+    id
+    name
+    image {
+      url
+    }
+    pivot {
+      quantity
+      unit
+    }
+  }
+}

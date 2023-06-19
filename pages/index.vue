@@ -31,7 +31,7 @@
                   label="Correo electronico"
                   variant="underlined"
                   color="green"
-                  prepend-inner-icon="mdi-account"
+                  prepend-inner-icon="mdi-email"
                   required
                 ></v-text-field>
 
@@ -49,6 +49,13 @@
                   @click:append="show1 = !show1"
                 ></v-text-field>
               </div>
+              <v-row justify="center" no-gutters>
+                <v-col cols="12">
+                  <v-alert v-if="errorMessage" outlined dense type="error">
+                    {{ errorMessage }}
+                  </v-alert>
+                </v-col>
+              </v-row>
 
               <div class="text sign-up-text">
                 <a href="#">Olvidaste tu contraseña?</a>
@@ -65,6 +72,8 @@
                 block
                 height="45"
                 @click="handleLogin()"
+                :loading="loadingLoginStatus"
+                :disabled="isButtonDisabled"
               >
                 Iniciar Sesión
               </v-btn>
@@ -172,11 +181,20 @@
                     </v-menu>
                   </div>
                   <br />
+                  <v-row justify="center" no-gutters>
+                <v-col cols="12">
+                  <v-alert v-if="errorMessageReg" outlined dense type="error">
+                    {{ errorMessageReg }}
+                  </v-alert>
+                </v-col>
+              </v-row>
                   <v-btn
                     class="mx-auto col-md-11"
                     color="primary"
                     dense
                     block
+                    :loading="loadingRegisterStatus"
+                    :disabled="isButtonDisabledRegister"
                     @click="handleRegister()"
                     height="45"
                   >
@@ -214,6 +232,15 @@ export default class Register extends Vue {
   public modal = false;
   public menu2 = false;
   date = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
+
+
+  get isButtonDisabled(): boolean {
+    return this.dataLogin.email === '' || this.dataLogin.password === '';
+  } 
+
+  get isButtonDisabledRegister(): boolean {
+    return this.dataRegister.name === '' || this.dataRegister.lastname === '' || this.dataRegister.email === '' || this.dataRegister.password === '' || this.dataRegister.birthday === '' ;
+  } 
 
   public rules = {
     passRules: {
@@ -305,8 +332,12 @@ export default class Register extends Vue {
 
   @Auth.State("errorMessage")
   public errorMessage?: string;
+   @Auth.State("errorMessageReg")
+  public errorMessageReg?: string;
   @Auth.State("loadingLoginStatus")
-  public loadingLoginStatus?: boolean;
+  public loadingLoginStatus!: boolean;
+  @Auth.State("loadingRegisterStatus")
+  private loadingRegisterStatus!: boolean;
   @Auth.Action
   private login!: (data: LoginInput) => Promise<void>;
   async handleLogin() {
@@ -344,7 +375,7 @@ a {
   padding: 40px 30px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.2);
   perspective: 2700px;
-  top: 10%;
+  top: 5%;
 
 }
 .container .cover{
