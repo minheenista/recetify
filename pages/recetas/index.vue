@@ -428,7 +428,7 @@
                   <v-btn class="mt-5"
                     color="primary"
                     :disabled="!pasos.length"
-                    @click="e6 = 1; dialog = false; fetchMe(); fetchRecipes(); showNotification = true"
+                    @click="e6 = 1; dialog = false; fetchMe(); fetchRecipes(); showNotification = true; initialize(); "
                   >
                     Guardar Receta 
                   </v-btn>

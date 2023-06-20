@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="me" class="mx-auto my-2" max-width="280">
+  <v-card v-if="me" class="mx-auto my-2" max-width="3200">
     <v-img
       cover
       height="100"
@@ -21,13 +21,16 @@
         <v-btn v-else icon color="pink" @click="handleAddToFavorites(recipe)">
           <v-icon>mdi-heart-outline</v-icon>
         </v-btn>
-        <v-btn @click.stop="dialog = true" icon color="green">
+        <v-btn @click.stop="dialog = true; initialize(); iniatializePasos()" icon color="green">
           <v-icon>mdi-eye</v-icon>
         </v-btn>
       </v-card-title>
       <v-card-subtitle>
         <span class="mb-3">{{ recipe.diet }}</span>
+        <v-spacer></v-spacer>
+        <span class="mb-3 right">Reseñas: {{ recipe.rate }}</span>
       </v-card-subtitle>
+      
 
       <v-card-text>
         <v-row align="center" class="mx-0">
@@ -36,7 +39,7 @@
 
             <v-chip small>{{ recipe.time_food }}</v-chip>
 
-            <v-chip small>{{ recipe.prep_time }}</v-chip>
+            <v-chip small>{{ recipe.prep_time }} minutos</v-chip>
           </div>
         </v-row>
       </v-card-text>
@@ -70,14 +73,16 @@
         <v-row>
           <v-card-subtitle class="ml-8 my-0">
             Autor: {{ recipe.user.name }}
-            {{ recipe.user.lastname }}</v-card-subtitle
+            {{ recipe.user.lastname }} 
+            <v-icon v-if="recipe.user.id == 618" small color="success">mdi-check-decagram</v-icon>
+            </v-card-subtitle
           >
           <v-spacer></v-spacer>
           <div class="mx-4>">
             <v-chip class="mr-4">{{ recipe.diet }}</v-chip>
-            <v-chip class="mr-4">{{ recipe.time_food }}</v-chip>
+            <v-chip class="mr-4">{{ recipe.time_food }} </v-chip>
             <v-chip class="mr-4">{{ recipe.origen_food }}</v-chip>
-            <v-chip>{{ recipe.prep_time }}</v-chip>
+            <v-chip>{{ recipe.prep_time }} minutos </v-chip>
           </div>
           <v-spacer></v-spacer>
 
@@ -129,6 +134,13 @@
               <v-divider class="mx-8" inset vertical></v-divider>
               <v-spacer></v-spacer>
             </v-toolbar>
+          </template>
+          <template v-slot:no-data>
+            <v-btn @click="initialize()"
+              color="primary"
+            >
+              No hay ingredientes seleccionados
+            </v-btn>
           </template>
 
           <!--  <template v-slot:item.image="{ item }">
@@ -964,9 +976,10 @@ iniatializePasos(): void {
     console.log("ingredientes", this.ingredientes);
   }
 
-  created(): void {
+  /* created(): void {
     this.initialize();
-  }
+    this.iniatializePasos();
+  } */
 }
 </script>
 
